@@ -8,8 +8,6 @@ public class Result<TValue>
     public ValidationResult? ValidationResult  { get; private set; }
     
     public bool IsFailure { get; private set; }
-
-    public Result(){}
     
     private Result(ValidationResult validationResult)
     {
