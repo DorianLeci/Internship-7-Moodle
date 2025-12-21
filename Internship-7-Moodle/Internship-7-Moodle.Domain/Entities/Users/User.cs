@@ -1,4 +1,4 @@
-using Internship_7_Moodle.Domain.Abstractions;
+using Internship_7_Moodle.Domain.Common.Abstractions;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
 using Internship_7_Moodle.Domain.Entities.Roles;
 using Internship_7_Moodle.Domain.Enumerations;

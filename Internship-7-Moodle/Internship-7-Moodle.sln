@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-7-Moodle.Domain", "Internship-7-Moodle.Domain\Internship-7-Moodle.Domain.csproj", "{322D5658-691B-4FD0-B508-2871F05BAC43}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-7-Moodle.Application", "Internship-7-Moodle.Application\Internship-7-Moodle.Application.csproj", "{E2E3767F-D52F-4ABF-8306-469C14942F7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{322D5658-691B-4FD0-B508-2871F05BAC43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{322D5658-691B-4FD0-B508-2871F05BAC43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{322D5658-691B-4FD0-B508-2871F05BAC43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2E3767F-D52F-4ABF-8306-469C14942F7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2E3767F-D52F-4ABF-8306-469C14942F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2E3767F-D52F-4ABF-8306-469C14942F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2E3767F-D52F-4ABF-8306-469C14942F7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

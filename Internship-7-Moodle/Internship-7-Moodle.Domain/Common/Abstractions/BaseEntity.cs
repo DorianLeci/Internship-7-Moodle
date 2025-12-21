@@ -1,4 +1,4 @@
-namespace Internship_7_Moodle.Domain.Abstractions;
+namespace Internship_7_Moodle.Domain.Common.Abstractions;
 
 public abstract class BaseEntity
 {
