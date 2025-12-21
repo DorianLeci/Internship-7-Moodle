@@ -1,9 +1,12 @@
 using Internship_7_Moodle.Domain.Common.Abstractions;
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.Users;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
 using Internship_7_Moodle.Domain.Entities.Roles;
 using Internship_7_Moodle.Domain.Enumerations;
+using Internship_7_Moodle.Domain.Services;
+
 namespace Internship_7_Moodle.Domain.Entities.Users;
 
 public class User:BaseEntity
@@ -41,6 +44,10 @@ public class User:BaseEntity
         
         if(Email.Length>MaxEmailLength)
             validationResult.Add(EntityValidation.UserValidation.EmailLength);
+
+        var isAdult = DomainHelper.IsAdult(BirthDate);
+        if (isAdult.HasValue && !isAdult.Value)
+            validationResult.Add(EntityValidation.UserValidation.IsNotAdult);
         
         return validationResult;
     }

@@ -24,7 +24,13 @@ public static partial class EntityValidation
             ValidationType.BussinessRule,
             ValidationSeverity.Error,
             $"{Prefix}_{nameof(User.Email)}",
-            $"Email korisnik ne smije biti duži od {User.MaxEmailLength} znakova");
+            $"Email korisnika ne smije biti duži od {User.MaxEmailLength} znakova");
+
+        public static readonly ValidationItem IsNotAdult = new ValidationItem(
+            ValidationType.BussinessRule,
+            ValidationSeverity.Error,
+            $"$\"{{Prefix}}_isNotAdult",
+            $"Korisnik mora imati bar 18 godina");
     }
 
 }
