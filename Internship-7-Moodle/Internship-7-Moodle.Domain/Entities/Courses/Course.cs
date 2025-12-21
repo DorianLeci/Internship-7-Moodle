@@ -16,4 +16,6 @@ public class Course:BaseEntity
     public User Owner { get; set; }
     
     public ICollection<CourseUser> CourseStudents { get; set; }
+    
+    public ICollection<CourseMaterial> Materials { get; set; }
 }
