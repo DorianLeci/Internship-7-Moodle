@@ -31,6 +31,12 @@ public static partial class EntityValidation
             ValidationSeverity.Error,
             $"$\"{{Prefix}}_isNotAdult",
             $"Korisnik mora imati bar 18 godina");
+        
+        public static readonly ValidationItem EmailNotUnique = new ValidationItem(
+            ValidationType.BussinessRule,
+            ValidationSeverity.Error,
+            $"$\"{{Prefix}}_EmailNotUnique",
+            $"Email mora biti jedinstven");
     }
 
 }

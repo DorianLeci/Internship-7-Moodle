@@ -7,4 +7,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Internship-7-Moodle.Domain\Internship-7-Moodle.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="11.1.0" />
+      <PackageReference Include="PasswordHasher.SHA256.ASP.NET.CORE.Identity" Version="1.0.1" />
+    </ItemGroup>
+
 </Project>

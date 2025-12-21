@@ -1,5 +1,6 @@
 using Internship_7_Moodle.Domain.Common.Abstractions;
 using Internship_7_Moodle.Domain.Common.Helper;
+using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.Users;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
@@ -15,9 +16,9 @@ public class User:BaseEntity
     public const int MaxLastNameLength = 30;
     public const int MaxEmailLength = 50;
         
-    public string? FirstName{ get; set; }
+    public string FirstName{ get; set; }
     
-    public string? LastName{ get; set; }
+    public string LastName{ get; set; }
     
     public DateOnly? BirthDate{ get; set; }
     
@@ -32,7 +33,16 @@ public class User:BaseEntity
     
     public ICollection<CourseUser> CourseStudents { get; set; }
 
-    public async Task<ValidationResult> Validate()
+    public Result<int> Create()
+    {
+        var result = Validate();
+        if (result.HasErrors)
+            return Result<int>.Failure(result);
+        
+        return Result<int>.Success(Id);
+    }
+    
+    public ValidationResult Validate()
     {
         var validationResult = new ValidationResult();
         
