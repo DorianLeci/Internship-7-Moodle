@@ -10,10 +10,18 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+      <PackageReference Include="Spectre.Console" Version="0.54.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Internship-7-Moodle.Application\Internship-7-Moodle.Application.csproj" />
+      <ProjectReference Include="..\Internship-7-Moodle.Infrastructure\Internship-7-Moodle.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
