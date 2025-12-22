@@ -4,5 +4,6 @@ public enum ValidationType
 {
     BussinessRule,
     FormalValidation,
-    InternalError
+    InternalError,
+    Infrastructure
 }

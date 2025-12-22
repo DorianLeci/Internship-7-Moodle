@@ -6,6 +6,7 @@ using Internship_7_Moodle.Domain.Common.Validation.Users;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
 using Internship_7_Moodle.Domain.Entities.Roles;
 using Internship_7_Moodle.Domain.Enumerations;
+using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Domain.Services;
 
 namespace Internship_7_Moodle.Domain.Entities.Users;
@@ -33,16 +34,17 @@ public class User:BaseEntity
     
     public ICollection<CourseUser> CourseStudents { get; set; }
 
-    public Result<int> Create()
+    public async Task<Result<int>> Create(IUserRepository userRepository)
     {
         var result = Validate();
         if (result.HasErrors)
             return Result<int>.Failure(result);
-        
+
+        await userRepository.InsertAsync(this);
         return Result<int>.Success(Id);
     }
     
-    public ValidationResult Validate()
+    private ValidationResult Validate()
     {
         var validationResult = new ValidationResult();
         

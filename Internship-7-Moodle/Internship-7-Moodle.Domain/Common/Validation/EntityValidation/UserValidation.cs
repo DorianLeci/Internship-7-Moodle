@@ -1,6 +1,6 @@
 using Internship_7_Moodle.Domain.Entities.Users;
 
-namespace Internship_7_Moodle.Domain.Common.Validation.Users;
+namespace Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 
 public static partial class EntityValidation
 {

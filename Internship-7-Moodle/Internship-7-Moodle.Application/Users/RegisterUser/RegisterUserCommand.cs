@@ -14,7 +14,7 @@ public record RegisterUserCommand(
     string Password,
     GenderEnum? Gender,
     RoleEnum RoleName)
-    : IRequest<Result<SuccessPostResponse>>
+    : IRequest<AppResult<SuccessPostResponse>>
 {
     public static RegisterUserCommand FromDto(RegisterUserDto dto)
     {
