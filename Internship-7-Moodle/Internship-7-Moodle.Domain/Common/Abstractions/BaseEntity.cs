@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Internship_7_Moodle.Domain.Common.Abstractions;
 
 public abstract class BaseEntity
@@ -8,5 +10,6 @@ public abstract class BaseEntity
     
     public DateTime UpdatedAt { get; set; }
     
+    [NotMapped]
     public DateTime? DeletedAt { get; set; }
 }

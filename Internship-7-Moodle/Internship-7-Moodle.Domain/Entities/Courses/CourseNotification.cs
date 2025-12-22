@@ -12,6 +12,4 @@ public class CourseNotification:BaseEntity
     public int CourseId { get; set; }
     public Course Course { get; set; }
     
-    public string CreatorId { get; set; }
-    public User Creator { get; set; }
 }

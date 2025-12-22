@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-7-Moodle.Domain"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-7-Moodle.Application", "Internship-7-Moodle.Application\Internship-7-Moodle.Application.csproj", "{E2E3767F-D52F-4ABF-8306-469C14942F7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-7-Moodle.Infrastructure", "Internship-7-Moodle.Infrastructure\Internship-7-Moodle.Infrastructure.csproj", "{26BA484D-2244-4A92-BD07-B984AC96D047}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-7-Moodle.Presentation", "Internship-7-Moodle.Presentation\Internship-7-Moodle.Presentation.csproj", "{2C30BDF9-4D15-4BDC-9550-D241726A3651}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{E2E3767F-D52F-4ABF-8306-469C14942F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2E3767F-D52F-4ABF-8306-469C14942F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2E3767F-D52F-4ABF-8306-469C14942F7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26BA484D-2244-4A92-BD07-B984AC96D047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26BA484D-2244-4A92-BD07-B984AC96D047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26BA484D-2244-4A92-BD07-B984AC96D047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26BA484D-2244-4A92-BD07-B984AC96D047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C30BDF9-4D15-4BDC-9550-D241726A3651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C30BDF9-4D15-4BDC-9550-D241726A3651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C30BDF9-4D15-4BDC-9550-D241726A3651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C30BDF9-4D15-4BDC-9550-D241726A3651}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

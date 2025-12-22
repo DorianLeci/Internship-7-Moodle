@@ -18,4 +18,5 @@ public class Course:BaseEntity
     public ICollection<CourseUser> CourseStudents { get; set; }
     
     public ICollection<CourseMaterial> Materials { get; set; }
+    public ICollection<CourseNotification> Notifications { get; set; }
 }
