@@ -10,7 +10,7 @@ public interface IRepository<TEntity,TId> where TEntity:class
     
     void Update(TEntity entity);
     
-    Task<TEntity?> DeleteAsync(TId id);
+    Task DeleteAsync(TId id);
     
     void Delete(TEntity? entity)
         ;

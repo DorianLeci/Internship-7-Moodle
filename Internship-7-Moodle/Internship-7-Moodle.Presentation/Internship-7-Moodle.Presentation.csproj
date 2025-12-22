@@ -8,4 +8,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Internship-7-Moodle.Application\Internship-7-Moodle.Application.csproj" />
+    </ItemGroup>
+
 </Project>

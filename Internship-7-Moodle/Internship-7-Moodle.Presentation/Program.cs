@@ -1,9 +1,7 @@
-﻿namespace Internship_7_Moodle.Presentation;
+﻿using Microsoft.Extensions.Hosting;
+using Internship_7_Moodle.Application.Dependencies;
 
-class Program
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Hello, World!");
-    }
-}
+var builder=Host.CreateApplicationBuilder();
+
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddAppServices(builder.Configuration);
