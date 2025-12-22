@@ -2,7 +2,7 @@ using Internship_7_Moodle.Domain.Common.Abstractions;
 using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Common.Validation;
-using Internship_7_Moodle.Domain.Common.Validation.Users;
+using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
 using Internship_7_Moodle.Domain.Entities.Roles;
 using Internship_7_Moodle.Domain.Enumerations;
