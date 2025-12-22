@@ -28,12 +28,21 @@ public class RegisterUserCommandHandler:IRequestHandler<RegisterUserCommand,AppR
     {
         var result=new AppResult<SuccessPostResponse>();
         
-        if (await _userDomainService.IsEmailUnique(request.Email))
+        var newUser = new User()
         {
-            var emailValidationResult = new ValidationResult();
-            emailValidationResult.Add(EntityValidation.UserValidation.EmailNotUnique);
-            result.SetValidationResult(emailValidationResult);
-            
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            BirthDate = request.BirthDate,
+            Email = request.Email,
+            Password = request.Password,
+            Gender = request.Gender,
+        };
+
+        var domainResult= newUser.Create();
+
+        if (domainResult.IsFailure)
+        {
+            result.SetValidationResult(domainResult.ValidationResult!);
             return result;
         }
         
@@ -43,31 +52,27 @@ public class RegisterUserCommandHandler:IRequestHandler<RegisterUserCommand,AppR
             var roleExistsValidationResult = new ValidationResult();
             roleExistsValidationResult.Add(EntityValidation.RoleValidation.RoleMustExist);
             result.SetValidationResult(roleExistsValidationResult);
-            
             return result;
         }
         
-        var newUser = new User()
+        if (!await _userDomainService.IsEmailUnique(request.Email))
         {
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            BirthDate = request.BirthDate,
-            Email = request.Email,
-            Password = request.Password,
-            Gender = request.Gender,
-            Role = role
-        };
-
-        var domainResult= await newUser.Create(_userUnitOfWork.UserRepository);
-        result.SetValidationResult(domainResult.ValidationResult!);
-        
-        if (result.IsFailure)
+            var emailValidationResult = new ValidationResult();
+            emailValidationResult.Add(EntityValidation.UserValidation.EmailNotUnique);
+            result.SetValidationResult(emailValidationResult);
             return result;
+        }
 
+        
+        newUser.Password = _passwordHasher.HashPassword(newUser,request.Password);
+        newUser.Role = role;
+        await _userUnitOfWork.UserRepository.InsertAsync(newUser);
         await _userUnitOfWork.SaveAsync();
         
         result.SetSuccessResult(new SuccessPostResponse(domainResult.Value));
         return result;
     }
     
+
+
 }

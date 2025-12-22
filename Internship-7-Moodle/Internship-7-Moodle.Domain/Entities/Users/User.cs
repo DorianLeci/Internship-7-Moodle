@@ -38,13 +38,12 @@ public class User:BaseEntity
     public ICollection<PrivateMessage> SentMessages { get; set; }=new  List<PrivateMessage>();
     public ICollection<PrivateMessage> ReceivedMessages { get; set; }=new List<PrivateMessage>();
 
-    public async Task<Result<int>> Create(IUserRepository userRepository)
+    public Result<int> Create()
     {
         var result = Validate();
         if (result.HasErrors)
             return Result<int>.Failure(result);
-
-        await userRepository.InsertAsync(this);
+        
         return Result<int>.Success(Id);
     }
     
@@ -52,20 +51,48 @@ public class User:BaseEntity
     {
         var validationResult = new ValidationResult();
         
+        CheckFirstName(validationResult);
+        
+        CheckLastName(validationResult);
+        
+        CheckEmail(validationResult);
+        
+        CheckBirthDate(validationResult);
+
+
+        
+        return validationResult;
+    }
+
+    private void CheckFirstName(ValidationResult validationResult)
+    {
+        if(string.IsNullOrWhiteSpace(FirstName))
+            validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(User),"Ime korisnika"));
         if(FirstName?.Length>MaxFirstNameLength)
-            validationResult.Add(EntityValidation.UserValidation.MaxFirstNameLength);
-        
-        if(FirstName?.Length>MaxLastNameLength)
-            validationResult.Add(EntityValidation.UserValidation.MaxLastNameLength);
-        
+            validationResult.Add(EntityValidation.UserValidation.MaxFirstNameLength);        
+    }
+    
+    private void CheckLastName(ValidationResult validationResult)
+    {
+        if(string.IsNullOrWhiteSpace(LastName))
+            validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(User),"Prezime korisnika"));
+        if(LastName?.Length>MaxLastNameLength)
+            validationResult.Add(EntityValidation.UserValidation.MaxLastNameLength);        
+    }
+
+    private void CheckEmail(ValidationResult validationResult)
+    {
+        if(string.IsNullOrWhiteSpace(Email))
+            validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(User),"Email korisnika"));
         if(Email.Length>MaxEmailLength)
             validationResult.Add(EntityValidation.UserValidation.EmailLength);
+    }
 
+    private void CheckBirthDate(ValidationResult validationResult)
+    {
         var isAdult = DomainHelper.IsAdult(BirthDate);
         if (isAdult.HasValue && !isAdult.Value)
             validationResult.Add(EntityValidation.UserValidation.IsNotAdult);
-        
-        return validationResult;
     }
 
 }
