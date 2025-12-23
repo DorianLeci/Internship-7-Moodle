@@ -1,12 +1,13 @@
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.InputValidation;
+using Internship_7_Moodle.Presentation.Views;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
 
 public static class FieldPrompt
 {
-    public static PresentationValidationResult<T?> PromptWithValidation<T>(string message,
+    public static async Task<PresentationValidationResult<T?>> PromptWithValidation<T>(Func<Task<bool>> showExitMenu,string message,
         Func<string, PresentationValidationResult<T?>> validationFunc, bool allowEmpty = false) where T : struct
     {
         while (true)
@@ -27,14 +28,16 @@ public static class FieldPrompt
             AnsiConsole.MarkupLine(result.Message ?? "[red]Neispravan unos[/]");
             AnsiConsole.MarkupLine(
                 "[red]Pritisni esc tipku ako želiš odustati od registracije,a bilo koju drugu ako želiš ponovno pokušati.[/]");
-
-            var exitInput = Console.ReadKey(intercept: true).Key;
-            if (exitInput == ConsoleKey.Escape)
+            
+            
+            var isExitChosen=await showExitMenu();
+            if (isExitChosen)
                 return PresentationValidationResult<T?>.Cancelled();
+
         }
     }
 
-    public static PresentationValidationResult<T> PromptWithValidation<T>(string message,
+    public static async Task<PresentationValidationResult<T>> PromptWithValidation<T>(Func<Task<bool>> showExitMenu,string message,
         Func<string, PresentationValidationResult<T>> validationFunc, bool allowEmpty = false) where T : class
     {
         while (true)
@@ -57,11 +60,10 @@ public static class FieldPrompt
 
 
             AnsiConsole.MarkupLine(result.Message ?? "[red]Neispravan unos[/]");
-            AnsiConsole.MarkupLine(
-                "[red]Pritisni esc tipku ako želiš odustati od registracije,a bilo koju drugu ako želiš ponovno pokušati.[/]");
 
-            var exitInput = Console.ReadKey(intercept: true).Key;
-            if (exitInput == ConsoleKey.Escape)
+            
+            var isExitChosen=await showExitMenu();
+            if (isExitChosen)
                 return PresentationValidationResult<T>.Cancelled();
 
         }

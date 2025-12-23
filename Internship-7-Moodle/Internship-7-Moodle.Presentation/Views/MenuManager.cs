@@ -20,29 +20,34 @@ public class MenuManager
     public async Task RunAsync()
     {
         bool exitRequested = false;
-        
-        var menuActions = new Dictionary<string, Func<Task<bool>>>
-        {
-            ["Register"]=async() => {await HandleRegisterUserAsync(); return false; },
-            ["Exit"]=async()=>{ Console.WriteLine("Exiting application..."); return true; }
-        };
+
+        var mainMenu = MenuBuilder.CreateMainMenu(this);
 
         while (!exitRequested)
         {
+            var title = "[yellow]Glavni izbornik[/]";
+            var titlePanel=new Panel(title)
+            {
+                Padding = new Padding(1, 1, 1, 1),
+                Border = BoxBorder.None
+            };
+            
+            AnsiConsole.Write(titlePanel);
+            
             var choice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>().Title("[red]Main Menu[/]")
-                    .AddChoices(menuActions.Keys));
+                new SelectionPrompt<string>()
+                    .AddChoices(mainMenu.Keys));
 
-            exitRequested = await menuActions[choice]();            
+            exitRequested = await mainMenu[choice]();            
         }
 
     }
 
-    private async Task HandleRegisterUserAsync()
+    public async Task HandleRegisterUserAsync()
     {
         const string registrationExit="[blue]Izlazak iz registracije[/]";
         
-        var email = FieldPrompt.PromptWithValidation("Unesi email",
+        var email = await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi email",
             email => EmailFormatCheck.IsEmailValid(email) ? PresentationValidationResult<string>.Success(email) : PresentationValidationResult<string>.Error("[red]Email nije u ispravnom formatu[/]"));
 
         if (email.IsCancelled)
@@ -52,7 +57,7 @@ public class MenuManager
         }
         
         
-        var password = FieldPrompt.PromptWithValidation("Unesi lozinku",
+        var password = await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi lozinku",
             password =>
             {
                 var errors=PasswordFormatCheck.IsPasswordValid(password);
@@ -67,7 +72,7 @@ public class MenuManager
         }
         
         
-        var firstName =FieldPrompt.PromptWithValidation("Unesi ime",firstName=>
+        var firstName =await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi ime",firstName=>
             NameFormatCheck.IsNameValid(firstName) 
                 ? PresentationValidationResult<string>.Success(firstName) : PresentationValidationResult<string>.Error("[red]Ime nije u ispravnom formatu.Ne smije imati brojeve ili specijalne znakove[/]"));
 
@@ -78,7 +83,7 @@ public class MenuManager
         }
             
         
-        var lastName= FieldPrompt.PromptWithValidation("Unesi prezime",lastName=>
+        var lastName= await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi prezime",lastName=>
             NameFormatCheck.IsNameValid(lastName) 
                 ? PresentationValidationResult<string>.Success(lastName) : PresentationValidationResult<string>.Error("[red]Prezime nije u ispravnom formatu.Ne smije imati brojeve ili specijalne znakove[/]"));
         
@@ -89,7 +94,7 @@ public class MenuManager
         }
 
         
-        var birthDate = FieldPrompt.PromptWithValidation("Unesi datum rođenja", birthDate =>
+        var birthDate = await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi datum rođenja", birthDate =>
         {
             if (string.IsNullOrEmpty(birthDate))
                 return PresentationValidationResult<DateOnly?>.Success();
@@ -106,7 +111,7 @@ public class MenuManager
         }
 
         
-        var gender = FieldPrompt.PromptWithValidation("Unesi spol (M,F)", gender =>
+        var gender = await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi spol (M,F)", gender =>
         {
             if (string.IsNullOrEmpty(gender))
                 return PresentationValidationResult<GenderEnum?>.Success();
@@ -124,5 +129,25 @@ public class MenuManager
         
         
         await _userActions.RegisterUserAsync();
+    }
+
+
+    private async Task<bool> ShowExitMenu()
+    {
+        var exitMenu = MenuBuilder.CreateExitMenu(this);
+
+        var title = "[yellow]Želiš li odustati od registracije[/]";
+        var titlePanel=new Panel(title)
+        {
+            Padding = new Padding(1, 1, 1, 1),
+            Border = BoxBorder.None
+        };
+        AnsiConsole.Write(titlePanel);
+        
+        var choice = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .AddChoices(exitMenu.Keys));
+
+        return await exitMenu[choice]();
     }
 }
