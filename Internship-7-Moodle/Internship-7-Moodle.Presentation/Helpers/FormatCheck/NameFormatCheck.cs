@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace Internship_7_Moodle.Presentation.Helper;
+namespace Internship_7_Moodle.Presentation.Helpers.FormatCheck;
 
 public static class NameFormatCheck
 {
