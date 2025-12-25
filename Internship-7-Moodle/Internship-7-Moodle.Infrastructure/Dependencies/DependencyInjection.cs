@@ -6,6 +6,7 @@ using Internship_7_Moodle.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Internship_7_Moodle.Infrastructure.Dependencies;
 
@@ -32,8 +33,10 @@ public static class DependencyInjection
         var userDbConnectionString = configuration.GetConnectionString("MoodleDB");
         if (string.IsNullOrEmpty(userDbConnectionString))
             throw new ArgumentNullException(nameof(userDbConnectionString));
-        
-        services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(userDbConnectionString));
-        
+
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(userDbConnectionString)
+                .LogTo(_ => { }, Array.Empty<string>(), Microsoft.Extensions.Logging.LogLevel.None));
+
     }    
 }

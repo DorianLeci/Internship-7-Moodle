@@ -22,12 +22,5 @@ public class CourseUserConfig:IEntityTypeConfiguration<CourseUser>
         builder.Property(cu=>cu.UserId).HasColumnName("user_id");
         builder.Property(cu=>cu.CourseId).HasColumnName("course_id");
         
-        builder.Property(cu => cu.CreatedAt)
-            .HasColumnName("created_at")
-            .IsRequired();
-
-        builder.Property(cu => cu.UpdatedAt)
-            .HasColumnName("updated_at")
-            .IsRequired();
     }
 }

@@ -9,7 +9,7 @@ namespace Internship_7_Moodle.Application.Users.RegisterUser;
 public record RegisterUserCommand(
     string FirstName,
     string LastName,
-    DateOnly? BirthDate,
+    DateOnly BirthDate,
     string Email,
     string Password,
     GenderEnum? Gender,

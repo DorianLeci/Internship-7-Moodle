@@ -25,12 +25,5 @@ public class PrivateMessage:IEntityTypeConfiguration<Domain.Entities.Messages.Pr
         builder.Property(pm=>pm.ReceiverId).HasColumnName("receiver_id");
         builder.Property(pm=>pm.SenderId).HasColumnName("sender_id");
         
-        builder.Property(pm => pm.CreatedAt)
-            .HasColumnName("created_at")
-            .IsRequired();
-
-        builder.Property(pm => pm.UpdatedAt)
-            .HasColumnName("updated_at")
-            .IsRequired();
     }
 }

@@ -20,12 +20,5 @@ public class CourseNotificationConfig:IEntityTypeConfiguration<CourseNotificatio
         
         builder.Property(cn => cn.CourseId).HasColumnName("course_id");
         
-        builder.Property(cn => cn.CreatedAt)
-            .HasColumnName("created_at")
-            .IsRequired();
-
-        builder.Property(cn => cn.UpdatedAt)
-            .HasColumnName("updated_at")
-            .IsRequired();
     }
 }

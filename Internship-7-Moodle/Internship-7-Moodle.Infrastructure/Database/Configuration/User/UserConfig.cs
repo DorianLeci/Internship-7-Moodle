@@ -7,7 +7,7 @@ public class UserConfig:IEntityTypeConfiguration<Domain.Entities.Users.User>
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.Users.User> builder)
     {
-        builder.ToTable("users");
+        builder.ToTable("user");
 
         builder.HasKey(u => u.Id);
         
@@ -19,17 +19,9 @@ public class UserConfig:IEntityTypeConfiguration<Domain.Entities.Users.User>
         builder.Property(u => u.Password).HasColumnName("password").IsRequired();
         builder.Property(u=>u.Gender).HasConversion<string>().HasColumnName("gender");
         
+        builder.HasOne(u=>u.Role).WithMany().HasForeignKey(u=>u.RoleId).OnDelete(DeleteBehavior.Restrict);
         builder.Property(u=>u.RoleId).HasColumnName("role_id").IsRequired();
         
-        builder.HasOne(u=>u.Role).WithOne().HasForeignKey<Domain.Entities.Users.User>(u=>u.RoleId).IsRequired(false).OnDelete(DeleteBehavior.Restrict);
-        
-        builder.Property(u => u.CreatedAt)
-            .HasColumnName("created_at")
-            .IsRequired();
-
-        builder.Property(u => u.UpdatedAt)
-            .HasColumnName("updated_at")
-            .IsRequired();
 
     }
 }

@@ -11,7 +11,7 @@ public class RoleConfig:IEntityTypeConfiguration<Domain.Entities.Roles.Role>
     {
         var converter = new EnumToStringConverter<RoleEnum>();
         
-        builder.ToTable("roles");
+        builder.ToTable("role");
         
         builder.HasKey(r => r.Id);
 
@@ -19,12 +19,5 @@ public class RoleConfig:IEntityTypeConfiguration<Domain.Entities.Roles.Role>
         builder.Property(r=>r.Description).HasColumnName("description").IsRequired();
         builder.Property(r=>r.RoleName).HasConversion(converter).HasColumnName("role_name").IsRequired();
         
-        builder.Property(r => r.CreatedAt)
-            .HasColumnName("created_at")
-            .IsRequired();
-
-        builder.Property(r => r.UpdatedAt)
-            .HasColumnName("updated_at")
-            .IsRequired();
     }
 }

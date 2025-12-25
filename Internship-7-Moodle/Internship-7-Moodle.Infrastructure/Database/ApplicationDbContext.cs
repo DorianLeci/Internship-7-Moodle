@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Entities.Messages;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
+using Internship_7_Moodle.Infrastructure.Database.Configuration.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Internship_7_Moodle.Infrastructure.Database;
@@ -24,5 +25,13 @@ public sealed class ApplicationDbContext:DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
         modelBuilder.HasDefaultSchema(Schemas.Default);
+        
+        modelBuilder.Entity<Domain.Entities.Users.User>().Configure();
+        modelBuilder.Entity<Domain.Entities.Roles.Role>().Configure();
+        modelBuilder.Entity<CourseUser>().Configure();
+        modelBuilder.Entity<PrivateMessage>().Configure();
+        modelBuilder.Entity<CourseNotification>().Configure();
+        modelBuilder.Entity<CourseMaterial>().Configure();
+        modelBuilder.Entity<Course>().Configure();
     }
 }

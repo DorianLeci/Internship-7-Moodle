@@ -1,12 +1,13 @@
 using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
+using Internship_7_Moodle.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Internship_7_Moodle.Infrastructure.Repositories;
 
 public class UserRepository:Repository<User,int>,IUserRepository
 {
-    public UserRepository(DbContext context) : base(context)
+    public UserRepository(ApplicationDbContext context) : base(context)
     {
     }
 

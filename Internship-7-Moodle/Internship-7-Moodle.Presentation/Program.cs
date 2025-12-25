@@ -5,6 +5,7 @@ using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 var builder=Host.CreateApplicationBuilder();
 
@@ -14,6 +15,9 @@ builder.Configuration
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddAppServices(builder.Configuration);
+
+builder.Logging.ClearProviders();
+
 
 builder.Services.AddScoped<UserActions>();
 builder.Services.AddScoped<MenuManager>();

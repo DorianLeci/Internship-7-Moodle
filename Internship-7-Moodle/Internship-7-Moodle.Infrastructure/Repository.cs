@@ -1,16 +1,16 @@
 using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Persistence.Common;
+using Internship_7_Moodle.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Internship_7_Moodle.Infrastructure;
 
 public class Repository<TEntity,TId>:IRepository<TEntity,TId> where TEntity : class
 {
-    protected readonly DbContext Context;
+    protected readonly ApplicationDbContext Context;
     protected readonly DbSet<TEntity> DbSet;
 
-    public Repository(DbContext context)
+    public Repository(ApplicationDbContext context)
     {
         Context = context;
         DbSet = context.Set<TEntity>();

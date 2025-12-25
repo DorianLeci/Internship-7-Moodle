@@ -22,7 +22,7 @@ public class User:BaseEntity
     
     public string LastName{ get; set; }
     
-    public DateOnly? BirthDate{ get; set; }
+    public DateOnly BirthDate{ get; set; }
     
     public string Email { get; set; }
     
@@ -90,6 +90,9 @@ public class User:BaseEntity
 
     private void CheckBirthDate(ValidationResult validationResult)
     {
+        if(string.IsNullOrWhiteSpace(Email))
+            validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(User),"Datum rođenja korisnika"));
+        
         var isAdult = DomainHelper.IsAdult(BirthDate);
         if (isAdult.HasValue && !isAdult.Value)
             validationResult.Add(EntityValidation.UserValidation.IsNotAdult);

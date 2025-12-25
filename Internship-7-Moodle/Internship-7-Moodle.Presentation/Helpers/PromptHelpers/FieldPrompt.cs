@@ -54,7 +54,6 @@ public static class FieldPrompt
             var result = validationFunc(input);
             if (result.Successful)
             {
-                AnsiConsole.MarkupLine($"Value: {result.Value}");
                 return result;
             }
 
@@ -68,5 +67,7 @@ public static class FieldPrompt
 
         }
     }
+    
+    
 
 }

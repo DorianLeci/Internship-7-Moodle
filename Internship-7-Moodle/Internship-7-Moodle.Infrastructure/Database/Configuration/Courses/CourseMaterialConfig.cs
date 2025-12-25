@@ -21,12 +21,5 @@ public class CourseMaterialConfig:IEntityTypeConfiguration<CourseMaterial>
 
         builder.Property(cm => cm.CourseId).HasColumnName("course_id");
         
-        builder.Property(cm => cm.CreatedAt)
-            .HasColumnName("created_at")
-            .IsRequired();
-
-        builder.Property(cm => cm.UpdatedAt)
-            .HasColumnName("updated_at")
-            .IsRequired();
     }
 }

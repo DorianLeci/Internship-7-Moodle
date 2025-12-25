@@ -11,4 +11,6 @@ public class ValidationResult
     
     public void Add(ValidationItem validationItem)=>_validationItems.Add(validationItem);
     
+    public void AddRange(IEnumerable<ValidationItem> validationItems)=>_validationItems.AddRange(validationItems);
+    
 }

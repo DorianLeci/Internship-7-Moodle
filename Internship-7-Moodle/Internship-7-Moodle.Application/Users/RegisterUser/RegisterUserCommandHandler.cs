@@ -27,6 +27,7 @@ public class RegisterUserCommandHandler:IRequestHandler<RegisterUserCommand,AppR
     public async Task<AppResult<SuccessPostResponse>> Handle(RegisterUserCommand request,CancellationToken cancellationToken)
     {
         var result=new AppResult<SuccessPostResponse>();
+        var validationResult = new ValidationResult();
         
         var newUser = new User()
         {
@@ -41,35 +42,29 @@ public class RegisterUserCommandHandler:IRequestHandler<RegisterUserCommand,AppR
         var domainResult= newUser.Create();
 
         if (domainResult.IsFailure)
-        {
-            result.SetValidationResult(domainResult.ValidationResult!);
-            return result;
-        }
+            validationResult.AddRange(domainResult.ValidationResult!.ValidationItems);
         
         var role=await _userUnitOfWork.RoleRepository.GetByRoleEnumAsync(request.RoleName);
         if (role == null)
-        {
-            var roleExistsValidationResult = new ValidationResult();
-            roleExistsValidationResult.Add(EntityValidation.RoleValidation.RoleMustExist);
-            result.SetValidationResult(roleExistsValidationResult);
-            return result;
-        }
+            validationResult.Add(EntityValidation.RoleValidation.RoleMustExist);
         
         if (!await _userDomainService.IsEmailUnique(request.Email))
         {
-            var emailValidationResult = new ValidationResult();
-            emailValidationResult.Add(EntityValidation.UserValidation.EmailNotUnique);
-            result.SetValidationResult(emailValidationResult);
-            return result;
+            validationResult.Add(EntityValidation.UserValidation.EmailNotUnique);
         }
 
+        if (validationResult.HasErrors)
+        {
+            result.SetValidationResult(validationResult);
+            return result;
+        }
         
         newUser.Password = _passwordHasher.HashPassword(newUser,request.Password);
-        newUser.Role = role;
+        newUser.Role = role!;
         await _userUnitOfWork.UserRepository.InsertAsync(newUser);
         await _userUnitOfWork.SaveAsync();
         
-        result.SetSuccessResult(new SuccessPostResponse(domainResult.Value));
+        result.SetSuccessResult(new SuccessPostResponse(newUser.Id));
         return result;
     }
     

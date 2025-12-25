@@ -23,12 +23,5 @@ public class CourseConfig:IEntityTypeConfiguration<Course>
         builder.HasOne(c=>c.Owner).WithOne().HasForeignKey<Course>(c=>c.OwnerId);
         builder.Property(c=>c.OwnerId).HasColumnName("owner_id");
         
-        builder.Property(c => c.CreatedAt)
-            .HasColumnName("created_at")
-            .IsRequired();
-
-        builder.Property(c => c.UpdatedAt)
-            .HasColumnName("updated_at")
-            .IsRequired();
     }
 }

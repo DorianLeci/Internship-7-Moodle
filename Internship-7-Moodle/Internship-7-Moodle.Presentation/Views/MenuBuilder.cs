@@ -37,4 +37,12 @@ public class MenuBuilder
             .AddChoice("Odustani",()=>true)
             .ReturnDictionary();
     }
+
+    public static Dictionary<string, Func<Task<bool>>> CreateRetryMenu(MenuManager menuManager)
+    {
+        return new MenuBuilder()
+            .AddChoice("Pokušaj se ponovno registrirati",()=>true)
+            .AddChoice("Odustani od registracije",()=>false)
+            .ReturnDictionary();
+    }
 }
