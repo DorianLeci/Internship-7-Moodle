@@ -30,16 +30,16 @@ public class MenuManager
         AnsiConsole.Clear();
         bool exitRequested = false;
 
-        var mainMenu = MenuBuilder.CreateMainMenu(this);
+        var guestMenu = MenuBuilder.CreateGuestMenu(this);
 
         while (!exitRequested)
         {
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[yellow] Glavni izbornik[/]")
-                    .AddChoices(mainMenu.Keys));
+                    .Title("[yellow] Početni izbornik[/]")
+                    .AddChoices(guestMenu.Keys));
 
-            exitRequested = await mainMenu[choice]();            
+            exitRequested = await guestMenu[choice]();            
         }
 
     }
@@ -138,7 +138,7 @@ public class MenuManager
                 return;
 
             }
-
+            
             ConsoleHelper.ClearAndSleep(2000);
             return;
         }
@@ -188,7 +188,11 @@ public class MenuManager
                 ConsoleHelper.ClearAndSleep(2000,loginExit);
                 return;
             }
+
+            var mainMenu = new MainMenuManager(_userActions,response.Value.RoleName.Value);
             ConsoleHelper.ClearAndSleep(2000);
+            await mainMenu.RunAsync();
+            
             return;
             
         }

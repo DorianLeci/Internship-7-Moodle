@@ -1,3 +1,6 @@
+using Internship_7_Moodle.Domain.Enumerations;
+using Spectre.Console;
+
 namespace Internship_7_Moodle.Presentation.Views;
 
 public class MenuBuilder
@@ -20,14 +23,16 @@ public class MenuBuilder
         return _menuOptions;
     }
 
-    public static Dictionary<string, Func<Task<bool>>> CreateMainMenu(MenuManager menuManager)
+    public static Dictionary<string, Func<Task<bool>>> CreateGuestMenu(MenuManager menuManager)
     {
         return new MenuBuilder()
             .AddChoice("Registracija", async () =>
                 { await menuManager.HandleRegisterUserAsync(); return false; })
             .AddChoice("Prijava", async () =>
                 { await menuManager.HandleLoginUserAsync(); return false; })
-            .AddChoice("Izlaz iz aplikacije", ()=> {Console.WriteLine("Exiting application..."); return true; })
+            .AddChoice("Izlaz iz aplikacije", ()=>
+            {
+                AnsiConsole.MarkupLine("[blue]Izlaz iz aplikacije...[/]"); return true; })
             
             .ReturnDictionary();
     }
@@ -39,6 +44,26 @@ public class MenuBuilder
             .AddChoice(quit.message,()=>quit.value)
             .ReturnDictionary();
     }
+    
+    public static Dictionary<string, Func<Task<bool>>> CreateMainMenu(MainMenuManager menuManager)
+    {
+        var builder = new MenuBuilder();
+
+        if (menuManager.RoleName == RoleEnum.Student)
+            builder.AddChoice("Moji kolegiji", async () =>
+            {
+                await menuManager.ShowCourseMenuAsync();
+                return false;
+            });
+
+        builder.AddChoice("Odjava", () =>
+        {
+            AnsiConsole.MarkupLine("[blue]Odjava...[/]");
+            return true;
+        });
+        
+        return builder.ReturnDictionary();
+    }   
     
     
     

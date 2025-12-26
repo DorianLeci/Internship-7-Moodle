@@ -16,7 +16,7 @@ public class RoleConfig:IEntityTypeConfiguration<Domain.Entities.Roles.Role>
         builder.HasKey(r => r.Id);
 
         builder.Property(r => r.Id).HasColumnName("id");
-        builder.Property(r=>r.Description).HasColumnName("description").IsRequired();
+        builder.Property(r=>r.Description).HasColumnName("description").IsRequired().HasMaxLength(Domain.Entities.Roles.Role.MaxDescriptionLength);
         builder.Property(r=>r.RoleName).HasConversion(converter).HasColumnName("role_name").IsRequired();
         
     }

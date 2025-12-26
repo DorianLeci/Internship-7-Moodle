@@ -14,9 +14,9 @@ public class CourseConfig:IEntityTypeConfiguration<Course>
         
         builder.Property(c=>c.Id).HasColumnName("id");
         
-        builder.Property(c=>c.Name).HasColumnName("name").IsRequired();
+        builder.Property(c=>c.Name).HasColumnName("name").IsRequired().HasMaxLength(Course.MaxNameLength);
         
-        builder.Property(c=>c.Description).HasColumnName("description").IsRequired();
+        builder.Property(c=>c.Description).HasColumnName("description").IsRequired().HasMaxLength(Course.MaxDescriptionLength);
         
         builder.Property(c=>c.Ects).HasColumnName("ects").IsRequired();
         

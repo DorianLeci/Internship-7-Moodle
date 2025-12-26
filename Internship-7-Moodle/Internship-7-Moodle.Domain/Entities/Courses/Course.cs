@@ -6,6 +6,8 @@ namespace Internship_7_Moodle.Domain.Entities.Courses;
 
 public class Course:BaseEntity
 {
+    public const int MaxNameLength = 30;
+    public const int MaxDescriptionLength = 200;
     public string Name { get; set; }
     
     public string Description { get; set; }
