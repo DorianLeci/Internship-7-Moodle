@@ -1,5 +1,6 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Users.Response;
+using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.Users;
@@ -47,7 +48,7 @@ public class LoginUserCommandHandler:IRequestHandler<LoginUserCommand,AppResult<
             return result;
         }
         
-        result.SetSuccessResult(new UserLoginResponse(user.Id,user.Role.RoleName));
+        result.SetResult(new UserLoginResponse{Id=user.Id, RoleName = user.Role.RoleName});
         return result;
 
     }

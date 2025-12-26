@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Infrastructure.Database;
@@ -19,5 +20,14 @@ public class UserRepository:Repository<User,int>,IUserRepository
     public async Task<User?> GetUserByEmailAsync(string email)
     {
         return await DbSet.Include(u=>u.Role).FirstOrDefaultAsync(user => user.Email == email);
+    }
+
+    public async Task<IEnumerable<Course>> GetAllStudentCoursesAsync(int studentId)
+    {
+        return await Context.CourseUsers
+            .Where(cu => cu.UserId == studentId)
+            .Include(cu => cu.Course).ThenInclude(c=>c.Owner)
+            .Select(cu => cu.Course)
+            .ToListAsync();
     }
 }

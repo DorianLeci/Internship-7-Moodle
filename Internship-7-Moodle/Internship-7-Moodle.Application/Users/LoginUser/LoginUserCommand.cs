@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Users.Response;
+using Internship_7_Moodle.Application.Users.Response.User;
 using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.LoginUser;

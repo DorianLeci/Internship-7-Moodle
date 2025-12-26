@@ -188,8 +188,8 @@ public class MenuManager
                 ConsoleHelper.ClearAndSleep(2000,loginExit);
                 return;
             }
-
-            var mainMenu = new MainMenuManager(_userActions,response.Value.RoleName.Value);
+            
+            var mainMenu = new MainMenuManager(_userActions,response.Value!.RoleName,response.Value.Id);
             ConsoleHelper.ClearAndSleep(2000);
             await mainMenu.RunAsync();
             

@@ -63,7 +63,7 @@ public class RegisterUserCommandHandler:IRequestHandler<RegisterUserCommand,AppR
         await _userUnitOfWork.UserRepository.InsertAsync(newUser);
         await _userUnitOfWork.SaveAsync();
         
-        result.SetSuccessResult(new SuccessPostResponse(newUser.Id));
+        result.SetResult(new SuccessPostResponse(newUser.Id));
         return result;
     }
     

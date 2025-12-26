@@ -1,5 +1,6 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Users.Response;
+using Internship_7_Moodle.Application.Users.Response.User;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -51,7 +52,7 @@ public static class Writer
         }
         
         var idText = $"[yellow] -Id korisnika: {appResult.Value!.Id}[/]";
-        var roleText=$"[yellow] -Uloga korisnika: {appResult.Value!.RoleName}[/]";
+        var roleText=$"[yellow] -Uloga korisnika: {appResult.Value.RoleName}[/]";
         
         AnsiConsole.Write(new Panel(string.Join("\n",idText,roleText))
         {
@@ -62,4 +63,5 @@ public static class Writer
         
         return true;        
     }
+    
 }

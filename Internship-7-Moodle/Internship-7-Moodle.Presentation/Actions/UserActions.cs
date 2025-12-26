@@ -1,8 +1,10 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.DTO;
+using Internship_7_Moodle.Application.Users.GetAllCourses;
 using Internship_7_Moodle.Application.Users.LoginUser;
 using Internship_7_Moodle.Application.Users.RegisterUser;
 using Internship_7_Moodle.Application.Users.Response;
+using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
 
@@ -33,4 +35,20 @@ public class UserActions
         return await _mediator.Send(LoginUserCommand.FromDto(loginDto));
         
     }
+
+    public async Task<IEnumerable<StudentCourseResponse>> GetStudentCoursesAsync(int studentId)
+    {
+        var dto=new StudentCoursesDto(studentId);
+        
+        var result = await _mediator.Send(GetStudentCoursesQuery.FromDto(dto));
+
+        if (result.Value == null)
+            return [];
+        
+        var courses = result.Value.Entities;
+
+        return courses;
+        
+    }
+    
 }

@@ -2,7 +2,7 @@ using Internship_7_Moodle.Domain.Common.Validation;
 
 namespace Internship_7_Moodle.Application.Common.Model;
 
-public class AppResult<TValue> where TValue : class
+public class AppResult<TValue> where TValue : class,new()
 {
     private readonly List<ValidationItem> _infos = new();
     private readonly List<ValidationItem> _warnings = new();
@@ -13,10 +13,10 @@ public class AppResult<TValue> where TValue : class
     public IReadOnlyCollection<ValidationItem> Errors => _errors.AsReadOnly();
 
     public bool IsFailure => _errors.Count != 0;
-    
-    public TValue? Value { get; private set; }
 
-    public void SetSuccessResult(TValue value)
+    public TValue? Value { get; private set; } = null;
+
+    public void SetResult(TValue value)
     {
         Value = value;
     }
