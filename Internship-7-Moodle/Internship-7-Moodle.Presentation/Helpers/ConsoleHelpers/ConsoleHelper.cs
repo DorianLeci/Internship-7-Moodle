@@ -20,5 +20,23 @@ public static class ConsoleHelper
         Thread.Sleep(timeout);
         AnsiConsole.Clear();
     }
+
+    public static async Task ShowCountdown(int seconds)
+    {
+        ClearAndSleep();
+        await AnsiConsole.Progress()
+            .StartAsync(async ctx =>
+            {
+                var task = ctx.AddTask("[blue]Pričekajte...[/]", maxValue: seconds);
+
+                while (!ctx.IsFinished)
+                {
+                    task.Description = $"[blue]Pričekajte {seconds-task.Value} s...[/]";
+                    task.Increment(1);
+                    await Task.Delay(1000);
+                }
+
+            });
+    }
     
 }

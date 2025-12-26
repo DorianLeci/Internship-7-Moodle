@@ -15,4 +15,9 @@ public class UserRepository:Repository<User,int>,IUserRepository
     {
         return await DbSet.AnyAsync(user => user.Email == email && (!excludeId.HasValue || user.Id != excludeId));       
     }
+
+    public async Task<User?> GetUserByEmailAsync(string email)
+    {
+        return await DbSet.Include(u=>u.Role).FirstOrDefaultAsync(user => user.Email == email);
+    }
 }

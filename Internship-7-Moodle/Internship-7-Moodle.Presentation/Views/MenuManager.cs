@@ -55,7 +55,7 @@ public class MenuManager
 
         while (true)
         {
-             var emailResult = await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi email",
+             var emailResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,"Unesi email",
                 email => UserPromptFunctions.EmailCheck(email));
 
             if (emailResult.IsCancelled)
@@ -64,7 +64,7 @@ public class MenuManager
                 return;
             }
             
-            var passwordResult = await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi lozinku",
+            var passwordResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,"Unesi lozinku",
                 password =>UserPromptFunctions.PasswordCheck(password));
 
             if (passwordResult.IsCancelled)
@@ -73,7 +73,7 @@ public class MenuManager
                 return;
             }
             
-            var confirmPasswordResult=await FieldPrompt.PromptWithValidation(ShowExitMenu,
+            var confirmPasswordResult=await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,
                 "Unesi lozinku ponovno",confirmPassword=>UserPromptFunctions.ConfirmPasswordCheck(confirmPassword,passwordResult.Value));
             
             if (confirmPasswordResult.IsCancelled)
@@ -82,48 +82,48 @@ public class MenuManager
                 return;
             }
             
-            var firstNameResult =await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi ime",firstName=>UserPromptFunctions.NameCheck(firstName));
+            var firstNameResult =await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,"Unesi ime",firstName=>UserPromptFunctions.NameCheck(firstName));
 
             if (firstNameResult.IsCancelled)
             {
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;           
             }
 
 
-            var lastNameResult = await FieldPrompt.PromptWithValidation(ShowExitMenu, "Unesi prezime",
+            var lastNameResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync, "Unesi prezime",
                 lastName => UserPromptFunctions.NameCheck(lastName));
                
             if (lastNameResult.IsCancelled)
             {
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;           
             }
 
 
-            var birthDateResult = await FieldPrompt.PromptWithValidation(ShowExitMenu, "Unesi datum rođenja",
+            var birthDateResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync, "Unesi datum rođenja",
                 birthDate => UserPromptFunctions.BirthDateCheck(birthDate));
             
             if (birthDateResult.IsCancelled)
             {
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;           
             }
 
             
-            var genderResult = await FieldPrompt.PromptWithValidation(ShowExitMenu,"Unesi spol (M,F)", gender => UserPromptFunctions.GenderCheck(gender),allowEmpty:true);
+            var genderResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,"Unesi spol (M,F)", gender => UserPromptFunctions.GenderCheck(gender),allowEmpty:true);
             
             if (genderResult.IsCancelled)
             {
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;           
             }
 
-            var isCaptchaSuccessful=await ShowCaptchaMenu();
+            var isCaptchaSuccessful=await ShowCaptchaMenuAsync();
 
             if (!isCaptchaSuccessful)
             {
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;                       
             }
             
@@ -133,21 +133,55 @@ public class MenuManager
 
             if (!isUserRegistered)
             {
-                var isRegistrationRequested = await ShowRetryMenu();
+                var isRegistrationRequested = await ShowRetryMenuAsync();
                 if (isRegistrationRequested) continue;
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;
 
             }
 
-            ConsoleHelper.ClearAndSleep(1000,registrationSuccess);
+            ConsoleHelper.ClearAndSleep(2000);
+            return;
         }
 
 
     }
 
+    public async Task HandleLoginUserAsync()
+    {
+        const string loginExit="[blue]Izlazak iz prijave[/]";
+        const string loginSuccess = "[green]Uspješna prijava[/]";
+        const int antiBotDelaySeconds = 30;
+        
+        while (true)
+        {
+            ConsoleHelper.ClearAndSleep();
+            var email = AnsiConsole.Prompt(new TextPrompt<string>("Unesi email:"));
+            var password = AnsiConsole.Prompt(new TextPrompt<string>("Unesi lozinku:"));
 
-    private async Task<bool> ShowExitMenu()
+            var response = await _userActions.LoginUserAsync(email, password);
+
+            var isLoginSuccessful=Writer.LoginUserWriter(response);
+
+            if (!isLoginSuccessful)
+            {
+                var isLoginRequested=await ShowRetryMenuAsync();
+                if (isLoginRequested)
+                {
+                    await ConsoleHelper.ShowCountdown(antiBotDelaySeconds);
+                    continue;
+                }
+                ConsoleHelper.ClearAndSleep(2000,loginExit);
+                return;
+            }
+            ConsoleHelper.ClearAndSleep(2000);
+            return;
+            
+        }
+        
+
+    }
+    private async Task<bool> ShowExitMenuAsync()
     {
         var exitMenu = MenuBuilder.CreateExitMenu(this);
 
@@ -166,14 +200,14 @@ public class MenuManager
         return await exitMenu[choice]();
     }
 
-    private async Task<bool> ShowRetryMenu()
+    private async Task<bool> ShowRetryMenuAsync()
     {
         var retryMenu=MenuBuilder.CreateRetryMenu(this);
         
         var title = "[yellow]Odaberi[/]";
         var titlePanel=new Panel(title)
         {
-            Padding = new Padding(1, 1, 1, 1),
+            Padding = new Padding(1, 1, 1, 0),
             Border = BoxBorder.None
         };
         AnsiConsole.Write(titlePanel);
@@ -187,11 +221,11 @@ public class MenuManager
         
     }
 
-    private async Task<bool> ShowCaptchaMenu()
+    private async Task<bool> ShowCaptchaMenuAsync()
     {
         var captchaString = CaptchaService.GenerateCaptcha();
         
-        var isCaptchaValid = await FieldPrompt.PromptWithValidation(ShowExitMenu, 
+        var isCaptchaValid = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync, 
             $"[white on DarkBlue]{captchaString}[/]\nUnesi captcha prikazan na ekranu",
             input=>CaptchaService.IsCaptchaValid(input)? PresentationValidationResult<string>.Success():PresentationValidationResult<string>.Error("Unesena captcha se ne podudara s prikazanom"));
 

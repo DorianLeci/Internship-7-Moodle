@@ -12,6 +12,15 @@ public static partial class EntityValidation
                 $"{entityName}_ItemIsRequired",
                 $"{propertyName} je obavezno polje");            
         }
+        
+        public static ValidationItem ItemMustExist(string entityName, string propertyName)
+        {
+            return new ValidationItem(
+                ValidationType.BussinessRule,
+                ValidationSeverity.Error,
+                $"{entityName}_ItemMustExist",
+                $"{propertyName} ne postoji");            
+        }
 
             
     }

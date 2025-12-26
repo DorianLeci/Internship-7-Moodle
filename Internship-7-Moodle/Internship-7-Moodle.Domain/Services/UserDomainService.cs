@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
 
 namespace Internship_7_Moodle.Domain.Services;
@@ -16,4 +17,6 @@ public class UserDomainService
         var exists = await _userRepository.ExistsByEmailAsync(email, excludeId);
         return !exists;
     }
+
+
 }

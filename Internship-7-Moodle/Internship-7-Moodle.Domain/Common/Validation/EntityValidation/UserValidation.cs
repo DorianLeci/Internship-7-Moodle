@@ -23,8 +23,15 @@ public static partial class EntityValidation
         public static readonly ValidationItem EmailLength = new ValidationItem(
             ValidationType.BussinessRule,
             ValidationSeverity.Error,
-            $"{Prefix}_{nameof(User.Email)}",
+            $"{Prefix}_EmailLength",
             $"Email korisnika ne smije biti duži od {User.MaxEmailLength} znakova");
+        
+        public static readonly ValidationItem EmailFormat = new ValidationItem(
+            ValidationType.BussinessRule,
+            ValidationSeverity.Error,
+            $"{Prefix}_EmailFormat",
+            $"Format emaila nije ispravan");
+
 
         public static readonly ValidationItem IsNotAdult = new ValidationItem(
             ValidationType.BussinessRule,
@@ -37,6 +44,12 @@ public static partial class EntityValidation
             ValidationSeverity.Error,
             $"$\"{{Prefix}}_EmailNotUnique",
             $"Email mora biti jedinstven");
+
+        public static readonly ValidationItem InvalidPassword = new ValidationItem(
+            ValidationType.Authentication,
+            ValidationSeverity.Error,
+            $"$\"{{Prefix}}_InvalidPassword",
+            $"Lozinka nije ispravna");
     }
 
 }

@@ -23,9 +23,11 @@ public class MenuBuilder
     public static Dictionary<string, Func<Task<bool>>> CreateMainMenu(MenuManager menuManager)
     {
         return new MenuBuilder()
-            .AddChoice("Register", async () =>
+            .AddChoice("Registracija", async () =>
                 { await menuManager.HandleRegisterUserAsync(); return false; })
-            .AddChoice("Exit", ()=> {Console.WriteLine("Exiting application..."); return true; })
+            .AddChoice("Prijava", async () =>
+                { await menuManager.HandleLoginUserAsync(); return false; })
+            .AddChoice("Izlaz iz aplikacije", ()=> {Console.WriteLine("Exiting application..."); return true; })
             
             .ReturnDictionary();
     }
@@ -41,8 +43,9 @@ public class MenuBuilder
     public static Dictionary<string, Func<Task<bool>>> CreateRetryMenu(MenuManager menuManager)
     {
         return new MenuBuilder()
-            .AddChoice("Pokušaj se ponovno registrirati",()=>true)
-            .AddChoice("Odustani od registracije",()=>false)
+            .AddChoice("Pokušaj ponovno",()=>true)
+            .AddChoice("Odustani",()=>false)
             .ReturnDictionary();
     }
+    
 }

@@ -4,7 +4,7 @@ public class SuccessPostResponse
 {
     public int? Id { get; init; }
     
-    public SuccessPostResponse(int? id, List<string>? warnings=null, List<string>? infos=null)
+    public SuccessPostResponse(int? id)
     {
         Id = id;
     }

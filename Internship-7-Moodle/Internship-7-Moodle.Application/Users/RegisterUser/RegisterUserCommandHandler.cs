@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Internship_7_Moodle.Application.Common.Model;
-using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
+using Internship_7_Moodle.Domain.Entities.Roles;
 using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Domain.Services;
@@ -46,7 +45,7 @@ public class RegisterUserCommandHandler:IRequestHandler<RegisterUserCommand,AppR
         
         var role=await _userUnitOfWork.RoleRepository.GetByRoleEnumAsync(request.RoleName);
         if (role == null)
-            validationResult.Add(EntityValidation.RoleValidation.RoleMustExist);
+            validationResult.Add(EntityValidation.CommonValidation.ItemMustExist(nameof(Role),"Uloga korisnika"));
         
         if (!await _userDomainService.IsEmailUnique(request.Email))
         {
