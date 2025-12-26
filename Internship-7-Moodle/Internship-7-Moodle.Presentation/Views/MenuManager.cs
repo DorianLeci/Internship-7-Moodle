@@ -9,6 +9,7 @@ using Internship_7_Moodle.Presentation.Helpers.PromptFunctions.User;
 using Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Internship_7_Moodle.Presentation.InputValidation;
+using Internship_7_Moodle.Presentation.Service;
 using Npgsql.Internal.Postgres;
 using Spectre.Console;
 
@@ -17,30 +18,25 @@ namespace Internship_7_Moodle.Presentation.Views;
 public class MenuManager
 {
     private readonly UserActions _userActions;
+    private readonly AntiBotService _antiBotService;
 
-    public MenuManager(UserActions userActions)
+    public MenuManager(UserActions userActions,AntiBotService antiBotService)
     {
         _userActions = userActions;
+        _antiBotService = antiBotService;
     }
     public async Task RunAsync()
     {
+        AnsiConsole.Clear();
         bool exitRequested = false;
 
         var mainMenu = MenuBuilder.CreateMainMenu(this);
 
         while (!exitRequested)
         {
-            var title = "[yellow]Glavni izbornik[/]";
-            var titlePanel=new Panel(title)
-            {
-                Padding = new Padding(1, 1, 1, 1),
-                Border = BoxBorder.None
-            };
-            
-            AnsiConsole.Write(titlePanel);
-            
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
+                    .Title("[yellow] Glavni izbornik[/]")
                     .AddChoices(mainMenu.Keys));
 
             exitRequested = await mainMenu[choice]();            
@@ -153,11 +149,17 @@ public class MenuManager
     public async Task HandleLoginUserAsync()
     {
         const string loginExit="[blue]Izlazak iz prijave...[/]";
-        const int antiBotDelaySeconds = 30;
         
         while (true)
         {
             ConsoleHelper.ClearAndSleep();
+
+            var isCancelled=await _antiBotService.ApplyCooldownAsync();
+            if (isCancelled)
+            {
+                ConsoleHelper.ClearAndSleep(2000,loginExit);
+                return;
+            }
             
             var email = AnsiConsole.Prompt(new TextPrompt<string>("Unesi email:"));
 
@@ -177,12 +179,10 @@ public class MenuManager
 
             if (!isLoginSuccessful)
             {
+                _antiBotService.RecordFailedLogin();
+                
                 var isLoginRequested=await ShowChoiceMenuAsync(("Pokušaj ponovno",true),("Odustani",false),"[yellow]Želiš li pokušati ponovno?[/]");
-                if (isLoginRequested)
-                {
-                    await ConsoleHelper.ShowCountdown(antiBotDelaySeconds);
-                    continue;
-                }
+                if (isLoginRequested) continue;
                 
                 AnsiConsole.Clear();
                 ConsoleHelper.ClearAndSleep(2000,loginExit);

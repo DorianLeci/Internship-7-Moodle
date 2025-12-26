@@ -2,6 +2,7 @@
 using Internship_7_Moodle.Application.Dependencies;
 using Internship_7_Moodle.Infrastructure.Dependencies;
 using Internship_7_Moodle.Presentation.Actions;
+using Internship_7_Moodle.Presentation.Service;
 using Internship_7_Moodle.Presentation.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ builder.Logging.ClearProviders();
 
 builder.Services.AddScoped<UserActions>();
 builder.Services.AddScoped<MenuManager>();
+builder.Services.AddScoped<AntiBotService>();
     
 var host=builder.Build();
 
