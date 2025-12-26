@@ -38,7 +38,7 @@ public static class FieldPrompt
     }
 
     public static async Task<PresentationValidationResult<T>> PromptWithValidation<T>(Func<Task<bool>> showExitMenu,string message,
-        Func<string, PresentationValidationResult<T>> validationFunc, bool allowEmpty = false) where T : class
+        Func<string, PresentationValidationResult<T>> validationFunc, bool allowEmpty = false,bool hidden=false) where T : class
     {
         while (true)
         {
@@ -48,6 +48,9 @@ public static class FieldPrompt
 
             if (allowEmpty)
                 prompt.AllowEmpty();
+
+            if (hidden)
+                prompt.Secret();
 
             var input = AnsiConsole.Prompt(prompt);
 

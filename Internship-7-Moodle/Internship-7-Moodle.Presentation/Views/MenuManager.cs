@@ -50,12 +50,11 @@ public class MenuManager
 
     public async Task HandleRegisterUserAsync()
     {
-        const string registrationExit="[blue]Izlazak iz registracije[/]";
-        const string registrationSuccess = "[green]Uspješna registracija[/]";
+        const string registrationExit="[blue]Izlazak iz registracije...[/]";
 
         while (true)
         {
-             var emailResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,"Unesi email",
+             var emailResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi email",
                 email => UserPromptFunctions.EmailCheck(email));
 
             if (emailResult.IsCancelled)
@@ -63,9 +62,11 @@ public class MenuManager
                 ConsoleHelper.ClearAndSleep(registrationExit);
                 return;
             }
+
+            var hidePassword = await ShowChoiceMenuAsync(("Da",true), ("Ne",false), "[yellow]Zeliš li sakriti lozinku[/]");
             
-            var passwordResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,"Unesi lozinku",
-                password =>UserPromptFunctions.PasswordCheck(password));
+            var passwordResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi lozinku",
+                password =>UserPromptFunctions.PasswordCheck(password),hidden:hidePassword);
 
             if (passwordResult.IsCancelled)
             {
@@ -73,8 +74,8 @@ public class MenuManager
                 return;
             }
             
-            var confirmPasswordResult=await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,
-                "Unesi lozinku ponovno",confirmPassword=>UserPromptFunctions.ConfirmPasswordCheck(confirmPassword,passwordResult.Value));
+            var confirmPasswordResult=await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),
+                "Unesi lozinku ponovno",confirmPassword=>UserPromptFunctions.ConfirmPasswordCheck(confirmPassword,passwordResult.Value),hidden:hidePassword);
             
             if (confirmPasswordResult.IsCancelled)
             {
@@ -82,7 +83,7 @@ public class MenuManager
                 return;
             }
             
-            var firstNameResult =await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,"Unesi ime",firstName=>UserPromptFunctions.NameCheck(firstName));
+            var firstNameResult =await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi ime",firstName=>UserPromptFunctions.NameCheck(firstName));
 
             if (firstNameResult.IsCancelled)
             {
@@ -91,7 +92,7 @@ public class MenuManager
             }
 
 
-            var lastNameResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync, "Unesi prezime",
+            var lastNameResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(), "Unesi prezime",
                 lastName => UserPromptFunctions.NameCheck(lastName));
                
             if (lastNameResult.IsCancelled)
@@ -101,7 +102,7 @@ public class MenuManager
             }
 
 
-            var birthDateResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync, "Unesi datum rođenja",
+            var birthDateResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(), "Unesi datum rođenja",
                 birthDate => UserPromptFunctions.BirthDateCheck(birthDate));
             
             if (birthDateResult.IsCancelled)
@@ -111,7 +112,7 @@ public class MenuManager
             }
 
             
-            var genderResult = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync,"Unesi spol (M,F)", gender => UserPromptFunctions.GenderCheck(gender),allowEmpty:true);
+            var genderResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi spol (M,F)", gender => UserPromptFunctions.GenderCheck(gender),allowEmpty:true);
             
             if (genderResult.IsCancelled)
             {
@@ -133,8 +134,10 @@ public class MenuManager
 
             if (!isUserRegistered)
             {
-                var isRegistrationRequested = await ShowRetryMenuAsync();
+                var isRegistrationRequested = await ShowChoiceMenuAsync(("Pokušaj ponovno",true),("Odustani",false),"[yellow]Želiš li pokušati ponovno?[/]");
                 if (isRegistrationRequested) continue;
+
+                AnsiConsole.Clear();
                 ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;
 
@@ -149,28 +152,39 @@ public class MenuManager
 
     public async Task HandleLoginUserAsync()
     {
-        const string loginExit="[blue]Izlazak iz prijave[/]";
-        const string loginSuccess = "[green]Uspješna prijava[/]";
+        const string loginExit="[blue]Izlazak iz prijave...[/]";
         const int antiBotDelaySeconds = 30;
         
         while (true)
         {
             ConsoleHelper.ClearAndSleep();
+            
             var email = AnsiConsole.Prompt(new TextPrompt<string>("Unesi email:"));
-            var password = AnsiConsole.Prompt(new TextPrompt<string>("Unesi lozinku:"));
 
+            var hidePassword = await ShowChoiceMenuAsync(("Da", true), ("Ne", false), "[yellow]Zeliš li sakriti lozinku[/]");
+            AnsiConsole.Clear();
+            
+            var passwordPrompt = new TextPrompt<string>("Unesi lozinku:");
+            if (hidePassword)
+                passwordPrompt.Secret();
+            
+            var password = AnsiConsole.Prompt(passwordPrompt);
+            
+            
             var response = await _userActions.LoginUserAsync(email, password);
 
             var isLoginSuccessful=Writer.LoginUserWriter(response);
 
             if (!isLoginSuccessful)
             {
-                var isLoginRequested=await ShowRetryMenuAsync();
+                var isLoginRequested=await ShowChoiceMenuAsync(("Pokušaj ponovno",true),("Odustani",false),"[yellow]Želiš li pokušati ponovno?[/]");
                 if (isLoginRequested)
                 {
                     await ConsoleHelper.ShowCountdown(antiBotDelaySeconds);
                     continue;
                 }
+                
+                AnsiConsole.Clear();
                 ConsoleHelper.ClearAndSleep(2000,loginExit);
                 return;
             }
@@ -181,14 +195,16 @@ public class MenuManager
         
 
     }
-    private async Task<bool> ShowExitMenuAsync()
+    private async Task<bool> ShowChoiceMenuAsync((string message,bool value)? confirm=null,(string message,bool value)? quit=null,string title="[yellow]Želiš li odustati od registracije[/]")
     {
-        var exitMenu = MenuBuilder.CreateExitMenu(this);
-
-        var title = "[yellow]Želiš li odustati od registracije[/]";
+        var confirmChoice=confirm ?? ("Nastavi", false);
+        var quitChoice= quit ?? ("Odustani", true);
+        
+        var exitMenu = MenuBuilder.CreateChoiceMenu(this,confirmChoice,quitChoice);
+        
         var titlePanel=new Panel(title)
         {
-            Padding = new Padding(1, 1, 1, 1),
+            Padding = new Padding(1, 1, 1, 0),
             Border = BoxBorder.None
         };
         AnsiConsole.Write(titlePanel);
@@ -199,35 +215,14 @@ public class MenuManager
 
         return await exitMenu[choice]();
     }
-
-    private async Task<bool> ShowRetryMenuAsync()
-    {
-        var retryMenu=MenuBuilder.CreateRetryMenu(this);
-        
-        var title = "[yellow]Odaberi[/]";
-        var titlePanel=new Panel(title)
-        {
-            Padding = new Padding(1, 1, 1, 0),
-            Border = BoxBorder.None
-        };
-        AnsiConsole.Write(titlePanel);
-        
-        var choice = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .AddChoices(retryMenu.Keys));
-
-        return await retryMenu[choice]();     
-        
-        
-    }
-
+    
     private async Task<bool> ShowCaptchaMenuAsync()
     {
         var captchaString = CaptchaService.GenerateCaptcha();
         
-        var isCaptchaValid = await FieldPrompt.PromptWithValidation(ShowExitMenuAsync, 
+        var isCaptchaValid = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(), 
             $"[white on DarkBlue]{captchaString}[/]\nUnesi captcha prikazan na ekranu",
-            input=>CaptchaService.IsCaptchaValid(input)? PresentationValidationResult<string>.Success():PresentationValidationResult<string>.Error("Unesena captcha se ne podudara s prikazanom"));
+            input=>CaptchaService.IsCaptchaValid(input)? PresentationValidationResult<string>.Success():PresentationValidationResult<string>.Error("[red]\nUnesena captcha se ne podudara s prikazanom[/]"));
 
         return isCaptchaValid.Successful;
     }

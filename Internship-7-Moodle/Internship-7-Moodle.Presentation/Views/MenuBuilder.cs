@@ -32,20 +32,14 @@ public class MenuBuilder
             .ReturnDictionary();
     }
 
-    public static Dictionary<string, Func<Task<bool>>> CreateExitMenu(MenuManager menuManager)
+    public static Dictionary<string, Func<Task<bool>>> CreateChoiceMenu(MenuManager menuManager,(string message,bool value) confirm,(string message,bool value) quit)
     {
         return new MenuBuilder()
-            .AddChoice("Nastavi",()=>false)
-            .AddChoice("Odustani",()=>true)
+            .AddChoice(confirm.message,()=>confirm.value)
+            .AddChoice(quit.message,()=>quit.value)
             .ReturnDictionary();
     }
-
-    public static Dictionary<string, Func<Task<bool>>> CreateRetryMenu(MenuManager menuManager)
-    {
-        return new MenuBuilder()
-            .AddChoice("Pokušaj ponovno",()=>true)
-            .AddChoice("Odustani",()=>false)
-            .ReturnDictionary();
-    }
+    
+    
     
 }
