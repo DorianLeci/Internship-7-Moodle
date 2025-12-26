@@ -13,7 +13,12 @@ public class CourseMaterialConfig:IEntityTypeConfiguration<CourseMaterial>
         builder.HasKey(cm=>cm.Id);
         builder.Property(cm=>cm.Id).HasColumnName("id");
         
-        builder.Property(cm=>cm.Name).HasColumnName("name").IsRequired();
+        builder.Property(cm=>cm.Title).HasColumnName("title").IsRequired().HasMaxLength(CourseMaterial.MaxTitleLength);
+        
+        builder.Property(cm=>cm.AuthorName).HasColumnName("author_name").IsRequired().HasMaxLength(CourseMaterial.MaxAuthorNameLength);
+        
+        builder.Property(cm=>cm.PublishedDate).HasColumnName("published_date");
+        
         builder.Property(cm=>cm.Url).HasColumnName("url").IsRequired();
         
         builder.HasOne(cm=>cm.Course).WithMany(c=>c.Materials)

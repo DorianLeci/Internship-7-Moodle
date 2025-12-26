@@ -13,8 +13,8 @@ public class CourseNotificationConfig:IEntityTypeConfiguration<CourseNotificatio
         builder.HasKey(cn=>cn.Id);
         builder.Property(cn=>cn.Id).HasColumnName("id");
         
-        builder.Property(cn=>cn.Subject).HasColumnName("subject").IsRequired();
-        builder.Property(cn=>cn.Content).HasColumnName("content").IsRequired();
+        builder.Property(cn=>cn.Subject).HasColumnName("subject").IsRequired().HasMaxLength(CourseNotification.SubjectMaxLength);
+        builder.Property(cn=>cn.Content).HasColumnName("content").IsRequired().HasMaxLength(CourseNotification.ContentMaxLength);
         
         builder.HasOne(cn=>cn.Course).WithMany(c=>c.Notifications).HasForeignKey(cn=>cn.CourseId).IsRequired();
         

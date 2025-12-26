@@ -26,26 +26,30 @@ public static class Seeder
 
     public static void SeedData(ModelBuilder modelBuilder)
     {
-        RoleSeed(modelBuilder);
-        UserDataSeed(modelBuilder);
-        CourseSeed(modelBuilder);
-        CourseUserDataSeed(modelBuilder);
+        var seedTime=new DateTime(2025, 09, 01);
+        
+        RoleSeed(modelBuilder,seedTime);
+        UserDataSeed(modelBuilder,seedTime);
+        CourseSeed(modelBuilder,seedTime);
+        CourseUserDataSeed(modelBuilder,seedTime);
+        NotificationSeed(modelBuilder);
+        MaterialSeed(modelBuilder,seedTime);
         
     }
 
-    private static void RoleSeed(ModelBuilder modelBuilder)
+    private static void RoleSeed(ModelBuilder modelBuilder,DateTime seedTime)
     {
         const string studentDescription = "Može samo gledati podatke o kolegijima (nema prava da išta izmijeni)";
         const string professorDescription = "Može dodavati studente u kolegije te slati obavijesti i materijale";
         const string adminDescription = "Ima ovlasti brisati i dodavati korisnike bilo koje uloge";
         
         modelBuilder.Entity<Role>().HasData(
-            new Role { Id = 1, RoleName = RoleEnum.Student, Description = studentDescription },
-            new Role { Id = 2, RoleName = RoleEnum.Professor, Description = professorDescription },
-            new Role { Id = 3, RoleName = RoleEnum.Admin, Description = adminDescription }
-        );        
+            new Role { Id = 1, RoleName = RoleEnum.Student, Description = "Može samo gledati podatke o kolegijima (nema prava da išta izmijeni)", CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Role { Id = 2, RoleName = RoleEnum.Professor, Description = "Može dodavati studente u kolegije te slati obavijesti i materijale", CreatedAt = seedTime, UpdatedAt = seedTime },
+            new Role { Id = 3, RoleName = RoleEnum.Admin, Description = "Ima ovlasti brisati i dodavati korisnike bilo koje uloge", CreatedAt = seedTime, UpdatedAt = seedTime }
+        );
     }
-    private static void UserDataSeed(ModelBuilder modelBuilder)
+    private static void UserDataSeed(ModelBuilder modelBuilder, DateTime seedTime)
     {
         var users = new[]
         {
@@ -58,7 +62,9 @@ public static class Seeder
                 LastName = "Doe",
                 BirthDate = new DateOnly(2000, 04, 04),
                 Gender = GenderEnum.M,
-                RoleId = 1
+                RoleId = 1,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
             new User
             {
@@ -69,7 +75,9 @@ public static class Seeder
                 LastName = "Leci",
                 BirthDate = new DateOnly(2000, 03, 03),
                 Gender = GenderEnum.M,
-                RoleId = 1
+                RoleId = 1,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
             new User
             {
@@ -80,7 +88,9 @@ public static class Seeder
                 LastName = "Leci",
                 BirthDate = new DateOnly(2004, 03, 28),
                 Gender = GenderEnum.M,
-                RoleId = 1
+                RoleId = 1,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
             new User
             {
@@ -91,7 +101,9 @@ public static class Seeder
                 LastName = "Leci",
                 BirthDate = new DateOnly(2005, 11, 28),
                 Gender = GenderEnum.F,
-                RoleId = 1
+                RoleId = 1,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
             new User
             {
@@ -102,10 +114,12 @@ public static class Seeder
                 LastName = "Leci",
                 BirthDate = new DateOnly(1990, 10, 12),
                 Gender = GenderEnum.F,
-                RoleId = 1
+                RoleId = 1,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
-            
-            new User{
+            new User
+            {
                 Id = 6,
                 Email = "ivoivić@gmail.com",
                 Password = "ProfIvo#",
@@ -113,10 +127,12 @@ public static class Seeder
                 LastName = "Ivić",
                 BirthDate = new DateOnly(1989, 9, 12),
                 Gender = GenderEnum.M,
-                RoleId = 2
+                RoleId = 2,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
-            
-            new User{
+            new User
+            {
                 Id = 7,
                 Email = "petarpetrović@gmail.com",
                 Password = "ProfPetar#",
@@ -124,10 +140,12 @@ public static class Seeder
                 LastName = "Petrović",
                 BirthDate = new DateOnly(1988, 9, 12),
                 Gender = GenderEnum.M,
-                RoleId = 2
+                RoleId = 2,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
-            
-            new User{
+            new User
+            {
                 Id = 8,
                 Email = "majamajić@gmail.com",
                 Password = "ProfMaja#",
@@ -135,10 +153,12 @@ public static class Seeder
                 LastName = "Majić",
                 BirthDate = new DateOnly(1995, 01, 01),
                 Gender = GenderEnum.F,
-                RoleId = 2
+                RoleId = 2,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
-            
-            new User{
+            new User
+            {
                 Id = 9,
                 Email = "vesnavesnić@gmail.com",
                 Password = "ProfVesna#",
@@ -146,10 +166,12 @@ public static class Seeder
                 LastName = "Vesnić",
                 BirthDate = new DateOnly(1997, 02, 02),
                 Gender = GenderEnum.F,
-                RoleId = 2
+                RoleId = 2,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
-            
-            new User{
+            new User
+            {
                 Id = 10,
                 Email = "sebaleci@gmail.com",
                 Password = "AdminSeba#",
@@ -157,17 +179,19 @@ public static class Seeder
                 LastName = "Leci",
                 BirthDate = new DateOnly(1997, 03, 08),
                 Gender = GenderEnum.M,
-                RoleId = 3
+                RoleId = 3,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             }
         };
-        
+
         HashAllPasswords(users);
-        
-        modelBuilder.Entity<User>().HasData(users);        
-    }
+        modelBuilder.Entity<User>().HasData(users);
+}
 
 
-    private static void CourseSeed(ModelBuilder modelBuilder)
+
+    private static void CourseSeed(ModelBuilder modelBuilder,DateTime seedTime)
     {
         modelBuilder.Entity<Course>().HasData(
             new Course
@@ -176,7 +200,9 @@ public static class Seeder
                 Name = "Matematika 1",
                 Description = "Osnove algebre i teorije brojeva.",
                 Ects = 7,
-                OwnerId = 6
+                OwnerId = 6,
+                CreatedAt =seedTime,
+                UpdatedAt = seedTime
             },
             new Course
             {
@@ -184,7 +210,9 @@ public static class Seeder
                 Name = "Matematika 2",
                 Description = "Integrali i diferencijalne jednadžbe.",
                 Ects = 7,
-                OwnerId = 7
+                OwnerId = 7,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
             new Course
             {
@@ -192,7 +220,9 @@ public static class Seeder
                 Name = "Objektno orijentirano programiranje",
                 Description = "Osnovni koncepti OOP-a",
                 Ects = 6,
-                OwnerId = 8
+                OwnerId = 8,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             },
             new Course
             {
@@ -201,29 +231,227 @@ public static class Seeder
                 Description =
                     "Proučavanje vremena izvršavanja i optimizacije algoritama za sortiranje i pretraživanje.",
                 Ects = 6,
-                OwnerId = 9
+                OwnerId = 9,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime
             });       
     }
 
-    public static void CourseUserDataSeed(ModelBuilder modelBuilder)
+    private static void CourseUserDataSeed(ModelBuilder modelBuilder,DateTime seedTime)
     {
         modelBuilder.Entity<CourseUser>().HasData(
-            new CourseUser { UserId = 1, CourseId = 1 },
-            new CourseUser { UserId = 2, CourseId = 1 },
-            new CourseUser { UserId = 3, CourseId = 1 },
-            new CourseUser { UserId = 4, CourseId = 1 },
+            new CourseUser { Id=1,UserId = 1, CourseId = 1, CreatedAt = seedTime, UpdatedAt = seedTime},
+            new CourseUser { Id=2,UserId = 2, CourseId = 1, CreatedAt = seedTime, UpdatedAt = seedTime},
+            new CourseUser { Id=3,UserId = 3, CourseId = 1, CreatedAt = seedTime, UpdatedAt = seedTime },
+            new CourseUser { Id=4,UserId = 4, CourseId = 1, CreatedAt =  seedTime, UpdatedAt = seedTime },
             
-            new CourseUser { UserId = 3, CourseId = 2 },
-            new CourseUser { UserId = 4, CourseId = 2 },
-            new CourseUser { UserId = 5, CourseId = 2 },
+            new CourseUser { Id=5,UserId = 3, CourseId = 2, CreatedAt = seedTime,UpdatedAt = seedTime },
+            new CourseUser { Id=6,UserId = 4, CourseId = 2, CreatedAt = seedTime,UpdatedAt = seedTime },
+            new CourseUser { Id=7,UserId = 5, CourseId = 2, CreatedAt = seedTime, UpdatedAt = seedTime },
             
-            new CourseUser { UserId = 1, CourseId = 3 },
-            new CourseUser { UserId = 2, CourseId = 3 },
-            new CourseUser { UserId = 3, CourseId = 3 },
-            new CourseUser { UserId = 4, CourseId = 3 },
+            new CourseUser { Id=8,UserId = 1, CourseId = 3, CreatedAt = seedTime,UpdatedAt = seedTime},
+            new CourseUser { Id=9,UserId = 2, CourseId = 3, CreatedAt = seedTime,UpdatedAt = seedTime },
+            new CourseUser { Id=10,UserId = 3, CourseId = 3, CreatedAt = seedTime,UpdatedAt = seedTime },
+            new CourseUser { Id=11,UserId = 4, CourseId = 3, CreatedAt = seedTime,UpdatedAt = seedTime },
             
-            new CourseUser { UserId = 1, CourseId = 4 },
-            new CourseUser { UserId = 4, CourseId = 4 },
-            new CourseUser { UserId = 5, CourseId = 4 });
+            new CourseUser { Id=12,UserId = 1, CourseId = 4, CreatedAt = seedTime,UpdatedAt = seedTime },
+            new CourseUser { Id=13,UserId = 4, CourseId = 4, CreatedAt = seedTime,UpdatedAt = seedTime },
+            new CourseUser { Id=14,UserId = 5, CourseId = 4, CreatedAt = seedTime,UpdatedAt = seedTime });
     }
+
+    private static void NotificationSeed(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<CourseNotification>().HasData(
+            new CourseNotification
+            {
+                Id=1,
+                Subject="Otkazano predavanje",
+                Content="Poštovani,\nzbog bolesti otkazujem sutrašnje predavanje.",
+                CourseId=1,
+                CreatedAt = new DateTime(2025, 10, 26, 11, 10, 0),
+                UpdatedAt = new DateTime(2025, 10, 26, 11, 10, 0)
+            },
+            new CourseNotification
+            {
+                Id=2,
+                Subject="Prvi kolokvij",
+                Content="Poštovani,\nsutra se održava prvi kolokvij iz kolegija Matematika 1.\nMolimo ponesite iksice i pribor za pisanje.Ostalo je zabranjeno.",
+                CourseId =1,
+                CreatedAt = new DateTime(2025, 11, 26, 08, 15, 0),
+                UpdatedAt = new DateTime(2025, 11, 26, 08, 15, 0)
+            },
+            new CourseNotification
+            {
+                Id=3,
+                Subject="Drugi kolokvij",
+                Content="Poštovani,\nNapomena: tko nije položio prvi kolokvij ne može izaći na drugi.Morati će čekati do ispitnog roka.",
+                CourseId =1,
+                CreatedAt = new DateTime(2025, 11, 30, 08, 15, 0),
+                UpdatedAt =  new DateTime(2025, 11, 30, 08, 15, 0)
+            },
+            new CourseNotification
+            {
+                Id=4,
+                Subject="Teorijski ispit za bodove",
+                Content="Poštovani,\nna predavanju idući tjedan održati će se teorijski ispit za dodatne bodove.\nGradivo koje ulazi u ispit: Dvostruki integrali.",
+                CourseId =2,
+                CreatedAt = new DateTime(2025, 11, 18, 09, 15, 0),
+                UpdatedAt = new DateTime(2025, 11, 18, 09, 15, 0)
+            },
+            new CourseNotification
+            {
+                Id=5,
+                Subject="Rezultati prvog kolokvija",
+                Content="Poštovani,\nu prilogu se nalaze rezultati kolokvija.\nhttps://moodle.rezultati/prvi_kolokvij.pdf",
+                CourseId =2,
+                CreatedAt = new DateTime(2025, 11, 29, 10, 30, 0),
+                UpdatedAt = new DateTime(2025, 11, 29, 10, 30, 0)
+            },
+            new CourseNotification
+            {
+                Id=6,
+                Subject="Praktični rad",
+                Content="Poštovani,\nrok za predaju praktičnog rada kojeg smo spominjali na predavanju je 10.1.2026.\nOcjena iz praktičnog rada nosi 40% završne ocjene.",
+                CourseId =3,
+                CreatedAt = new DateTime(2025, 12, 01, 07, 45, 0),
+                UpdatedAt =  new DateTime(2025, 12, 01, 07, 45, 0)
+            },
+            new CourseNotification
+            {
+                Id=7,
+                Subject="Promjena dvorane",
+                Content="Poštovani,\nsutrašnje predavanje održati će se u sali A102 (umjesto u predviđenoj A302)",
+                CourseId =3,
+                CreatedAt = new DateTime(2025, 11, 01, 07, 45, 0),
+                UpdatedAt =  new DateTime(2025, 11, 01, 07, 45, 0)
+            },
+            new CourseNotification
+            {
+                Id=8,
+                Subject="Laboratorijske vježbe",
+                Content="Poštovani,\nidući tjedan (8.10.) počinju laboratorijske vježbe iz kolegija algoritmi.",
+                CourseId =4,
+                CreatedAt = new DateTime(2025, 10, 01, 07, 45, 0),
+                UpdatedAt = new  DateTime(2025, 10, 01, 07, 45, 0)
+            },
+            new CourseNotification
+            {
+                Id=9,
+                Subject="Promjena rasporeda",
+                Content="Poštovani,\nidući tjedan (25.10.) predavanje će se održati s početkom u 11:45 (umjesto 10:45) u sali A101.",
+                CourseId =4,
+                CreatedAt = new DateTime(2025, 10, 18, 07, 45, 0),
+                UpdatedAt = new   DateTime(2025, 10, 18, 07, 45, 0)
+            }          
+            
+        );
+
+    }
+
+    private static void MaterialSeed(ModelBuilder builder, DateTime seedTime)
+    {
+        builder.Entity<CourseMaterial>().HasData(
+            new CourseMaterial
+            {
+                Id = 1,
+                CourseId = 1,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime,
+                
+                Title="Matematika1 FESB",
+                AuthorName = "Ivo Ivić",
+                PublishedDate =  new DateOnly(2015,01,01),
+                Url="https://fesbmaterijali.net/ivo/Matematika1%20FESB.pdf"
+            },
+            new CourseMaterial
+            {
+                Id = 2,
+                CourseId = 1,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime,
+                
+                Title="Zbirka zadataka 2015",
+                AuthorName = "Ivo Ivić",
+                PublishedDate =  new DateOnly(2015,01,01),
+                Url="https://fesbmaterijali.net/ivo/Zbirka%zadataka%2015/"
+            },
+            
+            new CourseMaterial
+            {
+                Id = 3,
+                CourseId = 2,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime,
+                
+                Title="Uvod u viševarijabilni račun",
+                AuthorName = "Petar Petrović",
+                PublishedDate =  new DateOnly(2017,03,28),
+                Url="https://fesbmaterijali.net/petar/multivariable%calculus/"
+            },
+            new CourseMaterial
+            {
+                Id = 4,
+                CourseId = 2,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime,
+                
+                Title="Uvod u integralni račun",
+                AuthorName = "Petar Petrović",
+                PublishedDate =  new DateOnly(2018,04,27),
+                Url="https://fesbmaterijali.net/petar/integrals%book/"
+            },
+            new CourseMaterial
+            {
+                Id = 5,
+                CourseId = 3,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime,
+                
+                Title="OOP skripta, FESB 2003",
+                AuthorName = "Marjan Marjanović",
+                PublishedDate =  new DateOnly(2003,11,11),
+                Url="https://fesbmaterijali.net/marjanovic/oop%skripta/"
+            },
+            new CourseMaterial
+            {
+                Id = 6,
+                CourseId = 3,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime,
+                
+                Title="The C++ programming Language,",
+                AuthorName = "Bjourn Stroustrup",
+                PublishedDate =  new DateOnly(1986,02,27),
+                Url="https://www.stroustrup.com/4th.html"
+            },
+            new CourseMaterial
+            {
+                Id = 7,
+                CourseId = 4,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime,
+                
+                Title="„Algoritmi“, interna skripta",
+                AuthorName = "Hrvoje Hrvojić",
+                PublishedDate =  new DateOnly(2010,02,27),
+                Url="https://fesbmaterijali.net/hrvojic/interna%skripta/"
+            },
+            new CourseMaterial
+            {
+                Id = 8,
+                CourseId = 4,
+                CreatedAt = seedTime,
+                UpdatedAt = seedTime,
+                
+                Title="„Introduction to Algorithms“, second edition",
+                AuthorName = "T.Cormen",
+                PublishedDate =  new DateOnly(202,05,14),
+                Url="https://www.cs.mcgill.ca/~akroit/math/compsci/Cormen%20Introduction%20to%20Algorithms.pdf"
+            }
+            
+            
+            );
+
+    }
+    
 }

@@ -5,6 +5,8 @@ namespace Internship_7_Moodle.Domain.Entities.Courses;
 
 public class CourseNotification:BaseEntity
 {
+    public const int SubjectMaxLength = 30;
+    public const int ContentMaxLength = 300;
     public string Subject { get; set; }
     
     public string Content { get; set; }

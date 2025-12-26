@@ -6,8 +6,10 @@ public abstract class BaseEntity
 {
     public int Id { get; init; }
     
+    [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedAt { get; init; }
     
+    [Column(TypeName = "timestamp without time zone")]
     public DateTime UpdatedAt { get; set; }
     
     [NotMapped]
