@@ -2,13 +2,14 @@ using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
+using Internship_7_Moodle.Presentation.Views.Common;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 
-public class StudentMenuManager:BaseMenuManager
+public class StudentMainMenuManager:BaseMainMenuManager
 {
-    public StudentMenuManager(UserActions userActions,int userId) : base(userActions,userId)
+    public StudentMainMenuManager(UserActions userActions,int userId) : base(userActions,userId)
     {
     }
 
@@ -16,7 +17,7 @@ public class StudentMenuManager:BaseMenuManager
     {
         bool logoutRequested = false;
 
-        var mainMenu = MenuBuilder.CreateStudentMenu(this);
+        var mainMenu = MenuBuilder.MenuBuilder.CreateStudentMenu(this);
 
         while (!logoutRequested)
         {
@@ -44,7 +45,7 @@ public class StudentMenuManager:BaseMenuManager
         }
 
         var exitRequested = false;
-        var courseMenu = MenuBuilder.CreateCourseMenu(this,studentCoursesList);
+        var courseMenu = MenuBuilder.MenuBuilder.CreateCourseMenu(this,studentCoursesList);
 
         while (!exitRequested)
         {
@@ -64,7 +65,7 @@ public class StudentMenuManager:BaseMenuManager
         ConsoleHelper.ClearAndSleep();
 
         var exitRequested = false;
-        var courseSubmenu = MenuBuilder.CreateCourseSubmenu(this, course.CourseId);
+        var courseSubmenu = MenuBuilder.MenuBuilder.CreateCourseSubmenu(this, course.CourseId);
         
         while (!exitRequested)
         {

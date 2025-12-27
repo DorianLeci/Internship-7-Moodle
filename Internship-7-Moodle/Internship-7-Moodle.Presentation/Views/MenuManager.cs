@@ -30,7 +30,7 @@ public class MenuManager
         AnsiConsole.Clear();
         bool exitRequested = false;
 
-        var guestMenu = MenuBuilder.CreateGuestMenu(this);
+        var guestMenu = MenuBuilder.MenuBuilder.CreateGuestMenu(this);
 
         while (!exitRequested)
         {
@@ -204,7 +204,7 @@ public class MenuManager
         var confirmChoice=confirm ?? ("Nastavi", false);
         var quitChoice= quit ?? ("Odustani", true);
         
-        var exitMenu = MenuBuilder.CreateChoiceMenu(this,confirmChoice,quitChoice);
+        var exitMenu = MenuBuilder.MenuBuilder.CreateChoiceMenu(this,confirmChoice,quitChoice);
         
         var titlePanel=new Panel(title)
         {

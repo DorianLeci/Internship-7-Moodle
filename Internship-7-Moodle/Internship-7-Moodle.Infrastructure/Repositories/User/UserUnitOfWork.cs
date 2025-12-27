@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Persistence.Messages;
 using Internship_7_Moodle.Domain.Persistence.Roles;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Infrastructure.Database;
@@ -10,11 +11,14 @@ public class UserUnitOfWork:IUserUnitOfWork
     public IUserRepository UserRepository { get; }
     public IRoleRepository RoleRepository { get; }
     
-    public UserUnitOfWork(ApplicationDbContext context, IUserRepository userRepository, IRoleRepository roleRepository)
+    public IMessageRepository MessageRepository { get; }
+
+    public UserUnitOfWork(ApplicationDbContext context, IUserRepository userRepository, IRoleRepository roleRepository, IMessageRepository messageRepository)
     {
         _dbContext = context;
         UserRepository = userRepository;
         RoleRepository = roleRepository;
+        MessageRepository = messageRepository;
     }
     public async Task CreateTransaction()
     {

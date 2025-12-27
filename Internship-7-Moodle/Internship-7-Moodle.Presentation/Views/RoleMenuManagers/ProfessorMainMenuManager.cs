@@ -1,10 +1,11 @@
 using Internship_7_Moodle.Presentation.Actions;
+using Internship_7_Moodle.Presentation.Views.Common;
 
 namespace Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 
-public class AdminMenuManager:BaseMenuManager
+public class ProfessorMainMenuManager:BaseMainMenuManager
 {
-    public AdminMenuManager(UserActions userActions, int userId) : base(userActions, userId)
+    public ProfessorMainMenuManager(UserActions userActions, int userId) : base(userActions, userId)
     {
     }
 
