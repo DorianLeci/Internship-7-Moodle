@@ -34,16 +34,30 @@ public partial class MenuBuilder
             .ReturnDictionary();
     }
     
-    private static void AddCommon(MenuBuilder builder,BaseMainMenuManager manager)
+    private MenuBuilder AddCommon(BaseMainMenuManager manager)
     {
-        builder.AddChoice("Privatni chat", async () => { await manager.ShowPrivateChatMenuAsync(); return false; });
+        AddChoice("Privatni chat", async () => { await manager.ShowPrivateChatMenuAsync(); return false; });
         
-        builder.AddChoice("Odjava", () =>
+        AddChoice("Odjava", () =>
         {
             AnsiConsole.MarkupLine("[blue]Odjava...[/]");
             ConsoleHelper.ClearAndSleep(2000);
             return true;
         });
+
+        return this;
+    }
+
+    private MenuBuilder AddMenuExit()
+    {
+        AddChoice("Izlazak iz izbornika", () =>
+        {
+            AnsiConsole.MarkupLine("[blue]Izlazak...[/]");
+            ConsoleHelper.ClearAndSleep(1000);
+            return true;
+        });
+
+        return this;
     }
     
     public static Dictionary<string, Func<Task<bool>>> CreateGuestMenu(MenuManager menuManager)
@@ -59,11 +73,12 @@ public partial class MenuBuilder
             
             .ReturnDictionary();
     }
-
-    public static Dictionary<string, Func<Task<bool>>> CreateChatMenu(BaseMainMenuManager manager)
+    
+    public static Dictionary<string,Func<Task<bool>>> CreatePrivateChatMenu(BaseMainMenuManager manager)
     {
         return new MenuBuilder()
-            .AddChoice("Registracija", async () => { await manager.ShowPrivateChatMenuAsync(); return false; })
+            .AddChoice("Nova poruka", async () => { await manager.ShowNewMessageMenuAsync(); return false; })
+            .AddMenuExit()
             .ReturnDictionary();
     }
 

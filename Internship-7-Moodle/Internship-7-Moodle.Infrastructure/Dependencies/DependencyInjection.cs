@@ -1,16 +1,15 @@
-using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Courses;
+using Internship_7_Moodle.Domain.Persistence.Messages;
 using Internship_7_Moodle.Domain.Persistence.Roles;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Infrastructure.Database;
-using Internship_7_Moodle.Infrastructure.Repositories;
 using Internship_7_Moodle.Infrastructure.Repositories.Course;
+using Internship_7_Moodle.Infrastructure.Repositories.Message;
 using Internship_7_Moodle.Infrastructure.Repositories.Role;
 using Internship_7_Moodle.Infrastructure.Repositories.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Internship_7_Moodle.Infrastructure.Dependencies;
 
@@ -31,6 +30,7 @@ public static class DependencyInjection
         services.AddScoped<IRoleRepository,RoleRepository>();
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<ICourseUnitOfWork, CourseUnitOfWork>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
     }
 
     

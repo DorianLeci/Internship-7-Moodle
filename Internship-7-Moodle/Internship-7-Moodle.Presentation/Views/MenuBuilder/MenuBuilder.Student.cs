@@ -10,13 +10,10 @@ public partial class MenuBuilder
     
     public static Dictionary<string, Func<Task<bool>>> CreateStudentMenu(StudentMainMenuManager mainMenuManager)
     {
-        var builder = new MenuBuilder();
-        
-        builder.AddChoice("Moji kolegiji", async () => { await mainMenuManager.ShowCourseMenuAsync(mainMenuManager.Id); return false; });
-
-        AddCommon(builder, mainMenuManager);
-        
-        return builder.ReturnDictionary();
+        return new MenuBuilder()
+            .AddChoice("Moji kolegiji", async () => { await mainMenuManager.ShowCourseMenuAsync(mainMenuManager.Id); return false; })
+            .AddCommon(mainMenuManager)  
+            .ReturnDictionary();
     }   
     public static Dictionary<string, Func<Task<bool>>> CreateCourseMenu(StudentMainMenuManager mainMenuManager,List<StudentCourseResponse> list)
     {
@@ -27,15 +24,10 @@ public partial class MenuBuilder
             var stringKey = $"{course.CourseName} - ({course.Ects} ECTS) - Profesor: {course.ProfessorName}";
             builder.AddChoice(stringKey, async () => {await mainMenuManager.ShowCourseSubmenuAsync(course); return false;});
         }
-
-        builder.AddChoice("Izlazak iz izbornika", () =>
-        {
-            AnsiConsole.MarkupLine("[blue]Izlazak...[/]");
-            ConsoleHelper.ClearAndSleep(2000);
-            return true;
-        });
-
-        return builder.ReturnDictionary();
+        
+        return builder
+            .AddMenuExit()
+            .ReturnDictionary();
 
     }
 
@@ -52,12 +44,7 @@ public partial class MenuBuilder
                 await mainMenuManager.ShowCourseMaterialsAsync(courseId);
                 return false;
             })
-            .AddChoice("Izlazak iz izbornika", () =>
-            {
-                AnsiConsole.MarkupLine("[blue]Izlazak...[/]");
-                ConsoleHelper.ClearAndSleep(1000);
-                return true;
-            })
+            .AddMenuExit()
             .ReturnDictionary();
     }
 

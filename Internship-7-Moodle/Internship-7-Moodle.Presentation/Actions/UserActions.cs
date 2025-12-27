@@ -3,6 +3,7 @@ using Internship_7_Moodle.Application.Courses.GetAllMaterials;
 using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
+using Internship_7_Moodle.Application.Users.GetUsersWithoutChat;
 using Internship_7_Moodle.Application.Users.LoginUser;
 using Internship_7_Moodle.Application.Users.RegisterUser;
 using Internship_7_Moodle.Application.Users.Response;
@@ -75,6 +76,20 @@ public class UserActions
         var materials = result.Value.Entities;
 
         return materials;        
+    }
+
+    public async Task<IEnumerable<UserResponse>> GetAllUsersWithoutChatAsync(int courseId,RoleEnum? roleFilter=null)
+    {
+        var dto=new GetUserChatDto(courseId,roleFilter);
+        var result = await _mediator.Send(GetUsersWithoutChatRequest.FromDto(dto));
+
+        if (result.Value == null)
+            return [];
+        
+        var  users = result.Value.Entities;
+        
+        return users;
+
     }
     
 }
