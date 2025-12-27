@@ -13,8 +13,8 @@ public class PrivateMessage:IEntityTypeConfiguration<Domain.Entities.Messages.Pr
         builder.HasKey(pm=>pm.Id);
         builder.Property(pm=>pm.Id).HasColumnName("id");
         
-        builder.Property(pm=>pm.IsRead).HasColumnName("is_read");
-        builder.Property(pm=>pm.Text).HasColumnName("text");
+        builder.Property(pm=>pm.IsRead).HasColumnName("is_read").IsRequired().HasDefaultValue(false);
+        builder.Property(pm=>pm.Text).HasColumnName("text").IsRequired().HasMaxLength(Domain.Entities.Messages.PrivateMessage.MaxTextLength);
         
         builder.HasOne(pm=>pm.Receiver).WithMany(u=>u.ReceivedMessages)
             .HasForeignKey(pm=>pm.ReceiverId).IsRequired();

@@ -5,6 +5,7 @@ namespace Internship_7_Moodle.Domain.Entities.Messages;
 
 public class PrivateMessage:BaseEntity
 {
+    public const int MaxTextLength = 1000;
     public string Text { get; set; }
     public bool IsRead { get; set; }
     

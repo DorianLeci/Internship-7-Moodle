@@ -53,5 +53,12 @@ public static class ConsoleHelper
             });
         return cancelled;
     }
+
+    public static void ScreenExit(int timeout)
+    {
+        AnsiConsole.MarkupLine("\n[blue]Pritisni bilo koju tipku za izlaz...[/]");
+        Console.ReadKey(true);  
+        ClearAndSleep(timeout);
+    }
     
 }

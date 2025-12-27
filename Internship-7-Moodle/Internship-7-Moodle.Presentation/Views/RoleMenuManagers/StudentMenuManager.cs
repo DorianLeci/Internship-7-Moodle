@@ -85,9 +85,7 @@ public class StudentMenuManager:BaseMenuManager
         var notificationList = notifications.ToList();
         Writer.NotificationWriter(notificationList);
 
-        AnsiConsole.MarkupLine("\n[blue]Pritisni bilo koju tipku za izlaz...[/]");
-        Console.ReadKey(true);  
-        ConsoleHelper.ClearAndSleep(1500);
+        ConsoleHelper.ScreenExit(1500);
     }
     
     public async Task ShowCourseMaterialsAsync(int courseId)
@@ -98,8 +96,6 @@ public class StudentMenuManager:BaseMenuManager
         var materialList = materials.ToList();
         Writer.MaterialsWriter(materialList);
 
-        AnsiConsole.MarkupLine("\n[blue]Pritisni bilo koju tipku za izlaz...[/]");
-        Console.ReadKey(true);  
-        ConsoleHelper.ClearAndSleep(1500);        
+        ConsoleHelper.ScreenExit(1500); 
     }
 }

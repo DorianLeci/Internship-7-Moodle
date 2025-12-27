@@ -70,7 +70,7 @@ public static class Writer
     {
         if (notificationResponses.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]Ne postoje dostupni kolegiji.[/]");
+            AnsiConsole.MarkupLine("[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
             ConsoleHelper.ClearAndSleep(2000);
             return;
         }
@@ -104,7 +104,7 @@ public static class Writer
     {
         if (materialResponses.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]Ne postoje dostupni materijali.[/]");
+            AnsiConsole.MarkupLine("[red]Ne postoje dostupni materijali.Izlazak...[/]");
             ConsoleHelper.ClearAndSleep(2000);
             return;
         }

@@ -3,6 +3,7 @@ using System;
 using Internship_7_Moodle.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Internship_7_Moodle.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251227145105_MigrationUpdateMessage")]
+    partial class MigrationUpdateMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -415,8 +418,8 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
                         .HasColumnName("text");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -432,68 +435,6 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("private_message", "public");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 11, 11, 7, 45, 0, 0, DateTimeKind.Unspecified),
-                            IsRead = true,
-                            ReceiverId = 8,
-                            SenderId = 1,
-                            Text = "Poštovani,\nimam nedoumica u vezi predavanja o polimorfizmu i nasljeđivanju.Možete li dodatno pojasniti polimorfizam.",
-                            UpdatedAt = new DateTime(2025, 10, 1, 7, 45, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 11, 11, 9, 45, 0, 0, DateTimeKind.Unspecified),
-                            IsRead = true,
-                            ReceiverId = 1,
-                            SenderId = 8,
-                            Text = "Poštovani,\nHvala na pitanju! 🙂\nPolimorfizam je koncept u objektno-orijentiranom programiranju koji omogućava da se ista metoda ili operacija ponaša različito ovisno o tipu objekta koji je poziva.\nU praksi, to znači da možete imati baznu klasu s apstraktnom ili virtualnom metodom, a različite izvedene klase mogu implementirati tu metodu na svoj način.\nKada pozovete metodu preko referenci na baznu klasu, program automatski izvršava implementaciju odgovarajuće izvedene klase.\nAko želite, možemo na primjeru vaše konzolne aplikacije s MenuManager klasama pokazati kako polimorfizam radi u stvarnom kodu.\nNadam se da ovo pojašnjava. Javite ako želite detaljniji primjer koda.",
-                            UpdatedAt = new DateTime(2025, 11, 11, 9, 45, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2025, 10, 3, 9, 30, 0, 0, DateTimeKind.Unspecified),
-                            IsRead = true,
-                            ReceiverId = 10,
-                            SenderId = 1,
-                            Text = "Poštovani,\nimam pitanje u vezi ažuriranja profila.Na kraju godine ću postati profesor te sam htio pitati je li moguća promjena uloge.",
-                            UpdatedAt = new DateTime(2025, 10, 3, 9, 30, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2025, 10, 3, 9, 45, 0, 0, DateTimeKind.Unspecified),
-                            IsRead = true,
-                            ReceiverId = 1,
-                            SenderId = 10,
-                            Text = "Poštovani,\nvaša uloga će biti promijenjena kada postanete profesor,pratiti ćemo novosti.",
-                            UpdatedAt = new DateTime(2025, 10, 3, 9, 45, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2025, 12, 3, 14, 1, 0, 0, DateTimeKind.Unspecified),
-                            IsRead = true,
-                            ReceiverId = 2,
-                            SenderId = 1,
-                            Text = "Bok,jel imaš skriptu iz Matematike 1 slučajno?",
-                            UpdatedAt = new DateTime(2025, 10, 3, 14, 1, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedAt = new DateTime(2025, 12, 3, 14, 7, 0, 0, DateTimeKind.Unspecified),
-                            IsRead = true,
-                            ReceiverId = 1,
-                            SenderId = 2,
-                            Text = "Bok,imam naravno,sutra ti dam na faksu.",
-                            UpdatedAt = new DateTime(2025, 10, 3, 14, 7, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Internship_7_Moodle.Domain.Entities.PivotTables.CourseUser", b =>
@@ -783,7 +724,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "John",
                             Gender = "M",
                             LastName = "Doe",
-                            Password = "AQAAAAEAACcQAAAAEKm/3IHqckA8OdyqTPVkWPmQyS4WMoGyNEyyYlrZwgzi/lgADDCJTvMcjusDDOW3Rw==",
+                            Password = "AQAAAAEAACcQAAAAEHqPeYf0y9Z/MHJv5V2XbSvd2K8LpMBkhDyi3w02oSmjy36MiJJKB4koJbkfHzaYKw==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -796,7 +737,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Dorian",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEBakWKqFhbHxUpy4qFEj+7UlvjiqUCojS4a7VuOyVmTJCVS0lRSfaVWAnGS0nZbxBw==",
+                            Password = "AQAAAAEAACcQAAAAENSuUTYeymnFQwMhmq3eLz8Oo6aobuxpcCqQseqaZy6Mi31Sd1n9xIsYi76ts+WA0g==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -809,7 +750,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Damir",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEAyUS4sBFgKgPllHNCNuKgRfOWTZgdZTDkpVtCvQ9ofL7YPGICPnlyOQv/AV8dVdmg==",
+                            Password = "AQAAAAEAACcQAAAAENUfYIPBkxajBPa+w2Ss3/3zYaegUsaiPh2YE570dm7mei18/VyFv1CF5crgIBes+A==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -822,7 +763,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Vesna",
                             Gender = "F",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEAaliDfOwHojT58+56LVOO19mBUp/cse7F9Mg40XxKPzbIiyjGsui8Mf8f7SnHbrXQ==",
+                            Password = "AQAAAAEAACcQAAAAELr7QO6WlgcN/41P7bD+/SsyFqnTPTokUwQeeh+MbiIO/AJsPyb59V+PZPNOXnotrQ==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -835,7 +776,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Zora",
                             Gender = "F",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAENciAk7mZA0GHZ4fBw+HfeZUbcfAxcxe8V1Ha+jIvZ8WuCNu5xHo+cnbZE+zrXY0Wg==",
+                            Password = "AQAAAAEAACcQAAAAEBICKLueA0+DS2/L5aeNkx2H6xndroi/Kgga2lPZiU5QOMB6ef/hIz3A+yzhaukmuA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -848,7 +789,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Ivo",
                             Gender = "M",
                             LastName = "Ivić",
-                            Password = "AQAAAAEAACcQAAAAEGok0uHumKhUrnTUsjPyJ89eskxOrmHlbQ69tgOh2QPZZMjU3crF3+WAoZACwJRSGw==",
+                            Password = "AQAAAAEAACcQAAAAEL66+bNCaKBHRvxY7OAfDlE7v1YBw9AUd8hoKvg1p+ySBEvPd6che8aAdjZNY/qZGQ==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -861,7 +802,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Petar",
                             Gender = "M",
                             LastName = "Petrović",
-                            Password = "AQAAAAEAACcQAAAAECzvAeEYV4h7TPUywV42Q9QBWmR+LN8T01BvG8NKuiqGVV2g5IoH51+Dqsi8EG6mfw==",
+                            Password = "AQAAAAEAACcQAAAAEKnOraCDC8OB6/fQc70LgnmX/O5qEoGz4oJZa34Edx3Tt3aQ5wt++ALutj+GbUNwJQ==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -874,7 +815,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Maja",
                             Gender = "F",
                             LastName = "Majić",
-                            Password = "AQAAAAEAACcQAAAAEESK9A3HW5QNCdsccfzomp3WOS3YBn6nylwSPsT8aYpCubBXeF9LvDYXz7ZTGPU6IQ==",
+                            Password = "AQAAAAEAACcQAAAAEA64fobg9Vma6Y4Bt8WoD+cWbRX2vO+342wD1QPqZ0Mw1Ycn/rDagjDdQgeUeoF6gQ==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -887,7 +828,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Vesna",
                             Gender = "F",
                             LastName = "Vesnić",
-                            Password = "AQAAAAEAACcQAAAAEDULlQ5srg6yIrT79kh/mPtMcofB4/GG5dZwfNJk5Cpty6rRnw0d75lzMD0Pzlp8PQ==",
+                            Password = "AQAAAAEAACcQAAAAECNOmb/k3WXqrekVT8pYniuq3/UykdiRl1NdD+UJrxWSbMRVI8yHZsmsW7MRAQZ8PA==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -900,7 +841,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Sebastian",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEINAbLu7vyYgs4/K8605FcDzDBoZncxaanrgSVedjqaEpbMqOHOC8rgRDFwdy2XpsA==",
+                            Password = "AQAAAAEAACcQAAAAEE9IVoVqmqkLh65al8Bmd1B8C6Z6+AUy4XNvEEM5s92nZiqb69YkAlTTL5R22CnuuQ==",
                             RoleId = 3,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
