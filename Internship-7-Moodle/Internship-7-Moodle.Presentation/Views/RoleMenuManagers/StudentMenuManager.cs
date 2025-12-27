@@ -1,34 +1,22 @@
 using Internship_7_Moodle.Application.Users.Response.User;
-using Internship_7_Moodle.Domain.Entities.Courses;
-using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Spectre.Console;
 
-namespace Internship_7_Moodle.Presentation.Views;
+namespace Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 
-public class MainMenuManager
+public class StudentMenuManager:BaseMenuManager
 {
-    private readonly UserActions _userActions;
-    private readonly RoleEnum _roleName;
-    private readonly int _userId;
-    
-    public RoleEnum RoleName => _roleName;
-    public int UserId => _userId;
-
-    public MainMenuManager(UserActions userActions,RoleEnum roleName,int userId)
+    public StudentMenuManager(UserActions userActions,int userId) : base(userActions,userId)
     {
-        _userActions = userActions;
-        _roleName = roleName;
-        _userId = userId;
     }
 
-    public async Task RunAsync()
+    public override async Task RunAsync()
     {
         bool logoutRequested = false;
 
-        var mainMenu = MenuBuilder.CreateMainMenu(this);
+        var mainMenu = MenuBuilder.CreateStudentMenu(this);
 
         while (!logoutRequested)
         {
@@ -40,12 +28,12 @@ public class MainMenuManager
             logoutRequested = await mainMenu[choice]();            
         }
     }
-
+    
     public async Task ShowCourseMenuAsync(int studentId)
     {
         ConsoleHelper.ClearAndSleep();
         
-        var studentCourses = await _userActions.GetStudentCoursesAsync(studentId);
+        var studentCourses = await UserActions.GetStudentCoursesAsync(studentId);
         
         var studentCoursesList = studentCourses.ToList();
         if (studentCoursesList.Count == 0)
@@ -70,7 +58,7 @@ public class MainMenuManager
 
 
     }
-
+    
     public async Task ShowCourseSubmenuAsync(StudentCourseResponse course)
     {
         ConsoleHelper.ClearAndSleep();
@@ -93,17 +81,25 @@ public class MainMenuManager
     {
         ConsoleHelper.ClearAndSleep();
 
-        var notifications = await _userActions.GetAllNotificationsAsync(courseId);
+        var notifications = await UserActions.GetAllNotificationsAsync(courseId);
         var notificationList = notifications.ToList();
         Writer.NotificationWriter(notificationList);
 
         AnsiConsole.MarkupLine("\n[blue]Pritisni bilo koju tipku za izlaz...[/]");
         Console.ReadKey(true);  
-        ConsoleHelper.ClearAndSleep(2000);
+        ConsoleHelper.ClearAndSleep(1500);
     }
     
     public async Task ShowCourseMaterialsAsync(int courseId)
     {
-        
+        ConsoleHelper.ClearAndSleep();
+
+        var materials = await UserActions.GetAllMaterialsAsync(courseId);
+        var materialList = materials.ToList();
+        Writer.MaterialsWriter(materialList);
+
+        AnsiConsole.MarkupLine("\n[blue]Pritisni bilo koju tipku za izlaz...[/]");
+        Console.ReadKey(true);  
+        ConsoleHelper.ClearAndSleep(1500);        
     }
 }

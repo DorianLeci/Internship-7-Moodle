@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Common.Model;
+using Internship_7_Moodle.Application.Courses.GetAllMaterials;
 using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
@@ -40,9 +41,7 @@ public class UserActions
 
     public async Task<IEnumerable<StudentCourseResponse>> GetStudentCoursesAsync(int studentId)
     {
-        var dto=new StudentCoursesDto(studentId);
-        
-        var result = await _mediator.Send(GetStudentCoursesRequest.FromDto(dto));
+        var result = await _mediator.Send(new GetStudentCoursesRequest(studentId));
 
         if (result.Value == null)
             return [];
@@ -55,9 +54,8 @@ public class UserActions
 
     public async Task<IEnumerable<NotificationResponse>> GetAllNotificationsAsync(int courseId)
     {
-        var dto=new GetNotificationDto(courseId);
-
-        var result = await _mediator.Send(GetAllNotificationsRequest.FromDto(dto));
+        
+        var result = await _mediator.Send(new GetAllNotificationsRequest(courseId));
 
         if (result.Value == null)
             return [];
@@ -65,6 +63,18 @@ public class UserActions
         var courses = result.Value.Entities;
 
         return courses;
+    }
+
+    public async Task<IEnumerable<MaterialResponse>> GetAllMaterialsAsync(int courseId)
+    {
+        var result = await _mediator.Send(new GetAllMaterialsRequest(courseId));
+
+        if (result.Value == null)
+            return [];
+
+        var materials = result.Value.Entities;
+
+        return materials;        
     }
     
 }

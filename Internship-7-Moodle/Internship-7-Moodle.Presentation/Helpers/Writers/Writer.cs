@@ -70,7 +70,7 @@ public static class Writer
     {
         if (notificationResponses.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
+            AnsiConsole.MarkupLine("[red]Ne postoje dostupni kolegiji.[/]");
             ConsoleHelper.ClearAndSleep(2000);
             return;
         }
@@ -97,6 +97,38 @@ public static class Writer
             
             AnsiConsole.Write(panel);
         }
+    }
+
+
+    public static void MaterialsWriter(List<MaterialResponse> materialResponses)
+    {
+        if (materialResponses.Count == 0)
+        {
+            AnsiConsole.MarkupLine("[red]Ne postoje dostupni materijali.[/]");
+            ConsoleHelper.ClearAndSleep(2000);
+            return;
+        }
+
+        foreach (var materialResponse in materialResponses)
+        {
+            var table = new Table()
+            {
+                Border =TableBorder.Ascii
+            };
+            table.HideHeaders();
+            table.AddColumn(new TableColumn("").LeftAligned());
+            table.AddRow($"[green]Materijal: {materialResponse.Title+", "+materialResponse.AuthorName}[/] |"
+                         + $"[yellow]Datum objave: {materialResponse.CreatedAt}[/] |" );
+
+            table.AddRow($"[blue]Link: {materialResponse.Url}[/] |");
+            
+            var panel = new Panel(table)
+            {
+                Border =  BoxBorder.None
+            };
+            
+            AnsiConsole.Write(panel);
+        }        
     }
     
 }

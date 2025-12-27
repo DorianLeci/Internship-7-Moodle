@@ -10,8 +10,4 @@ namespace Internship_7_Moodle.Application.Users.GetAllCourses;
 
 public record GetStudentCoursesRequest(int StudentId):IRequest<AppResult<GetAllResponse<StudentCourseResponse>>>
 {
-    public static GetStudentCoursesRequest FromDto(StudentCoursesDto dto)
-    {
-        return new GetStudentCoursesRequest(dto.StudentId);
-    }
 }

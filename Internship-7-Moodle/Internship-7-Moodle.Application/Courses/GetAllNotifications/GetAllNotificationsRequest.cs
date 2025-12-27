@@ -8,8 +8,4 @@ namespace Internship_7_Moodle.Application.Courses.GetAllNotifications;
 
 public record GetAllNotificationsRequest(int CourseId): IRequest<AppResult<GetAllResponse<NotificationResponse>>>
 {
-    public static GetAllNotificationsRequest FromDto(GetNotificationDto dto)
-    {
-        return new GetAllNotificationsRequest(dto.courseId);
-    }
 }

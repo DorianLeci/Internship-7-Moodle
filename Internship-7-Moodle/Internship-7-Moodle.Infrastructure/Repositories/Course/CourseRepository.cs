@@ -19,4 +19,12 @@ public class CourseRepository:Repository<Domain.Entities.Courses.Course,int>,ICo
             .OrderByDescending(c=>c.CreatedAt)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<CourseMaterial>> GetAllCourseMaterialsAsync(int courseId)
+    {
+        return await Context.CourseMaterials
+            .Where(c => c.CourseId == courseId)
+            .OrderByDescending(c => c.CreatedAt)
+            .ToListAsync();
+    }
 }

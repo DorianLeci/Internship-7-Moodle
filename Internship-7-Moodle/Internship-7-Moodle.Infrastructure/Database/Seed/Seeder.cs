@@ -419,7 +419,7 @@ public static class Seeder
                 CreatedAt = seedTime,
                 UpdatedAt = seedTime,
                 
-                Title="The C++ programming Language,",
+                Title="The C++ programming Language",
                 AuthorName = "Bjourn Stroustrup",
                 PublishedDate =  new DateOnly(1986,02,27),
                 Url="https://www.stroustrup.com/4th.html"

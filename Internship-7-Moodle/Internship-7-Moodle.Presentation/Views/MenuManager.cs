@@ -189,7 +189,7 @@ public class MenuManager
                 return;
             }
             
-            var mainMenu = new MainMenuManager(_userActions,response.Value!.RoleName,response.Value.Id);
+            var mainMenu = MainMenuFactory.Create(_userActions,response.Value!.RoleName,response.Value.Id);
             ConsoleHelper.ClearAndSleep(2000);
             await mainMenu.RunAsync();
             

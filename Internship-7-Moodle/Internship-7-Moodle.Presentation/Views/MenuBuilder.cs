@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Views;
@@ -47,16 +48,11 @@ public class MenuBuilder
             .ReturnDictionary();
     }
     
-    public static Dictionary<string, Func<Task<bool>>> CreateMainMenu(MainMenuManager menuManager)
+    public static Dictionary<string, Func<Task<bool>>> CreateStudentMenu(StudentMenuManager menuManager)
     {
         var builder = new MenuBuilder();
-
-        if (menuManager.RoleName == RoleEnum.Student)
-            builder.AddChoice("Moji kolegiji", async () =>
-            {
-                await menuManager.ShowCourseMenuAsync(menuManager.UserId);
-                return false;
-            });
+        
+        builder.AddChoice("Moji kolegiji", async () => { await menuManager.ShowCourseMenuAsync(menuManager.Id); return false; });
 
         builder.AddChoice("Odjava", () =>
         {
@@ -68,7 +64,7 @@ public class MenuBuilder
         return builder.ReturnDictionary();
     }
 
-    public static Dictionary<string, Func<Task<bool>>> CreateCourseMenu(MainMenuManager menuManager,List<StudentCourseResponse> list)
+    public static Dictionary<string, Func<Task<bool>>> CreateCourseMenu(StudentMenuManager menuManager,List<StudentCourseResponse> list)
     {
         var builder = new MenuBuilder();
 
@@ -89,7 +85,7 @@ public class MenuBuilder
 
     }
 
-    public static Dictionary<string, Func<Task<bool>>> CreateCourseSubmenu(MainMenuManager menuManager,int courseId)
+    public static Dictionary<string, Func<Task<bool>>> CreateCourseSubmenu(StudentMenuManager menuManager,int courseId)
     {
         return new MenuBuilder()
             .AddChoice("Obavijesti", async () =>
