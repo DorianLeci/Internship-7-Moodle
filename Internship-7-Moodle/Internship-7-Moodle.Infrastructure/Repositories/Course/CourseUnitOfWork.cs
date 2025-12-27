@@ -1,21 +1,20 @@
-using Internship_7_Moodle.Domain.Persistence.Roles;
-using Internship_7_Moodle.Domain.Persistence.Users;
+using Internship_7_Moodle.Domain.Persistence.Courses;
 using Internship_7_Moodle.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
-namespace Internship_7_Moodle.Infrastructure.Repositories;
+namespace Internship_7_Moodle.Infrastructure.Repositories.Course;
 
-public class UserUnitOfWork:IUserUnitOfWork
+public class CourseUnitOfWork:ICourseUnitOfWork
 {
+    public ICourseRepository CourseRepository { get; }
     private readonly ApplicationDbContext _dbContext;
-    public IUserRepository UserRepository { get; }
-    public IRoleRepository RoleRepository { get; }
-    
-    public UserUnitOfWork(ApplicationDbContext context, IUserRepository userRepository, IRoleRepository roleRepository)
+
+    public CourseUnitOfWork(ICourseRepository courseRepository, ApplicationDbContext dbContext)
     {
-        _dbContext = context;
-        UserRepository = userRepository;
-        RoleRepository = roleRepository;
+        CourseRepository = courseRepository;
+        _dbContext = dbContext;
     }
+    
     public async Task CreateTransaction()
     {
         await _dbContext.Database.BeginTransactionAsync();

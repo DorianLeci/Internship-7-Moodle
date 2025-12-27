@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.GetAllCourses;
 
-public class GetAllStudentCoursesRequestHandler:IRequestHandler<GetStudentCoursesQuery,AppResult<GetAllResponse<StudentCourseResponse>>>
+public class GetAllStudentCoursesRequestHandler:IRequestHandler<GetStudentCoursesRequest,AppResult<GetAllResponse<StudentCourseResponse>>>
 {
     private readonly IUserUnitOfWork _userUnitOfWork;
     
@@ -15,7 +15,7 @@ public class GetAllStudentCoursesRequestHandler:IRequestHandler<GetStudentCourse
     {
         _userUnitOfWork = userUnitOfWork;
     }
-    public async Task<AppResult<GetAllResponse<StudentCourseResponse>>> Handle(GetStudentCoursesQuery request, CancellationToken cancellationToken)
+    public async Task<AppResult<GetAllResponse<StudentCourseResponse>>> Handle(GetStudentCoursesRequest request, CancellationToken cancellationToken)
     {
         var result=new  AppResult<GetAllResponse<StudentCourseResponse>>();
         var courses = await _userUnitOfWork.UserRepository.GetAllStudentCoursesAsync(request.StudentId);

@@ -88,6 +88,28 @@ public class MenuBuilder
         return builder.ReturnDictionary();
 
     }
+
+    public static Dictionary<string, Func<Task<bool>>> CreateCourseSubmenu(MainMenuManager menuManager,int courseId)
+    {
+        return new MenuBuilder()
+            .AddChoice("Obavijesti", async () =>
+            {
+                await menuManager.ShowCourseNotificationsAsync(courseId);
+                return false;
+            })
+            .AddChoice("Materijali", async () =>
+            {
+                await menuManager.ShowCourseMaterialsAsync(courseId);
+                return false;
+            })
+            .AddChoice("Izlazak iz izbornika", () =>
+            {
+                AnsiConsole.MarkupLine("[blue]Izlazak...[/]");
+                ConsoleHelper.ClearAndSleep(1000);
+                return true;
+            })
+            .ReturnDictionary();
+    }
     
     
     

@@ -1,9 +1,11 @@
 using Internship_7_Moodle.Application.Common.Model;
+using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
 using Internship_7_Moodle.Application.Users.LoginUser;
 using Internship_7_Moodle.Application.Users.RegisterUser;
 using Internship_7_Moodle.Application.Users.Response;
+using Internship_7_Moodle.Application.Users.Response.Course;
 using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
@@ -40,7 +42,7 @@ public class UserActions
     {
         var dto=new StudentCoursesDto(studentId);
         
-        var result = await _mediator.Send(GetStudentCoursesQuery.FromDto(dto));
+        var result = await _mediator.Send(GetStudentCoursesRequest.FromDto(dto));
 
         if (result.Value == null)
             return [];
@@ -49,6 +51,20 @@ public class UserActions
 
         return courses;
         
+    }
+
+    public async Task<IEnumerable<NotificationResponse>> GetAllNotificationsAsync(int courseId)
+    {
+        var dto=new GetNotificationDto(courseId);
+
+        var result = await _mediator.Send(GetAllNotificationsRequest.FromDto(dto));
+
+        if (result.Value == null)
+            return [];
+
+        var courses = result.Value.Entities;
+
+        return courses;
     }
     
 }

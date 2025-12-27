@@ -1,12 +1,11 @@
 using Internship_7_Moodle.Domain.Entities.Courses;
-using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Internship_7_Moodle.Infrastructure.Repositories;
+namespace Internship_7_Moodle.Infrastructure.Repositories.User;
 
-public class UserRepository:Repository<User,int>,IUserRepository
+public class UserRepository:Repository<Domain.Entities.Users.User,int>,IUserRepository
 {
     public UserRepository(ApplicationDbContext context) : base(context)
     {
@@ -17,12 +16,12 @@ public class UserRepository:Repository<User,int>,IUserRepository
         return await DbSet.AnyAsync(user => user.Email == email && (!excludeId.HasValue || user.Id != excludeId));       
     }
 
-    public async Task<User?> GetUserByEmailAsync(string email)
+    public async Task<Domain.Entities.Users.User?> GetUserByEmailAsync(string email)
     {
         return await DbSet.Include(u=>u.Role).FirstOrDefaultAsync(user => user.Email == email);
     }
 
-    public async Task<IEnumerable<Course>> GetAllStudentCoursesAsync(int studentId)
+    public async Task<IEnumerable<Domain.Entities.Courses.Course>> GetAllStudentCoursesAsync(int studentId)
     {
         return await Context.CourseUsers
             .Where(cu => cu.UserId == studentId)

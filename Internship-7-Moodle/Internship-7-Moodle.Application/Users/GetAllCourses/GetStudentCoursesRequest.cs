@@ -8,10 +8,10 @@ using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.GetAllCourses;
 
-public record GetStudentCoursesQuery(int StudentId):IRequest<AppResult<GetAllResponse<StudentCourseResponse>>>
+public record GetStudentCoursesRequest(int StudentId):IRequest<AppResult<GetAllResponse<StudentCourseResponse>>>
 {
-    public static GetStudentCoursesQuery FromDto(StudentCoursesDto dto)
+    public static GetStudentCoursesRequest FromDto(StudentCoursesDto dto)
     {
-        return new GetStudentCoursesQuery(dto.StudentId);
+        return new GetStudentCoursesRequest(dto.StudentId);
     }
 }

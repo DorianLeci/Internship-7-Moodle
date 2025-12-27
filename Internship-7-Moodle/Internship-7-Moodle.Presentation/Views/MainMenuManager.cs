@@ -3,6 +3,7 @@ using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Views;
@@ -72,7 +73,37 @@ public class MainMenuManager
 
     public async Task ShowCourseSubmenuAsync(StudentCourseResponse course)
     {
+        ConsoleHelper.ClearAndSleep();
+
+        var exitRequested = false;
+        var courseSubmenu = MenuBuilder.CreateCourseSubmenu(this, course.CourseId);
         
+        while (!exitRequested)
+        {
+            var choice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow] Kolegij screen[/]")
+                    .AddChoices(courseSubmenu.Keys));
+
+            exitRequested = await courseSubmenu[choice]();     
+        }
+    }
+
+    public async Task ShowCourseNotificationsAsync(int courseId)
+    {
+        ConsoleHelper.ClearAndSleep();
+
+        var notifications = await _userActions.GetAllNotificationsAsync(courseId);
+        var notificationList = notifications.ToList();
+        Writer.NotificationWriter(notificationList);
+
+        AnsiConsole.MarkupLine("\n[blue]Pritisni bilo koju tipku za izlaz...[/]");
+        Console.ReadKey(true);  
+        ConsoleHelper.ClearAndSleep(2000);
     }
     
+    public async Task ShowCourseMaterialsAsync(int courseId)
+    {
+        
+    }
 }
