@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Entities.Chats;
 using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Entities.Messages;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
@@ -36,7 +37,8 @@ public static class Seeder
         NotificationSeed(modelBuilder);
         MaterialSeed(modelBuilder,seedTime);
         PrivateMessageSeed(modelBuilder);
-        
+        ChatSeed(modelBuilder);
+
     }
 
     private static void RoleSeed(ModelBuilder modelBuilder,DateTime seedTime)
@@ -468,6 +470,7 @@ public static class Seeder
                 Text="Poštovani,\nimam nedoumica u vezi predavanja o polimorfizmu i nasljeđivanju.Možete li dodatno pojasniti polimorfizam.", 
                 SenderId = 1, 
                 ReceiverId = 8, 
+                ChatId =1,
                 IsRead = true 
             },
             new PrivateMessage
@@ -485,6 +488,7 @@ public static class Seeder
                 
                 SenderId = 8,
                 ReceiverId = 1,
+                ChatId=1,
                 IsRead = true
             },
             
@@ -496,6 +500,7 @@ public static class Seeder
                 Text="Poštovani,\nimam pitanje u vezi ažuriranja profila.Na kraju godine ću postati profesor te sam htio pitati je li moguća promjena uloge.", 
                 SenderId = 1, 
                 ReceiverId = 10, 
+                ChatId =2,
                 IsRead = true                 
             },
             new PrivateMessage
@@ -506,6 +511,7 @@ public static class Seeder
                 Text="Poštovani,\nvaša uloga će biti promijenjena kada postanete profesor,pratiti ćemo novosti.", 
                 SenderId = 10, 
                 ReceiverId = 1, 
+                ChatId=2,
                 IsRead = true                 
             },
             new PrivateMessage
@@ -516,6 +522,7 @@ public static class Seeder
                 Text="Bok,jel imaš skriptu iz Matematike 1 slučajno?", 
                 SenderId = 1, 
                 ReceiverId = 2, 
+                ChatId=3,
                 IsRead = true                 
             },
             new PrivateMessage
@@ -526,6 +533,7 @@ public static class Seeder
                 Text="Bok,imam naravno,sutra ti dam na faksu.", 
                 SenderId = 2, 
                 ReceiverId = 1, 
+                ChatId=3,
                 IsRead = true                 
             }
             
@@ -533,5 +541,36 @@ public static class Seeder
         
         
     }
-    
+
+    private static void ChatSeed(ModelBuilder builder)
+    {
+        builder.Entity<Chat>().HasData(
+            new Chat
+            {
+                Id=1,
+                UserAId = 1,
+                UserBId = 8,
+                CreatedAt = new DateTime(2025, 11, 11, 07, 45, 0),
+                UpdatedAt = new DateTime(2025, 10, 01, 07, 45, 0),
+            },
+            new Chat
+            {
+                Id=2,
+                UserAId = 1,
+                UserBId = 10,
+                CreatedAt = new DateTime(2025, 10, 03, 09, 30, 0),
+                UpdatedAt = new DateTime(2025, 10, 03, 09, 30, 0),
+            },
+            new Chat
+            {
+                Id=3,
+                UserAId = 1,
+                UserBId = 2,
+                CreatedAt = new DateTime(2025, 12, 03, 14, 01, 0),
+                UpdatedAt = new DateTime(2025, 10, 03, 14, 01, 0),
+
+            }
+            
+        );
+    }
 }

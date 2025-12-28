@@ -4,6 +4,7 @@ using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
+using Internship_7_Moodle.Domain.Entities.Chats;
 using Internship_7_Moodle.Domain.Entities.Messages;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
 using Internship_7_Moodle.Domain.Entities.Roles;
@@ -35,7 +36,11 @@ public class User:BaseEntity
     public ICollection<CourseUser> CourseEnrollments { get; set; }=new List<CourseUser>();
     
     public ICollection<PrivateMessage> SentMessages { get; set; }=new  List<PrivateMessage>();
+    
     public ICollection<PrivateMessage> ReceivedMessages { get; set; }=new List<PrivateMessage>();
+    
+    public ICollection<Chat> ChatsAsUserA { get; set; } = new List<Chat>();
+    public ICollection<Chat> ChatsAsUserB { get; set; } = new List<Chat>();
 
     public Result<int> Create()
     {

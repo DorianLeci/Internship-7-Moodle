@@ -17,7 +17,7 @@ public class CourseUserConfig:IEntityTypeConfiguration<CourseUser>
             .HasForeignKey(cu => cu.CourseId).IsRequired();
         
         builder.HasOne(cu => cu.User).WithMany(u=>u.CourseEnrollments)
-            .HasForeignKey(cu => cu.UserId).IsRequired();
+            .HasForeignKey(cu => cu.UserId).IsRequired().OnDelete(DeleteBehavior.Cascade);
         
         builder.Property(cu=>cu.UserId).HasColumnName("user_id");
         builder.Property(cu=>cu.CourseId).HasColumnName("course_id");

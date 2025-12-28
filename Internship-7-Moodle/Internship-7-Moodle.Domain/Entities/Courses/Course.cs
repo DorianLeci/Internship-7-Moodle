@@ -17,8 +17,8 @@ public class Course:BaseEntity
     public int OwnerId { get; set; }
     public User Owner { get; set; }
     
-    public ICollection<CourseUser> CourseStudents { get; set; }
+    public ICollection<CourseUser> CourseStudents { get; set; }=new List<CourseUser>();
     
-    public ICollection<CourseMaterial> Materials { get; set; }
-    public ICollection<CourseNotification> Notifications { get; set; }
+    public ICollection<CourseMaterial> Materials { get; set; }=new List<CourseMaterial>();
+    public ICollection<CourseNotification> Notifications { get; set; }=new List<CourseNotification>();
 }

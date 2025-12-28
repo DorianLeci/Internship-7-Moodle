@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Internship_7_Moodle.Infrastructure.Database.Configuration.Messages;
 
-public class PrivateMessage:IEntityTypeConfiguration<Domain.Entities.Messages.PrivateMessage>
+public class PrivateMessageConfig:IEntityTypeConfiguration<Domain.Entities.Messages.PrivateMessage>
 {
     
     public void Configure(EntityTypeBuilder<Domain.Entities.Messages.PrivateMessage> builder)
@@ -24,6 +24,9 @@ public class PrivateMessage:IEntityTypeConfiguration<Domain.Entities.Messages.Pr
         
         builder.Property(pm=>pm.ReceiverId).HasColumnName("receiver_id");
         builder.Property(pm=>pm.SenderId).HasColumnName("sender_id");
+        
+        builder.HasOne(pm=>pm.Chat).WithMany(c=>c.PrivateMessages).HasForeignKey(pm=>pm.ChatId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+        builder.Property(pm=>pm.ChatId).HasColumnName("chat_id");
         
     }
 }

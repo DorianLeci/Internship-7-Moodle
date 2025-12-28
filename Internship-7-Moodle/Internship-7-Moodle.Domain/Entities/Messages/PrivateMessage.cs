@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Domain.Common.Abstractions;
+using Internship_7_Moodle.Domain.Entities.Chats;
 using Internship_7_Moodle.Domain.Entities.Users;
 
 namespace Internship_7_Moodle.Domain.Entities.Messages;
@@ -14,4 +15,8 @@ public class PrivateMessage:BaseEntity
     
     public int ReceiverId { get; set; }
     public User Receiver { get; set; }
+    
+    public int ChatId{get;set;}
+    
+    public Chat Chat { get; set; }
 }
