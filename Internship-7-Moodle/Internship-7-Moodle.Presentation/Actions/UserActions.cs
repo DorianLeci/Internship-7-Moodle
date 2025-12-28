@@ -78,9 +78,9 @@ public class UserActions
         return materials;        
     }
 
-    public async Task<IEnumerable<UserResponse>> GetAllUsersWithoutChatAsync(int courseId,RoleEnum? roleFilter=null)
+    public async Task<IEnumerable<UserResponse>> GetAllUsersWithoutChatAsync(int userId,RoleEnum? roleFilter=null)
     {
-        var dto=new GetUserChatDto(courseId,roleFilter);
+        var dto=new GetUserChatDto(userId,roleFilter);
         var result = await _mediator.Send(GetUsersWithoutChatRequest.FromDto(dto));
 
         if (result.Value == null)

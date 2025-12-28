@@ -71,7 +71,7 @@ public static class Writer
         if (notificationResponses.Count == 0)
         {
             AnsiConsole.MarkupLine("[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
-            ConsoleHelper.ClearAndSleep(2000);
+            ConsoleHelper.ClearAndSleep(1000);
             return;
         }
 
@@ -130,5 +130,6 @@ public static class Writer
             AnsiConsole.Write(panel);
         }        
     }
+    
     
 }

@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Spectre.Console;
@@ -39,7 +40,55 @@ public abstract class BaseMainMenuManager
 
     public async Task ShowNewMessageMenuAsync()
     {
+        ConsoleHelper.ClearAndSleep();
         
+        var exitRequested = false;
+        var newMsgMenu = MenuBuilder.MenuBuilder.CreateNewMessageMenu(this);
+        
+        while (!exitRequested)
+        {
+            var choice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow] Nova poruka[/]")
+                    .AddChoices(newMsgMenu.Keys));
+
+            exitRequested = await newMsgMenu[choice]();     
+        }        
+    }
+
+    public async Task ShowUsersWithoutChatAsync(RoleEnum? roleFilter=null)
+    {
+        var users = await UserActions.GetAllUsersWithoutChatAsync(UserId, roleFilter);
+        var userList = users.ToList();
+        
+        if (userList.Count == 0)
+        {
+            AnsiConsole.MarkupLine("[red]Nema dostupnih korisnika[/]");
+            ConsoleHelper.ClearAndSleep(1000);
+            return;
+        }
+        
+        
+        var exitRequested = false;
+        var usrChatMenu = MenuBuilder.MenuBuilder.CreateUsersWithoutChatMenu(this, userList);
+        
+        while (!exitRequested)
+        {
+            var choice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow] Dostupni korisnici[/]")
+                    .AddChoices(usrChatMenu.Keys));
+
+            exitRequested = await usrChatMenu[choice]();     
+        }        
+        
+
+    }
+
+    public async Task OpenPrivateChatAsync(int userId)
+    {
+        AnsiConsole.Write("Privatni chaat");
+        ConsoleHelper.ClearAndSleep(3000);
     }
 
 }

@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Views.Common;
 using Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
@@ -80,6 +81,32 @@ public partial class MenuBuilder
             .AddChoice("Nova poruka", async () => { await manager.ShowNewMessageMenuAsync(); return false; })
             .AddMenuExit()
             .ReturnDictionary();
+    }
+
+    public static Dictionary<string, Func<Task<bool>>> CreateNewMessageMenu(BaseMainMenuManager manager)
+    {
+        return new MenuBuilder()
+            .AddChoice("Svi korisnici", async () => { await manager.ShowUsersWithoutChatAsync(); return false; })
+            .AddChoice("Studenti", async () => { await manager.ShowUsersWithoutChatAsync(RoleEnum.Student); return false; })
+            .AddChoice("Profesori", async () => { await manager.ShowUsersWithoutChatAsync(RoleEnum.Professor); return false; })
+            .AddChoice("Administratori", async () => { await manager.ShowUsersWithoutChatAsync(RoleEnum.Admin); return false; })
+            .AddMenuExit()
+            .ReturnDictionary();
+    }
+
+    public static Dictionary<string, Func<Task<bool>>> CreateUsersWithoutChatMenu(BaseMainMenuManager manager,List <UserResponse> users)
+    {
+        var builder = new MenuBuilder();
+        builder.AddMenuExit();
+        
+        foreach (var user in users)
+        {
+            var stringKey = $"{user.Id}-{user.FirstName} {user.LastName}-{user.RoleName}";
+            builder.AddChoice(stringKey,async () => { await manager.OpenPrivateChatAsync(user.Id); return false; });
+        }
+
+        return builder.ReturnDictionary();
+
     }
 
     

@@ -9,7 +9,7 @@ public static class ConsoleHelper
         if(message!=null)
             AnsiConsole.MarkupLine(message);
         
-        Thread.Sleep(400);
+        Thread.Sleep(200);
         AnsiConsole.Clear();
     }   
     public static void ClearAndSleep(int timeout,string? message=null)

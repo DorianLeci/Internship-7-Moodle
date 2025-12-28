@@ -23,13 +23,11 @@ public class MessageRepository:Repository<PrivateMessage,int>,IMessageRepository
         var usersWithoutChat = Context.Users
             .Where(u => !chattedUserIdList.Contains(u.Id));
 
+        usersWithoutChat=usersWithoutChat.Include(u=>u.Role);
         
-        if(roleFilter.HasValue)
-            usersWithoutChat=usersWithoutChat.Where(u=>u.RoleId == (int)roleFilter.Value);
-        
-        usersWithoutChat.Include(u=>u.Role);
-        
-        return await usersWithoutChat.ToListAsync();
+        return (roleFilter.HasValue)
+            ? await usersWithoutChat.Where(u => u.Role.RoleName==roleFilter).ToListAsync()
+            : await usersWithoutChat.ToListAsync();
     }
 
     
