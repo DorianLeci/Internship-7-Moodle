@@ -148,7 +148,7 @@ public static class Writer
     }
     public static async Task ChatWriter(ChatResponse chatResponse,UserActions userActions,int scrollOffset,int panelHeight)
     {            
-        // ConsoleHelper.ClearAndSleep(10);
+        ConsoleHelper.ClearAndSleep(10);
         ChatHeaderWriter(chatResponse);
 
         const string hasReadMarkup = "[blue]✓✓[/]";
@@ -162,7 +162,6 @@ public static class Writer
         
         foreach (var msg in visibleMsg)
         {
-            Console.WriteLine("Read: {0},{1}",msg.IsRead,msg.Content);
             var isCurrentUser = msg.SenderId == chatResponse.CurrentUserId;
             var senderName=msg.SenderId==chatResponse.CurrentUserId ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
             

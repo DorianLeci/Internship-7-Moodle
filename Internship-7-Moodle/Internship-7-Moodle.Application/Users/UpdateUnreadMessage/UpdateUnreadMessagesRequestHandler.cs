@@ -16,10 +16,19 @@ public class UpdateUnreadMessagesRequestHandler:IRequestHandler<UpdateUnreadMess
     public async Task<AppResult<EmptyResult>> Handle(UpdateUnreadMessagesRequest request, CancellationToken cancellationToken)
     {
         var result=new AppResult<EmptyResult>();
-        
-        if(request.MessageIdList!=null && request.MessageIdList.Any())   
-            await _userUnitOfWork.MessageRepository.MarkMessagesAsReadAsync(request.MessageIdList);
-        
+        if (request.MessageIdList != null && request.MessageIdList.Any())
+        {
+            var messages = await _userUnitOfWork.MessageRepository.GetPrivateMessagesAsync(request.MessageIdList);
+            
+            foreach (var msg in messages)
+            {
+                msg.IsRead = true;
+            }
+
+            await _userUnitOfWork.SaveAsync();
+        }
+
+
         result.SetResult(new EmptyResult());
         return result;
     }

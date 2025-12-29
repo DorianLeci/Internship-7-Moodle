@@ -11,5 +11,7 @@ public interface IMessageRepository:IRepository<PrivateMessage,int>
     
     Task<IEnumerable<User>> GetUsersWithChatAsync(int currentUserId,RoleEnum? roleFilter=null);
 
-    Task MarkMessagesAsReadAsync(IEnumerable<int> messageIdList);
+    Task MarkMessagesAsReadAsync(List<int> messageIdList);
+
+    Task<List<PrivateMessage>> GetPrivateMessagesAsync(IEnumerable<int> messageIdList);
 }

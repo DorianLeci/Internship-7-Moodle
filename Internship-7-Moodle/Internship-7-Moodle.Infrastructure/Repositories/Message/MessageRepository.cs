@@ -62,10 +62,16 @@ public class MessageRepository:Repository<PrivateMessage,int>,IMessageRepository
         
     }
 
-    public async Task MarkMessagesAsReadAsync(IEnumerable<int> messageIdList)
+    public async Task MarkMessagesAsReadAsync(List<int> messageIdList)
     {
         await DbSet
             .Where(m => messageIdList.Contains(m.Id))
             .ExecuteUpdateAsync(s=>s.SetProperty(m=>m.IsRead,true));
+    }
+    public async Task<List<PrivateMessage>> GetPrivateMessagesAsync(IEnumerable<int> messageIdList)
+    {
+        return await DbSet
+            .Where(m => messageIdList.Contains(m.Id))
+            .ToListAsync();
     }
 }

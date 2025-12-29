@@ -45,10 +45,6 @@ public class GetChatRequestHandler:IRequestHandler<GetChatRequest,AppResult<Chat
 
         var chat = await _userUnitOfWork.ChatRepository.GetChatAsync(userAId, userBId);
         
-        foreach (var pm in chat.PrivateMessages)
-        {
-            Console.WriteLine($"Read chat: {pm.IsRead},{pm.Text}");
-        }
         var chatResponse = new ChatResponse
         {
             ChatId = chat?.Id ?? 0,
