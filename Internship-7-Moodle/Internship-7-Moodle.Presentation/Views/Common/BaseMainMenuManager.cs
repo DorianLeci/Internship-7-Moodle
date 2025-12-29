@@ -41,12 +41,12 @@ public abstract class BaseMainMenuManager
         }
     }
 
-    public async Task ShowNewMessageMenuAsync()
+    public async Task ShowConversationMenuAsync(bool withoutChat,string title)
     {
         ConsoleHelper.ClearAndSleep();
         
         var exitRequested = false;
-        var newMsgMenu = MenuBuilder.MenuBuilder.CreateNewMessageMenu(this);
+        var newMsgMenu = MenuBuilder.MenuBuilder.CreateConversationMenu(this,withoutChat,title);
         
         while (!exitRequested)
         {
@@ -58,17 +58,17 @@ public abstract class BaseMainMenuManager
             exitRequested = await newMsgMenu[choice]();     
         }        
     }
-
-    public async Task ShowUsersWithoutChatAsync(RoleEnum? roleFilter=null)
+    
+    public async Task ShowUsersToChatWithAsync(bool withoutChat,string title,RoleEnum? roleFilter=null)
     {
         var exitRequested = false;
         
         while (!exitRequested)
         {
-            var users = await UserActions.GetAllUsersWithoutChatAsync(UserId, roleFilter);
+            var users =withoutChat ? await UserActions.GetAllUsersWithoutChatAsync(UserId, roleFilter): await UserActions.GetAllUsersWithChatAsync(UserId,roleFilter);
             var userList = users.ToList();
             
-            var usrChatMenu = MenuBuilder.MenuBuilder.CreateUsersWithoutChatMenu(this, userList);
+            var usrChatMenu = MenuBuilder.MenuBuilder.CreateUsersToChatWithMenu(this, userList);
         
             if (userList.Count == 0)
             {
@@ -77,7 +77,7 @@ public abstract class BaseMainMenuManager
                 return;
             }
             var prompt = new SelectionPrompt<string>()
-                .Title("[yellow] Korisnici s kojima još nisi komunicirao[/]")
+                .Title(title)
                 .PageSize(10)
                 .MoreChoicesText("[grey](Stisni strelicu prema dolje da vidiš više)[/]")
                 .EnableSearch()
@@ -87,9 +87,7 @@ public abstract class BaseMainMenuManager
             prompt.SearchHighlightStyle=new Style().Background(ConsoleColor.DarkBlue);
 
             var choice = AnsiConsole.Prompt(prompt);
-                
             
-                
             exitRequested = await usrChatMenu[choice]();     
         }        
         
@@ -100,7 +98,7 @@ public abstract class BaseMainMenuManager
     {
         const int panelHeight = 3;
         
-        var result=await UserActions.GetOrCreateChatAsync(UserId, otherUserId);
+        var result=await UserActions.GetChatAsync(UserId, otherUserId);
 
         if (result.IsFailure)
         {
@@ -118,10 +116,10 @@ public abstract class BaseMainMenuManager
             return;
         }
         
-        Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId,0,panelHeight);
+        Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId,chatResponse.Messages.Count-panelHeight,panelHeight);
         
-        bool exitChat = false;
-        int scrollOffset = 0;
+        var exitChat = false;
+        var scrollOffset = 0;
         
         while (!exitChat)
         {

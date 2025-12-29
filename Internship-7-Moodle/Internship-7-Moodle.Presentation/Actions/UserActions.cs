@@ -4,6 +4,7 @@ using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
 using Internship_7_Moodle.Application.Users.GetChat;
+using Internship_7_Moodle.Application.Users.GetUsersWithChat;
 using Internship_7_Moodle.Application.Users.GetUsersWithoutChat;
 using Internship_7_Moodle.Application.Users.LoginUser;
 using Internship_7_Moodle.Application.Users.RegisterUser;
@@ -94,8 +95,22 @@ public class UserActions
         return users;
 
     }
+    
+    public async Task<IEnumerable<UserResponse>> GetAllUsersWithChatAsync(int userId,RoleEnum? roleFilter=null)
+    {
+        var dto=new GetUserChatDto(userId,roleFilter);
+        var result = await _mediator.Send(GetUsersWithChatRequest.FromDto(dto));
 
-    public async Task<AppResult<ChatResponse>> GetOrCreateChatAsync(int currentUserId, int otherUserId)
+        if (result.Value == null)
+            return [];
+        
+        var  users = result.Value.Entities;
+        
+        return users;
+
+    }
+
+    public async Task<AppResult<ChatResponse>> GetChatAsync(int currentUserId, int otherUserId)
     {
         return await _mediator.Send(new GetChatRequest(currentUserId, otherUserId));
     }

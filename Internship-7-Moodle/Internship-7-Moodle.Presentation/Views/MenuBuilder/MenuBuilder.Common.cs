@@ -86,23 +86,24 @@ public partial class MenuBuilder
     public static Dictionary<string,Func<Task<bool>>> CreatePrivateChatMenu(BaseMainMenuManager manager)
     {
         return new MenuBuilder()
-            .AddChoice("Nova poruka", async () => { await manager.ShowNewMessageMenuAsync(); return false; })
+            .AddChoice("Nova poruka", async () => { await manager.ShowConversationMenuAsync(true,"[yellow]Korisnici s kojima još nisi komunicirao[/]"); return false; })
+            .AddChoice("Moji razgovori",async()=>{await manager.ShowConversationMenuAsync(false,"[yellow]Moji razgovori[/]"); return false; })
             .AddMenuExit()
             .ReturnDictionary();
     }
 
-    public static Dictionary<string, Func<Task<bool>>> CreateNewMessageMenu(BaseMainMenuManager manager)
+    public static Dictionary<string, Func<Task<bool>>> CreateConversationMenu(BaseMainMenuManager manager,bool withoutChat,string title)
     {
         return new MenuBuilder()
-            .AddChoice("Svi korisnici", async () => { await manager.ShowUsersWithoutChatAsync(); return false; })
-            .AddChoice("Studenti", async () => { await manager.ShowUsersWithoutChatAsync(RoleEnum.Student); return false; })
-            .AddChoice("Profesori", async () => { await manager.ShowUsersWithoutChatAsync(RoleEnum.Professor); return false; })
-            .AddChoice("Administratori", async () => { await manager.ShowUsersWithoutChatAsync(RoleEnum.Admin); return false; })
+            .AddChoice("Svi korisnici", async () => { await manager.ShowUsersToChatWithAsync(withoutChat:withoutChat,title:title); return false; })
+            .AddChoice("Studenti", async () => { await manager.ShowUsersToChatWithAsync(withoutChat,title,RoleEnum.Student); return false; })
+            .AddChoice("Profesori", async () => { await manager.ShowUsersToChatWithAsync(withoutChat,title,RoleEnum.Professor); return false; })
+            .AddChoice("Administratori", async () => { await manager.ShowUsersToChatWithAsync(withoutChat,title,RoleEnum.Admin); return false; })
             .AddMenuExit()
             .ReturnDictionary();
     }
 
-    public static Dictionary<string, Func<Task<bool>>> CreateUsersWithoutChatMenu(BaseMainMenuManager manager,List <UserResponse> users)
+    public static Dictionary<string, Func<Task<bool>>> CreateUsersToChatWithMenu(BaseMainMenuManager manager,List <UserResponse> users)
     {
         var builder = new MenuBuilder();
         builder.AddMenuExit();
