@@ -136,7 +136,7 @@ public static class Writer
         ErrorWriter(result,"[red]Nije moguće otvoriti chat[/]");
     }
 
-    public static void ChatHeaderWriter(ChatResponse chatResponse)
+    private static void ChatHeaderWriter(ChatResponse chatResponse)
     {
         var otherUserName = chatResponse.OtherUserName;
         AnsiConsole.Write(new Panel($"Chat sa: [yellow]{otherUserName}[/]")
@@ -147,10 +147,12 @@ public static class Writer
     }
     public static void ChatWriter(ChatResponse chatResponse,int currentUserId,int scrollOffset,int panelHeight)
     {            
-        ConsoleHelper.ClearAndSleep(50);
+        ConsoleHelper.ClearAndSleep(10);
+        ChatHeaderWriter(chatResponse);
+
         const string hasReadMarkup = "[blue]✓✓[/]";
         const string hasNotReadMarkup="[grey]✓✓[/]";
-        
+
         var grid = new Grid();
         grid.AddColumn();
         grid.AddColumn();

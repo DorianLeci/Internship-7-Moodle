@@ -104,7 +104,7 @@ public class UserActions
     {
         var dto=new SendMessageDto(currentUserId, otherUserId, text);
         
-        return await _mediator.Send(SendMessageRequest.FromDto(dto));
+        return await _mediator.Send(SendMessageCommand.FromDto(dto));
     }
     
 }

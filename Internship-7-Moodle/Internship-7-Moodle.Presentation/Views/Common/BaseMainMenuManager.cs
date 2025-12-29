@@ -61,24 +61,21 @@ public abstract class BaseMainMenuManager
 
     public async Task ShowUsersWithoutChatAsync(RoleEnum? roleFilter=null)
     {
-
-        
-        var users = await UserActions.GetAllUsersWithoutChatAsync(UserId, roleFilter);
-        var userList = users.ToList();
-        
-        if (userList.Count == 0)
-        {
-            AnsiConsole.MarkupLine("[red]Nema dostupnih korisnika[/]");
-            ConsoleHelper.ClearAndSleep(1000);
-            return;
-        }
-        
-        
         var exitRequested = false;
-        var usrChatMenu = MenuBuilder.MenuBuilder.CreateUsersWithoutChatMenu(this, userList);
         
         while (!exitRequested)
         {
+            var users = await UserActions.GetAllUsersWithoutChatAsync(UserId, roleFilter);
+            var userList = users.ToList();
+            
+            var usrChatMenu = MenuBuilder.MenuBuilder.CreateUsersWithoutChatMenu(this, userList);
+        
+            if (userList.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]Nema dostupnih korisnika[/]");
+                ConsoleHelper.ClearAndSleep(1000);
+                return;
+            }
             var prompt = new SelectionPrompt<string>()
                 .Title("[yellow] Korisnici s kojima još nisi komunicirao[/]")
                 .PageSize(10)
@@ -121,7 +118,6 @@ public abstract class BaseMainMenuManager
             return;
         }
         
-        Writer.ChatHeaderWriter(chatResponse);
         Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId,0,panelHeight);
         
         bool exitChat = false;
@@ -129,6 +125,7 @@ public abstract class BaseMainMenuManager
         
         while (!exitChat)
         {
+            AnsiConsole.MarkupLine("[blue]Pritisni enter ako želiš unijeti poruku ili q(Esc) za izlazak iz razgovora[/]: ");
             var keyInfo=Console.ReadKey(intercept:true);
 
             switch (keyInfo.Key)
@@ -152,7 +149,7 @@ public abstract class BaseMainMenuManager
                     break;
                 
                 case ConsoleKey.Enter:
-                    var textResult = FieldPrompt.MessageContentValidation("Unesi poruku(max 500 znakova)",
+                    var textResult = await FieldPrompt.MessageContentValidation(()=>ShowChoiceMenuAsync(),"Unesi poruku(max 500 znakova)",
                         text => PromptFunctions.ContentCheck(text));
                     
                     if (!textResult.Successful) break;
@@ -167,10 +164,24 @@ public abstract class BaseMainMenuManager
                     {
                         chatResponse.Messages.Add(messageResult.Value);
                     }
+
+                    scrollOffset++;
+                    if(scrollOffset>=(chatResponse.Messages.Count-panelHeight))
+                        scrollOffset = chatResponse.Messages.Count-panelHeight;
                     
                     Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId,scrollOffset,panelHeight);
                     break;
+                
+                case ConsoleKey.Q:
+                case ConsoleKey.Escape :
+                    exitChat = true;
+                    ConsoleHelper.ClearAndSleep(1500,"[blue]Izlazak...[/]");
+                    break;
                     
+
+                default:
+                    AnsiConsole.MarkupLine("[red]Nije tipka s kojom možeš upravljati[/]");
+                    break;
             }
             
         }
@@ -179,4 +190,25 @@ public abstract class BaseMainMenuManager
 
     }
 
+    
+    private async Task<bool> ShowChoiceMenuAsync((string message,bool value)? confirm=null,(string message,bool value)? quit=null,string title="[yellow]Želiš li odustati od registracije[/]")
+    {
+        var confirmChoice=confirm ?? ("Nastavi", false);
+        var quitChoice= quit ?? ("Odustani", true);
+        
+        var exitMenu = MenuBuilder.MenuBuilder.CreateChoiceMenu(this,confirmChoice,quitChoice);
+        
+        var titlePanel=new Panel(title)
+        {
+            Padding = new Padding(1, 1, 1, 0),
+            Border = BoxBorder.None
+        };
+        AnsiConsole.Write(titlePanel);
+        
+        var choice = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .AddChoices(exitMenu.Keys));
+
+        return await exitMenu[choice]();
+    }
 }

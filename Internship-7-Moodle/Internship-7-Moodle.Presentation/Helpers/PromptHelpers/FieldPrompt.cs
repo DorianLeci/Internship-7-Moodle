@@ -1,6 +1,5 @@
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.InputValidation;
-using Internship_7_Moodle.Presentation.Views;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
@@ -26,9 +25,6 @@ public static class FieldPrompt
                 return result;
 
             AnsiConsole.MarkupLine(result.Message ?? "[red]Neispravan unos[/]");
-            AnsiConsole.MarkupLine(
-                "[red]Pritisni esc tipku ako želiš odustati od registracije,a bilo koju drugu ako želiš ponovno pokušati.[/]");
-            
             
             var isExitChosen=await showExitMenu();
             if (isExitChosen)
@@ -71,12 +67,27 @@ public static class FieldPrompt
         }
     }
 
-    public static PresentationValidationResult<T> MessageContentValidation<T>(string message, Func<string, PresentationValidationResult<T>> validationFunc)
+    public static async Task<PresentationValidationResult<T>> MessageContentValidation<T>(Func<Task<bool>> showExitMenu,string message, Func<string, PresentationValidationResult<T>> validationFunc)
     {
-        var prompt = new TextPrompt<string>($"{message}: ");   
-        var input = AnsiConsole.Prompt(prompt);
+
+        while (true)
+        {
+            var prompt = new TextPrompt<string>($"{message}: ");   
+            var input = AnsiConsole.Prompt(prompt);
         
-        return validationFunc(input);
+            var result = validationFunc(input);
+            if (result.Successful)
+            {
+                return result;
+            }
+            
+            AnsiConsole.MarkupLine(result.Message ?? "[red]Neispravan unos[/]");
+            
+            var isExitChosen=await showExitMenu();
+            if (isExitChosen)
+                return PresentationValidationResult<T>.Cancelled();        
+        }
+
         
         
     }

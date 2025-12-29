@@ -10,23 +10,23 @@ using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.SendMessage;
 
-public class SendMessageRequestHandler:IRequestHandler<SendMessageRequest,AppResult<PrivateMessageResponse>>
+public class SendMessageCommandHandler:IRequestHandler<SendMessageCommand,AppResult<PrivateMessageResponse>>
 {
     private readonly IUserUnitOfWork _userUnitOfWork;
     private readonly ChatDomainService _chatDomainService;
 
-    public SendMessageRequestHandler(IUserUnitOfWork userUnitOfWork, ChatDomainService chatDomainService)
+    public SendMessageCommandHandler(IUserUnitOfWork userUnitOfWork, ChatDomainService chatDomainService)
     {
         _userUnitOfWork = userUnitOfWork;
         _chatDomainService = chatDomainService;
     }
     
-    public async Task<AppResult<PrivateMessageResponse>> Handle(SendMessageRequest request, CancellationToken cancellationToken)
+    public async Task<AppResult<PrivateMessageResponse>> Handle(SendMessageCommand command, CancellationToken cancellationToken)
     {
         var result=new AppResult<PrivateMessageResponse>();
         
-        var currentUser = await _userUnitOfWork.UserRepository.GetByIdAsync(request.CurrentUserId);
-        var otherUser = await _userUnitOfWork.UserRepository.GetByIdAsync(request.OtherUserId);
+        var currentUser = await _userUnitOfWork.UserRepository.GetByIdAsync(command.CurrentUserId);
+        var otherUser = await _userUnitOfWork.UserRepository.GetByIdAsync(command.OtherUserId);
 
         if (currentUser == null || otherUser == null)
         {
@@ -52,7 +52,7 @@ public class SendMessageRequestHandler:IRequestHandler<SendMessageRequest,AppRes
         {
             SenderId = currentUser.Id,
             ReceiverId = otherUser.Id,
-            Text = request.Text,
+            Text = command.Text,
             IsRead = false
         };
         

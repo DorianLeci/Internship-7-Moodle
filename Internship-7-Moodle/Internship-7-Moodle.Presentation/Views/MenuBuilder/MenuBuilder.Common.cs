@@ -35,6 +35,15 @@ public partial class MenuBuilder
             .ReturnDictionary();
     }
     
+    public static Dictionary<string, Func<Task<bool>>> CreateChoiceMenu(BaseMainMenuManager menuManager,(string message,bool value) confirm,(string message,bool value) quit)
+    {
+        return new MenuBuilder()
+            .AddChoice(confirm.message,()=>confirm.value)
+            .AddChoice(quit.message,()=>quit.value)
+            .ReturnDictionary();
+    }
+
+    
     private MenuBuilder AddCommon(BaseMainMenuManager manager)
     {
         AddChoice("Privatni chat", async () => { await manager.ShowPrivateChatMenuAsync(); return false; });
