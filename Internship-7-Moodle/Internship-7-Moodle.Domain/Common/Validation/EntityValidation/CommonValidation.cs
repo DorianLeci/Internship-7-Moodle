@@ -21,8 +21,7 @@ public static partial class EntityValidation
                 $"{entityName}_ItemMustExist",
                 $"{propertyName} ne postoji");            
         }
-
-            
+        
     }
 
 }

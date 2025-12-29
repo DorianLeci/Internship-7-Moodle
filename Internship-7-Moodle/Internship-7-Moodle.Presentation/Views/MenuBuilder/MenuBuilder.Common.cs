@@ -53,8 +53,7 @@ public partial class MenuBuilder
     {
         AddChoice("Izlazak iz izbornika", () =>
         {
-            AnsiConsole.MarkupLine("[blue]Izlazak...[/]");
-            ConsoleHelper.ClearAndSleep(1000);
+            ConsoleHelper.ClearAndSleep(1000,"[blue]Izlazak...[/]");
             return true;
         });
 

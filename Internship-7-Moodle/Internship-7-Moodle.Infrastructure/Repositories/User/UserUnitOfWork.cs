@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Persistence.Chats;
 using Internship_7_Moodle.Domain.Persistence.Messages;
 using Internship_7_Moodle.Domain.Persistence.Roles;
 using Internship_7_Moodle.Domain.Persistence.Users;
@@ -9,16 +10,20 @@ public class UserUnitOfWork:IUserUnitOfWork
 {
     private readonly ApplicationDbContext _dbContext;
     public IUserRepository UserRepository { get; }
+    
     public IRoleRepository RoleRepository { get; }
     
     public IMessageRepository MessageRepository { get; }
+    
+    public IChatRepository ChatRepository { get; }
 
-    public UserUnitOfWork(ApplicationDbContext context, IUserRepository userRepository, IRoleRepository roleRepository, IMessageRepository messageRepository)
+    public UserUnitOfWork(ApplicationDbContext context, IUserRepository userRepository, IRoleRepository roleRepository, IMessageRepository messageRepository, IChatRepository chatRepository)
     {
         _dbContext = context;
         UserRepository = userRepository;
         RoleRepository = roleRepository;
         MessageRepository = messageRepository;
+        ChatRepository = chatRepository;
     }
     public async Task CreateTransaction()
     {

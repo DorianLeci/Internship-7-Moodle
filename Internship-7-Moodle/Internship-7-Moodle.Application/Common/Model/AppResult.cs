@@ -2,7 +2,7 @@ using Internship_7_Moodle.Domain.Common.Validation;
 
 namespace Internship_7_Moodle.Application.Common.Model;
 
-public class AppResult<TValue> where TValue : class,new()
+public class AppResult<TValue> where TValue : class
 {
     private readonly List<ValidationItem> _infos = new();
     private readonly List<ValidationItem> _warnings = new();

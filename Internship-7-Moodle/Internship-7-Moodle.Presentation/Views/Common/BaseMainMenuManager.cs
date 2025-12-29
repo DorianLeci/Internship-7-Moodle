@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Views.Common;
@@ -58,6 +59,8 @@ public abstract class BaseMainMenuManager
 
     public async Task ShowUsersWithoutChatAsync(RoleEnum? roleFilter=null)
     {
+
+        
         var users = await UserActions.GetAllUsersWithoutChatAsync(UserId, roleFilter);
         var userList = users.ToList();
         
@@ -85,10 +88,30 @@ public abstract class BaseMainMenuManager
 
     }
 
-    public async Task OpenPrivateChatAsync(int userId)
+    public async Task OpenPrivateChatAsync(int otherUserId)
     {
-        AnsiConsole.Write("Privatni chaat");
-        ConsoleHelper.ClearAndSleep(3000);
+        ConsoleHelper.ClearAndSleep();
+        var result=await UserActions.GetOrCreateChatAsync(UserId, otherUserId);
+
+        if (result.IsFailure)
+        {
+            Writer.ChatErrorWriter(result);
+            ConsoleHelper.ClearAndSleep(2000,"[blue]Izlazak...[/]");
+            return;
+        }
+
+        var chatResponse = result.Value;
+
+        if (chatResponse == null)
+        {
+            Writer.ChatErrorWriter(result);
+            ConsoleHelper.ClearAndSleep(2000,"[blue]Izlazak...[/]");
+            return;
+        }
+        
+        Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId);
+ 
+
     }
 
 }

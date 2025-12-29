@@ -21,9 +21,9 @@ public class MessageRepository:Repository<PrivateMessage,int>,IMessageRepository
             .ToListAsync();
 
         var usersWithoutChat = Context.Users
-            .Where(u => !chattedUserIdList.Contains(u.Id));
+            .Where(u => !chattedUserIdList.Contains(u.Id) && u.Id != currentUserId);
 
-        usersWithoutChat=usersWithoutChat.Include(u=>u.Role);
+        usersWithoutChat=usersWithoutChat.Include(u=>u.Role).OrderBy(u=>u.Id);
         
         return (roleFilter.HasValue)
             ? await usersWithoutChat.Where(u => u.Role.RoleName==roleFilter).ToListAsync()

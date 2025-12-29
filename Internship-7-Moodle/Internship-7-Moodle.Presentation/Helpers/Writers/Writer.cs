@@ -13,14 +13,7 @@ public static class Writer
     {
         if (appResult.IsFailure)
         {
-            var errorMessages=string.Join("\n",appResult.Errors.Select(e => $"[red]-{e.Message}[/]"));
-            
-            AnsiConsole.Write(new Panel(errorMessages)
-            {
-                Header = new PanelHeader("[red]Registracija nije uspjela[/]",Justify.Center),
-                Border=BoxBorder.Rounded
-            });
-
+            ErrorWriter(appResult,"[red]Registracija nije uspjela[/]");
             return false;
         }
         
@@ -41,15 +34,7 @@ public static class Writer
     {
         if (appResult.IsFailure)
         {
-            var errorMessages=string.Join("\n",appResult.Errors.Select(e => $"[red]-{e.Message}[/]"));
-            
-            AnsiConsole.Write(new Panel(errorMessages)
-            {
-                Header = new PanelHeader("[red]Prijava nije uspjela[/]",Justify.Center),
-                Border=BoxBorder.Rounded
-            });
-            AnsiConsole.MarkupLine("[red]Ako ne želiš odustati od prijave pričekaj 30 sekundi prije ponovnog pokušaja[/]");
-            
+            ErrorWriter(appResult,"[red]Prijava nije uspjela[/]","[red]Ako ne želiš odustati od prijave pričekaj 30 sekundi prije ponovnog pokušaja[/]");
             return false;
         }
         
@@ -66,6 +51,20 @@ public static class Writer
         return true;        
     }
 
+    private static void ErrorWriter<T>(AppResult<T> appResult,string headerMessage,string? markupMessage=null) where T:class
+    {
+        var errorMessages=string.Join("\n",appResult.Errors.Select(e => $"[red]-{e.Message}[/]"));
+            
+        AnsiConsole.Write(new Panel(errorMessages)
+        {
+            Header = new PanelHeader(headerMessage,Justify.Center),
+            Border=BoxBorder.Rounded
+        });
+        
+        if(markupMessage!=null)
+            AnsiConsole.MarkupLine(markupMessage);
+    }
+    
     public static void NotificationWriter(List<NotificationResponse> notificationResponses)
     {
         if (notificationResponses.Count == 0)
@@ -130,6 +129,61 @@ public static class Writer
             AnsiConsole.Write(panel);
         }        
     }
-    
+
+
+    public static void ChatErrorWriter(AppResult<ChatResponse> result)
+    {
+        ErrorWriter(result,"[red]Nije moguće otvoriti chat[/]");
+    }
+
+    public static void ChatWriter(ChatResponse chatResponse,int currentUserId)
+    {
+        const string hasReadMarkup = "[blue]✓✓[/]";
+        const string hasNotReadMarkup="[grey]✓✓[/]";
+        
+        var otherUserName = chatResponse.OtherUserName;
+        AnsiConsole.Write(new Panel($"Chat sa: [yellow]{otherUserName}[/]")
+        {
+            Header = new PanelHeader("[green]Privatni chat[/]", Justify.Center),
+            Border = BoxBorder.Rounded
+        });
+
+        var grid = new Grid();
+        grid.AddColumn();
+        grid.AddColumn();
+        
+        foreach (var msg in chatResponse.Messages)
+        {
+            var isCurrentUser=msg.SenderId == currentUserId;
+            var senderName=msg.SenderId==currentUserId ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
+            
+            var infoTable = new Table()
+            {
+                Border = TableBorder.None,
+                ShowHeaders = false,
+            };
+
+            infoTable.AddColumn("");
+            infoTable.AddRow($"[grey]{msg.SentAt}[/] {(isCurrentUser ? (msg.IsRead? hasReadMarkup : hasNotReadMarkup): "") }");
+            
+
+            
+            var panel = new Panel(new Rows(new Markup(msg.Content),infoTable))
+            {
+                Header = new PanelHeader(senderName, Justify.Left),
+                Border = BoxBorder.Heavy,
+                BorderStyle=isCurrentUser ? new Style(Color.BlueViolet) : new Style(Color.Grey),
+                
+            };
+            
+            if(isCurrentUser)
+                grid.AddRow(panel, new Markup("")); 
+            
+            else
+                grid.AddRow(new Markup(""),panel);
+            
+        }
+        AnsiConsole.Write(grid);
+    }
     
 }

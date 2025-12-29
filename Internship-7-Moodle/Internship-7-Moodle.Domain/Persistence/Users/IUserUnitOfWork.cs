@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Persistence.Chats;
 using Internship_7_Moodle.Domain.Persistence.Common;
 using Internship_7_Moodle.Domain.Persistence.Messages;
 using Internship_7_Moodle.Domain.Persistence.Roles;
@@ -9,4 +10,5 @@ public interface IUserUnitOfWork:IUnitOfWork
     IUserRepository UserRepository { get; }
     IRoleRepository RoleRepository { get; }
     IMessageRepository MessageRepository { get; }
+    IChatRepository ChatRepository { get; }
 }

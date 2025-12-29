@@ -551,7 +551,7 @@ public static class Seeder
                 UserAId = 1,
                 UserBId = 8,
                 CreatedAt = new DateTime(2025, 11, 11, 07, 45, 0),
-                UpdatedAt = new DateTime(2025, 10, 01, 07, 45, 0),
+                UpdatedAt = new DateTime(2025, 11, 11, 09, 45, 0)
             },
             new Chat
             {
@@ -559,7 +559,7 @@ public static class Seeder
                 UserAId = 1,
                 UserBId = 10,
                 CreatedAt = new DateTime(2025, 10, 03, 09, 30, 0),
-                UpdatedAt = new DateTime(2025, 10, 03, 09, 30, 0),
+                UpdatedAt = new DateTime(2025, 10, 03, 09, 45, 0)
             },
             new Chat
             {
@@ -567,7 +567,7 @@ public static class Seeder
                 UserAId = 1,
                 UserBId = 2,
                 CreatedAt = new DateTime(2025, 12, 03, 14, 01, 0),
-                UpdatedAt = new DateTime(2025, 10, 03, 14, 01, 0),
+                UpdatedAt = new DateTime(2025, 10, 03, 14, 07, 0)
 
             }
             

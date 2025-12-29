@@ -1,8 +1,10 @@
+using Internship_7_Moodle.Domain.Persistence.Chats;
 using Internship_7_Moodle.Domain.Persistence.Courses;
 using Internship_7_Moodle.Domain.Persistence.Messages;
 using Internship_7_Moodle.Domain.Persistence.Roles;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Infrastructure.Database;
+using Internship_7_Moodle.Infrastructure.Repositories.Chat;
 using Internship_7_Moodle.Infrastructure.Repositories.Course;
 using Internship_7_Moodle.Infrastructure.Repositories.Message;
 using Internship_7_Moodle.Infrastructure.Repositories.Role;
@@ -31,6 +33,7 @@ public static class DependencyInjection
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<ICourseUnitOfWork, CourseUnitOfWork>();
         services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<IChatRepository, ChatRepository>();
     }
 
     

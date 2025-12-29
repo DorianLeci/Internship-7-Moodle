@@ -3,6 +3,7 @@ using Internship_7_Moodle.Application.Courses.GetAllMaterials;
 using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
+using Internship_7_Moodle.Application.Users.GetChat;
 using Internship_7_Moodle.Application.Users.GetUsersWithoutChat;
 using Internship_7_Moodle.Application.Users.LoginUser;
 using Internship_7_Moodle.Application.Users.RegisterUser;
@@ -90,6 +91,11 @@ public class UserActions
         
         return users;
 
+    }
+
+    public async Task<AppResult<ChatResponse>> GetOrCreateChatAsync(int currentUserId, int otherUserId)
+    {
+        return await _mediator.Send(new GetOrCreateChatRequest(currentUserId, otherUserId));
     }
     
 }
