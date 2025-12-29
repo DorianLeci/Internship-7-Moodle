@@ -16,7 +16,7 @@ public static partial class EntityValidation
         public static ValidationItem ItemMustExist(string entityName, string propertyName)
         {
             return new ValidationItem(
-                ValidationType.BussinessRule,
+                ValidationType.Infrastructure,
                 ValidationSeverity.Error,
                 $"{entityName}_ItemMustExist",
                 $"{propertyName} ne postoji");            

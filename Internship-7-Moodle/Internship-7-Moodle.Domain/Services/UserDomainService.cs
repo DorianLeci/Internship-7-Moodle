@@ -1,22 +1,23 @@
-using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
 
 namespace Internship_7_Moodle.Domain.Services;
 
 public class UserDomainService
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUserUnitOfWork _userUnitOfWork;
 
-    public UserDomainService(IUserRepository userRepository)
+    public UserDomainService(IUserUnitOfWork userUnitOfWork)
     {
-        _userRepository = userRepository;
+        _userUnitOfWork = userUnitOfWork;
     }
 
     public async Task<bool> IsEmailUnique(string email, int? excludeId = null)
     {
-        var exists = await _userRepository.ExistsByEmailAsync(email, excludeId);
+        var exists = await _userUnitOfWork.UserRepository.ExistsByEmailAsync(email, excludeId);
         return !exists;
     }
+
+
 
 
 }

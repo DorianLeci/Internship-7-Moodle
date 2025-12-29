@@ -14,6 +14,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(typeof(RegisterUserCommandHandler).Assembly);
         services.AddScoped<UserDomainService>();
+        services.AddScoped<ChatDomainService>();
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
     }
     

@@ -136,23 +136,28 @@ public static class Writer
         ErrorWriter(result,"[red]Nije moguće otvoriti chat[/]");
     }
 
-    public static void ChatWriter(ChatResponse chatResponse,int currentUserId)
+    public static void ChatHeaderWriter(ChatResponse chatResponse)
     {
-        const string hasReadMarkup = "[blue]✓✓[/]";
-        const string hasNotReadMarkup="[grey]✓✓[/]";
-        
         var otherUserName = chatResponse.OtherUserName;
         AnsiConsole.Write(new Panel($"Chat sa: [yellow]{otherUserName}[/]")
         {
             Header = new PanelHeader("[green]Privatni chat[/]", Justify.Center),
             Border = BoxBorder.Rounded
         });
-
+    }
+    public static void ChatWriter(ChatResponse chatResponse,int currentUserId,int scrollOffset,int panelHeight)
+    {            
+        ConsoleHelper.ClearAndSleep(50);
+        const string hasReadMarkup = "[blue]✓✓[/]";
+        const string hasNotReadMarkup="[grey]✓✓[/]";
+        
         var grid = new Grid();
         grid.AddColumn();
         grid.AddColumn();
-        
-        foreach (var msg in chatResponse.Messages)
+
+        var totalMsg = chatResponse.Messages.Count;
+
+        foreach (var msg in chatResponse.Messages.Skip(Math.Max(0,scrollOffset)).Take(panelHeight))
         {
             var isCurrentUser=msg.SenderId == currentUserId;
             var senderName=msg.SenderId==currentUserId ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
@@ -184,6 +189,7 @@ public static class Writer
             
         }
         AnsiConsole.Write(grid);
+        
     }
     
 }

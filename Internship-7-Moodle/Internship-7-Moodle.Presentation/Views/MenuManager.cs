@@ -1,17 +1,13 @@
-using Figgle.Fonts;
 using Internship_7_Moodle.Domain.Enumerations;
-using Internship_7_Moodle.Infrastructure.Security;
 using Internship_7_Moodle.Presentation.Actions;
-using Internship_7_Moodle.Presentation.Helpers;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
-using Internship_7_Moodle.Presentation.Helpers.FormatCheck;
-using Internship_7_Moodle.Presentation.Helpers.PromptFunctions.User;
+using Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
 using Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Internship_7_Moodle.Presentation.InputValidation;
 using Internship_7_Moodle.Presentation.Service;
-using Npgsql.Internal.Postgres;
 using Spectre.Console;
+using CaptchaService = Internship_7_Moodle.Presentation.Service.CaptchaService;
 
 namespace Internship_7_Moodle.Presentation.Views;
 
@@ -51,7 +47,7 @@ public class MenuManager
         while (true)
         {
              var emailResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi email",
-                email => UserPromptFunctions.EmailCheck(email));
+                email => PromptFunctions.EmailCheck(email));
 
             if (emailResult.IsCancelled)
             {
@@ -62,7 +58,7 @@ public class MenuManager
             var hidePassword = await ShowChoiceMenuAsync(("Da",true), ("Ne",false), "[yellow]Zeliš li sakriti lozinku[/]");
             
             var passwordResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi lozinku",
-                password =>UserPromptFunctions.PasswordCheck(password),hidden:hidePassword);
+                password =>PromptFunctions.PasswordCheck(password),hidden:hidePassword);
 
             if (passwordResult.IsCancelled)
             {
@@ -71,7 +67,7 @@ public class MenuManager
             }
             
             var confirmPasswordResult=await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),
-                "Unesi lozinku ponovno",confirmPassword=>UserPromptFunctions.ConfirmPasswordCheck(confirmPassword,passwordResult.Value),hidden:hidePassword);
+                "Unesi lozinku ponovno",confirmPassword=>PromptFunctions.ConfirmPasswordCheck(confirmPassword,passwordResult.Value),hidden:hidePassword);
             
             if (confirmPasswordResult.IsCancelled)
             {
@@ -79,7 +75,7 @@ public class MenuManager
                 return;
             }
             
-            var firstNameResult =await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi ime",firstName=>UserPromptFunctions.NameCheck(firstName));
+            var firstNameResult =await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi ime",firstName=>PromptFunctions.NameCheck(firstName));
 
             if (firstNameResult.IsCancelled)
             {
@@ -89,7 +85,7 @@ public class MenuManager
 
 
             var lastNameResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(), "Unesi prezime",
-                lastName => UserPromptFunctions.NameCheck(lastName));
+                lastName => PromptFunctions.NameCheck(lastName));
                
             if (lastNameResult.IsCancelled)
             {
@@ -99,7 +95,7 @@ public class MenuManager
 
 
             var birthDateResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(), "Unesi datum rođenja",
-                birthDate => UserPromptFunctions.BirthDateCheck(birthDate));
+                birthDate => PromptFunctions.BirthDateCheck(birthDate));
             
             if (birthDateResult.IsCancelled)
             {
@@ -108,7 +104,7 @@ public class MenuManager
             }
 
             
-            var genderResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi spol (M,F)", gender => UserPromptFunctions.GenderCheck(gender),allowEmpty:true);
+            var genderResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi spol (M,F)", gender => PromptFunctions.GenderCheck(gender),allowEmpty:true);
             
             if (genderResult.IsCancelled)
             {

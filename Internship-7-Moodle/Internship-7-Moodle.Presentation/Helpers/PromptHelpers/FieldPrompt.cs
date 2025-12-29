@@ -70,6 +70,16 @@ public static class FieldPrompt
 
         }
     }
+
+    public static PresentationValidationResult<T> MessageContentValidation<T>(string message, Func<string, PresentationValidationResult<T>> validationFunc)
+    {
+        var prompt = new TextPrompt<string>($"{message}: ");   
+        var input = AnsiConsole.Prompt(prompt);
+        
+        return validationFunc(input);
+        
+        
+    }
     
     
 

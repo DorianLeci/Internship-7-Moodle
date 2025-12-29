@@ -1,4 +1,4 @@
-namespace Internship_7_Moodle.Infrastructure.Security;
+namespace Internship_7_Moodle.Presentation.Service;
 
 public static class CaptchaService
 {

@@ -2,84 +2,71 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
-using Internship_7_Moodle.Domain.Entities.Chats;
 using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
+using Internship_7_Moodle.Domain.Services;
 using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.GetChat;
 
-public class GetOrCreateChatRequestHandler:IRequestHandler<GetOrCreateChatRequest,AppResult<ChatResponse>>
+public class GetChatRequestHandler:IRequestHandler<GetChatRequest,AppResult<ChatResponse>>
 {
     private readonly IUserUnitOfWork _userUnitOfWork;
+    private readonly ChatDomainService _chatDomainService;
 
-    public GetOrCreateChatRequestHandler(IUserUnitOfWork userUnitOfWork)
+    public GetChatRequestHandler(IUserUnitOfWork userUnitOfWork, ChatDomainService chatDomainService)
     {
         _userUnitOfWork = userUnitOfWork;
+        _chatDomainService = chatDomainService;
     }
-    public async Task<AppResult<ChatResponse>> Handle(GetOrCreateChatRequest request, CancellationToken cancellationToken)
+    public async Task<AppResult<ChatResponse>> Handle(GetChatRequest request, CancellationToken cancellationToken)
     {
         var result=new AppResult<ChatResponse>();
-        var validationResult = new ValidationResult();
         
         var currentUser = await _userUnitOfWork.UserRepository.GetByIdAsync(request.CurrentUserId);
         var otherUser = await _userUnitOfWork.UserRepository.GetByIdAsync(request.OtherUserId);
 
         if (currentUser == null || otherUser == null)
         {
+            var validationResult = new ValidationResult();
             validationResult.Add(EntityValidation.CommonValidation.ItemMustExist(nameof(User),"Jedan od korisnika"));
             result.SetValidationResult(validationResult);
             return result;
         }
 
-        if (currentUser.Id == otherUser.Id)
+        var chatValidation = _chatDomainService.ValidateUsersForChat(currentUser, otherUser);
+        if (chatValidation.HasErrors)
         {
-            validationResult.Add(EntityValidation.ChatValidation.ItemMustBeDifferent(nameof(User),
-                "Korisnici ne smije imati chat sam sa sobom"));
-            result.SetValidationResult(validationResult);
+            result.SetValidationResult(chatValidation);
             return result;
         }
         
-        var userAId = Math.Min(currentUser.Id, otherUser.Id);
-        var userBId = Math.Max(currentUser.Id, otherUser.Id);
-        
-        var chat=await _userUnitOfWork.ChatRepository.GetChatAsync(userAId, userBId) ?? new Chat
-        {
-            UserAId = userAId,
-            UserBId = userBId,
-        };
-        
-        bool isChatNew = chat.Id == 0;
+        var (userAId, userBId) = _chatDomainService.GetOrderedUserIds(currentUser, otherUser);
 
+        var chat = await _userUnitOfWork.ChatRepository.GetChatAsync(userAId, userBId);
+        
         var chatResponse = new ChatResponse
         {
-            ChatId = chat.Id,
+            ChatId = chat?.Id ?? 0,
             CurrentUserId = currentUser.Id,
             OtherUserId = otherUser.Id,
             CurrentUserName = currentUser.FirstName+" "+currentUser.LastName,
             OtherUserName = otherUser.FirstName + " " + otherUser.LastName,
             
-            Messages = chat.PrivateMessages
+            Messages = (chat!=null) ? chat.PrivateMessages
                 .OrderBy(pm=>pm.CreatedAt)
                 .Select(pm=>new PrivateMessageResponse
-            {
-                MessageId = pm.Id,
-                SenderId = pm.SenderId,
-                ReceiverId = pm.ReceiverId,
-                SenderName = pm.Sender.FirstName + " " + pm.Sender.LastName,
-                Content = pm.Text,
-                SentAt = pm.CreatedAt,
-                IsRead = pm.IsRead
-            }).ToList()
+                {
+                    MessageId = pm.Id,
+                    SenderId = pm.SenderId,
+                    ReceiverId = pm.ReceiverId,
+                    SenderName = pm.Sender.FirstName + " " + pm.Sender.LastName,
+                    Content = pm.Text,
+                    SentAt = pm.CreatedAt,
+                    IsRead = pm.IsRead
+                }).ToList(): new List<PrivateMessageResponse>()
             
         };
-
-        if (isChatNew)
-        {
-            await _userUnitOfWork.ChatRepository.InsertAsync(chat);
-            await _userUnitOfWork.SaveAsync();            
-        }
-
         
         result.SetResult(chatResponse);
         return result;

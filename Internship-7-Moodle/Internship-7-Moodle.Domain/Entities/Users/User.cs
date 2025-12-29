@@ -45,10 +45,7 @@ public class User:BaseEntity
     public Result<int> Create()
     {
         var result = Validate();
-        if (result.HasErrors)
-            return Result<int>.Failure(result);
-        
-        return Result<int>.Success(Id);
+        return result.HasErrors ? Result<int>.Failure(result) : Result<int>.Success(Id);
     }
     
     private ValidationResult Validate()

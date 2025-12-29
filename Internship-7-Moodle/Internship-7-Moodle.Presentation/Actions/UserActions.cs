@@ -10,8 +10,10 @@ using Internship_7_Moodle.Application.Users.RegisterUser;
 using Internship_7_Moodle.Application.Users.Response;
 using Internship_7_Moodle.Application.Users.Response.Course;
 using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Users.SendMessage;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
+using Spectre.Console;
 
 
 namespace Internship_7_Moodle.Presentation.Actions;
@@ -95,7 +97,14 @@ public class UserActions
 
     public async Task<AppResult<ChatResponse>> GetOrCreateChatAsync(int currentUserId, int otherUserId)
     {
-        return await _mediator.Send(new GetOrCreateChatRequest(currentUserId, otherUserId));
+        return await _mediator.Send(new GetChatRequest(currentUserId, otherUserId));
+    }
+
+    public async Task<AppResult<PrivateMessageResponse>> SendPrivateMessageAsync(int currentUserId, int otherUserId,string text)
+    {
+        var dto=new SendMessageDto(currentUserId, otherUserId, text);
+        
+        return await _mediator.Send(SendMessageRequest.FromDto(dto));
     }
     
 }

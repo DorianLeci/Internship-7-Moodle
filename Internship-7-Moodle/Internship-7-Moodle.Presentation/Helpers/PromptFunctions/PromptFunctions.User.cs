@@ -2,9 +2,9 @@ using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Helpers.FormatCheck;
 using Internship_7_Moodle.Presentation.InputValidation;
 
-namespace Internship_7_Moodle.Presentation.Helpers.PromptFunctions.User;
+namespace Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
 
-public static class UserPromptFunctions
+public static partial class PromptFunctions
 {
     public static PresentationValidationResult<string> EmailCheck(string email)
     {
@@ -48,6 +48,5 @@ public static class UserPromptFunctions
         return GenderFormatCheck.IsGenderValid(gender,out var gd)
             ? PresentationValidationResult<GenderEnum?>.Success(gd)
             : PresentationValidationResult<GenderEnum?>.Error("[red]Spol nije u ispravnom formatu[/]");
-
     }
 }

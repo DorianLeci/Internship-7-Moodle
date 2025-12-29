@@ -60,6 +60,7 @@ public class RegisterUserCommandHandler:IRequestHandler<RegisterUserCommand,AppR
         
         newUser.Password = _passwordHasher.HashPassword(newUser,request.Password);
         newUser.Role = role!;
+        
         await _userUnitOfWork.UserRepository.InsertAsync(newUser);
         await _userUnitOfWork.SaveAsync();
         

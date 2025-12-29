@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.GetChat;
 
-public record GetOrCreateChatRequest(int CurrentUserId,int OtherUserId):IRequest<AppResult<ChatResponse>>
+public record GetChatRequest(int CurrentUserId,int OtherUserId):IRequest<AppResult<ChatResponse>>
 {
 }

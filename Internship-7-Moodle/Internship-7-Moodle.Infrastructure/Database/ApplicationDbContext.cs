@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Entities.Chats;
 using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Entities.Messages;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
@@ -34,6 +35,7 @@ public sealed class ApplicationDbContext:DbContext
         modelBuilder.Entity<CourseNotification>().Configure();
         modelBuilder.Entity<CourseMaterial>().Configure();
         modelBuilder.Entity<Course>().Configure();
+        modelBuilder.Entity<Chat>().Configure();
         
         Seeder.SeedData(modelBuilder);
         
