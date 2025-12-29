@@ -96,13 +96,13 @@ public abstract class BaseMainMenuManager
 
     public async Task OpenPrivateChatAsync(int otherUserId)
     {
-        const int panelHeight = 3;
+        const int panelHeight = 5;
         
         var result=await UserActions.GetChatAsync(UserId, otherUserId);
 
         if (result.IsFailure)
         {
-            Writer.ChatErrorWriter(result);
+            Writer.Chat.ChatErrorWriter(result);
             ConsoleHelper.ClearAndSleep(2000,"[blue]Izlazak...[/]");
             return;
         }
@@ -111,13 +111,13 @@ public abstract class BaseMainMenuManager
 
         if (chatResponse == null)
         {
-            Writer.ChatErrorWriter(result);
+            Writer.Chat.ChatErrorWriter(result);
             ConsoleHelper.ClearAndSleep(2000,"[blue]Izlazak...[/]");
             return;
         }
         
         var scrollOffset =chatResponse.Messages.Count-panelHeight ;
-        await Writer.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
+        await Writer.Chat.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
         
         var exitChat = false;
         
@@ -138,7 +138,7 @@ public abstract class BaseMainMenuManager
                     if (scrollOffset < 0)
                         scrollOffset = 0;
                     
-                    await Writer.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
+                    await Writer.Chat.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
                     break;
                 
                 case ConsoleKey.DownArrow:
@@ -147,12 +147,12 @@ public abstract class BaseMainMenuManager
                     if(scrollOffset>=(chatResponse.Messages.Count-panelHeight))
                         scrollOffset = chatResponse.Messages.Count-panelHeight;
                     
-                    await Writer.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
+                    await Writer.Chat.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
                     break;
                 
                 case ConsoleKey.Enter:
                     var textResult = await FieldPrompt.MessageContentValidation(()=>ShowChoiceMenuAsync(),"Unesi poruku(max 500 znakova)",
-                        text => PromptFunctions.ContentCheck(text));
+                        text => PromptFunctions.Message.ContentCheck(text));
                     
                     if (!textResult.Successful) break;
                     
@@ -171,7 +171,7 @@ public abstract class BaseMainMenuManager
                     if(scrollOffset>=(chatResponse.Messages.Count-panelHeight))
                         scrollOffset = chatResponse.Messages.Count-panelHeight;
                     
-                    await Writer.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
+                    await Writer.Chat.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
                     break;
                 
                 case ConsoleKey.Q:

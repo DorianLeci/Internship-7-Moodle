@@ -6,6 +6,8 @@ namespace Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
 
 public static partial class PromptFunctions
 {
+    public static class UserRegister
+    {
     public static PresentationValidationResult<string> EmailCheck(string email)
     {
         return EmailFormatCheck.IsEmailValid(email)
@@ -49,4 +51,5 @@ public static partial class PromptFunctions
             ? PresentationValidationResult<GenderEnum?>.Success(gd)
             : PresentationValidationResult<GenderEnum?>.Error("[red]Spol nije u ispravnom formatu[/]");
     }
-}
+}        
+    }

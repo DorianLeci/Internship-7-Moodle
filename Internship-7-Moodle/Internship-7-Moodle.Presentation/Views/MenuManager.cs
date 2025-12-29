@@ -47,7 +47,7 @@ public class MenuManager
         while (true)
         {
              var emailResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi email",
-                email => PromptFunctions.EmailCheck(email));
+                email => PromptFunctions.UserRegister.EmailCheck(email));
 
             if (emailResult.IsCancelled)
             {
@@ -58,7 +58,7 @@ public class MenuManager
             var hidePassword = await ShowChoiceMenuAsync(("Da",true), ("Ne",false), "[yellow]Zeliš li sakriti lozinku[/]");
             
             var passwordResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi lozinku",
-                password =>PromptFunctions.PasswordCheck(password),hidden:hidePassword);
+                password =>PromptFunctions.UserRegister.PasswordCheck(password),hidden:hidePassword);
 
             if (passwordResult.IsCancelled)
             {
@@ -67,7 +67,7 @@ public class MenuManager
             }
             
             var confirmPasswordResult=await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),
-                "Unesi lozinku ponovno",confirmPassword=>PromptFunctions.ConfirmPasswordCheck(confirmPassword,passwordResult.Value),hidden:hidePassword);
+                "Unesi lozinku ponovno",confirmPassword=>PromptFunctions.UserRegister.ConfirmPasswordCheck(confirmPassword,passwordResult.Value),hidden:hidePassword);
             
             if (confirmPasswordResult.IsCancelled)
             {
@@ -75,7 +75,7 @@ public class MenuManager
                 return;
             }
             
-            var firstNameResult =await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi ime",firstName=>PromptFunctions.NameCheck(firstName));
+            var firstNameResult =await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi ime",firstName=>PromptFunctions.UserRegister.NameCheck(firstName));
 
             if (firstNameResult.IsCancelled)
             {
@@ -85,7 +85,7 @@ public class MenuManager
 
 
             var lastNameResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(), "Unesi prezime",
-                lastName => PromptFunctions.NameCheck(lastName));
+                lastName => PromptFunctions.UserRegister.NameCheck(lastName));
                
             if (lastNameResult.IsCancelled)
             {
@@ -95,7 +95,7 @@ public class MenuManager
 
 
             var birthDateResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(), "Unesi datum rođenja",
-                birthDate => PromptFunctions.BirthDateCheck(birthDate));
+                birthDate => PromptFunctions.UserRegister.BirthDateCheck(birthDate));
             
             if (birthDateResult.IsCancelled)
             {
@@ -104,7 +104,7 @@ public class MenuManager
             }
 
             
-            var genderResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi spol (M,F)", gender => PromptFunctions.GenderCheck(gender),allowEmpty:true);
+            var genderResult = await FieldPrompt.PromptWithValidation(()=>ShowChoiceMenuAsync(),"Unesi spol (M,F)", gender => PromptFunctions.UserRegister.GenderCheck(gender),allowEmpty:true);
             
             if (genderResult.IsCancelled)
             {
@@ -122,7 +122,7 @@ public class MenuManager
             
             var response=await _userActions.RegisterUserAsync(firstNameResult.Value,lastNameResult.Value,birthDateResult.Value!.Value,emailResult.Value,genderResult.Value,passwordResult.Value,RoleEnum.Student);
             
-            var isUserRegistered=Writer.RegisterUserWriter(response);
+            var isUserRegistered=Writer.Authentication.RegisterUserWriter(response);
 
             if (!isUserRegistered)
             {
@@ -171,7 +171,7 @@ public class MenuManager
             
             var response = await _userActions.LoginUserAsync(email, password);
 
-            var isLoginSuccessful=Writer.LoginUserWriter(response);
+            var isLoginSuccessful=Writer.Authentication.LoginUserWriter(response);
 
             if (!isLoginSuccessful)
             {

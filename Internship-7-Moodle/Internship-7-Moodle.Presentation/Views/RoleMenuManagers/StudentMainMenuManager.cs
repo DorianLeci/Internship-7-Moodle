@@ -84,7 +84,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
 
         var notifications = await UserActions.GetAllNotificationsAsync(courseId);
         var notificationList = notifications.ToList();
-        Writer.NotificationWriter(notificationList);
+        Writer.Course.NotificationWriter(notificationList);
 
         ConsoleHelper.ScreenExit(1500);
     }
@@ -95,7 +95,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
 
         var materials = await UserActions.GetAllMaterialsAsync(courseId);
         var materialList = materials.ToList();
-        Writer.MaterialsWriter(materialList);
+        Writer.Course.MaterialsWriter(materialList);
 
         ConsoleHelper.ScreenExit(1500); 
     }

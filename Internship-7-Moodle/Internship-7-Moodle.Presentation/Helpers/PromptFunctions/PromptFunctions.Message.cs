@@ -5,10 +5,14 @@ namespace Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
 
 public static partial class PromptFunctions
 {
-    public static PresentationValidationResult<string> ContentCheck(string text)
+    public static class Message
     {
-        return text.Length<=PrivateMessage.MaxTextLength
-            ? PresentationValidationResult<string>.Success(text)
-            : PresentationValidationResult<string>.Error("[red]Sadržaj poruke ima previše znakova[/]");
+        public static PresentationValidationResult<string> ContentCheck(string text)
+        {
+            return text.Length<=PrivateMessage.MaxTextLength
+                ? PresentationValidationResult<string>.Success(text)
+                : PresentationValidationResult<string>.Error("[red]Sadržaj poruke ima previše znakova[/]");
+        }        
     }
+
 }
