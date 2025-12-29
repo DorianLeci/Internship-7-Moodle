@@ -86,8 +86,8 @@ public partial class MenuBuilder
     public static Dictionary<string,Func<Task<bool>>> CreatePrivateChatMenu(BaseMainMenuManager manager)
     {
         return new MenuBuilder()
-            .AddChoice("Nova poruka", async () => { await manager.ShowConversationMenuAsync(true,"[yellow]Korisnici s kojima još nisi komunicirao[/]"); return false; })
-            .AddChoice("Moji razgovori",async()=>{await manager.ShowConversationMenuAsync(false,"[yellow]Moji razgovori[/]"); return false; })
+            .AddChoice("Nova poruka", async () => { await manager.ShowConversationMenuAsync(true," [yellow]Korisnici s kojima još nisi komunicirao[/]"); return false; })
+            .AddChoice("Moji razgovori",async()=>{await manager.ShowConversationMenuAsync(false," [yellow]Moji razgovori[/]"); return false; })
             .AddMenuExit()
             .ReturnDictionary();
     }

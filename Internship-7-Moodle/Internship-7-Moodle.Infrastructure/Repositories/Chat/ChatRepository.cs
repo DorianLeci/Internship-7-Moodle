@@ -19,6 +19,9 @@ public class ChatRepository:Repository<Domain.Entities.Chats.Chat,int>,IChatRepo
                 .ThenInclude(pm => pm.Receiver)
             .Include(c => c.UserA)
             .Include(c => c.UserB)
-            .FirstOrDefaultAsync(c => c.UserAId == userAId && c.UserBId == userBId);
+            .FirstOrDefaultAsync(c => 
+                (c.UserAId == userAId && c.UserBId == userBId) ||
+                (c.UserAId == userBId && c.UserBId == userAId)
+            );
     }
 }

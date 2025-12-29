@@ -61,4 +61,11 @@ public class MessageRepository:Repository<PrivateMessage,int>,IMessageRepository
             : await chattedUsersQuery.ToListAsync();
         
     }
+
+    public async Task MarkMessagesAsReadAsync(IEnumerable<int> messageIdList)
+    {
+        await DbSet
+            .Where(m => messageIdList.Contains(m.Id))
+            .ExecuteUpdateAsync(s=>s.SetProperty(m=>m.IsRead,true));
+    }
 }

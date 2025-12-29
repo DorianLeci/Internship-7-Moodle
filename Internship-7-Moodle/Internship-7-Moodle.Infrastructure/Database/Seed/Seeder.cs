@@ -518,7 +518,7 @@ public static class Seeder
             {
                 Id = 5, 
                 CreatedAt = new DateTime(2025, 12, 03, 14, 01, 0),
-                UpdatedAt = new DateTime(2025, 10, 03, 14, 01, 0),
+                UpdatedAt = new DateTime(2025, 12, 03, 14, 01, 0),
                 Text="Bok,jel imaš skriptu iz Matematike 1 slučajno?", 
                 SenderId = 1, 
                 ReceiverId = 2, 
@@ -529,7 +529,7 @@ public static class Seeder
             {
                 Id = 6, 
                 CreatedAt = new DateTime(2025, 12, 03, 14, 07, 0),
-                UpdatedAt = new DateTime(2025, 10, 03, 14, 07, 0),
+                UpdatedAt = new DateTime(2025, 12, 03, 14, 07, 0),
                 Text="Bok,imam naravno,sutra ti dam na faksu.", 
                 SenderId = 2, 
                 ReceiverId = 1, 
@@ -551,7 +551,7 @@ public static class Seeder
                 UserAId = 1,
                 UserBId = 8,
                 CreatedAt = new DateTime(2025, 11, 11, 07, 45, 0),
-                UpdatedAt = new DateTime(2025, 11, 11, 09, 45, 0)
+                UpdatedAt = new DateTime(2025, 11, 11, 07, 45, 0)
             },
             new Chat
             {
@@ -559,7 +559,7 @@ public static class Seeder
                 UserAId = 1,
                 UserBId = 10,
                 CreatedAt = new DateTime(2025, 10, 03, 09, 30, 0),
-                UpdatedAt = new DateTime(2025, 10, 03, 09, 45, 0)
+                UpdatedAt = new DateTime(2025, 10, 03, 09, 30, 0),
             },
             new Chat
             {
@@ -567,7 +567,7 @@ public static class Seeder
                 UserAId = 1,
                 UserBId = 2,
                 CreatedAt = new DateTime(2025, 12, 03, 14, 01, 0),
-                UpdatedAt = new DateTime(2025, 10, 03, 14, 07, 0)
+                UpdatedAt = new DateTime(2025, 12, 03, 14, 01, 0),
 
             }
             

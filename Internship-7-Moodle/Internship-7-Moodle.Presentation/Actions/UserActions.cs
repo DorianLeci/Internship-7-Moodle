@@ -12,6 +12,7 @@ using Internship_7_Moodle.Application.Users.Response;
 using Internship_7_Moodle.Application.Users.Response.Course;
 using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Application.Users.SendMessage;
+using Internship_7_Moodle.Application.Users.UpdateUnreadMessage;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
 using Spectre.Console;
@@ -120,6 +121,11 @@ public class UserActions
         var dto=new SendMessageDto(currentUserId, otherUserId, text);
         
         return await _mediator.Send(SendMessageCommand.FromDto(dto));
+    }
+
+    public async Task<AppResult<EmptyResult>> UpdateUnreadMessagesAsync(IEnumerable<int> messageIdList)
+    {
+        return await _mediator.Send(new UpdateUnreadMessagesRequest(messageIdList));
     }
     
 }

@@ -2,6 +2,7 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Users.Response;
 using Internship_7_Moodle.Application.Users.Response.Course;
 using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Spectre.Console;
 
@@ -145,24 +146,25 @@ public static class Writer
             Border = BoxBorder.Rounded
         });
     }
-    public static void ChatWriter(ChatResponse chatResponse,int currentUserId,int scrollOffset,int panelHeight)
+    public static async Task ChatWriter(ChatResponse chatResponse,UserActions userActions,int scrollOffset,int panelHeight)
     {            
-        ConsoleHelper.ClearAndSleep(10);
+        // ConsoleHelper.ClearAndSleep(10);
         ChatHeaderWriter(chatResponse);
 
         const string hasReadMarkup = "[blue]✓✓[/]";
         const string hasNotReadMarkup="[grey]✓✓[/]";
 
         var grid = new Grid();
-        grid.AddColumn();
-        grid.AddColumn();
-
-        var totalMsg = chatResponse.Messages.Count;
-
-        foreach (var msg in chatResponse.Messages.Skip(Math.Max(0,scrollOffset)).Take(panelHeight))
+        grid.AddColumn(new GridColumn { Width = 50 });
+        grid.AddColumn(new GridColumn { Width = 50 });
+        
+        var visibleMsg= await UpdateMessageList(chatResponse, userActions, scrollOffset,panelHeight);
+        
+        foreach (var msg in visibleMsg)
         {
-            var isCurrentUser=msg.SenderId == currentUserId;
-            var senderName=msg.SenderId==currentUserId ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
+            Console.WriteLine("Read: {0},{1}",msg.IsRead,msg.Content);
+            var isCurrentUser = msg.SenderId == chatResponse.CurrentUserId;
+            var senderName=msg.SenderId==chatResponse.CurrentUserId ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
             
             var infoTable = new Table()
             {
@@ -173,8 +175,6 @@ public static class Writer
             infoTable.AddColumn("");
             infoTable.AddRow($"[grey]{msg.SentAt}[/] {(isCurrentUser ? (msg.IsRead? hasReadMarkup : hasNotReadMarkup): "") }");
             
-
-            
             var panel = new Panel(new Rows(new Markup(msg.Content),infoTable))
             {
                 Header = new PanelHeader(senderName, Justify.Left),
@@ -183,15 +183,39 @@ public static class Writer
                 
             };
             
+            var emptyPanel = new Panel(" ") 
+            {
+                Border = BoxBorder.None,
+                Padding = new Padding(0),
+                Expand = true
+            };
             if(isCurrentUser)
-                grid.AddRow(panel, new Markup("")); 
-            
+                grid.AddRow(panel,emptyPanel);
+
             else
-                grid.AddRow(new Markup(""),panel);
+                grid.AddRow(emptyPanel,panel);   
             
         }
         AnsiConsole.Write(grid);
         
+    }
+
+    private static async Task<List<PrivateMessageResponse>> UpdateMessageList(ChatResponse chatResponse,UserActions userActions,int scrollOffset,int panelHeight)
+    {
+        var visibleMsg = chatResponse.Messages
+            .Skip(Math.Max(0, scrollOffset))
+            .Take(panelHeight)
+            .ToList();
+        
+        var visibleUnreadMsg = visibleMsg
+            .Where(m => m.ReceiverId == chatResponse.CurrentUserId && !m.IsRead)
+            .Select(m => m.MessageId)
+            .ToList();
+        
+        if(visibleUnreadMsg.Count>0)
+            await userActions.UpdateUnreadMessagesAsync(visibleUnreadMsg);
+        
+        return visibleMsg;
     }
     
 }

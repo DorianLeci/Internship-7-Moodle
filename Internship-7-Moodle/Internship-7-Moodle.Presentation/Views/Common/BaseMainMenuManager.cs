@@ -52,7 +52,7 @@ public abstract class BaseMainMenuManager
         {
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[yellow] Nova poruka[/]")
+                    .Title(title)
                     .AddChoices(newMsgMenu.Keys));
 
             exitRequested = await newMsgMenu[choice]();     
@@ -116,15 +116,19 @@ public abstract class BaseMainMenuManager
             return;
         }
         
-        Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId,chatResponse.Messages.Count-panelHeight,panelHeight);
+        var scrollOffset =chatResponse.Messages.Count-panelHeight ;
+        await Writer.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
         
         var exitChat = false;
-        var scrollOffset = 0;
         
         while (!exitChat)
         {
             AnsiConsole.MarkupLine("[blue]Pritisni enter ako želiš unijeti poruku ili q(Esc) za izlazak iz razgovora[/]: ");
             var keyInfo=Console.ReadKey(intercept:true);
+            
+            var refreshResult = await UserActions.GetChatAsync(UserId, otherUserId);
+            if (!refreshResult.IsFailure && refreshResult.Value != null)
+                chatResponse = refreshResult.Value;
 
             switch (keyInfo.Key)
             {
@@ -134,7 +138,7 @@ public abstract class BaseMainMenuManager
                     if (scrollOffset < 0)
                         scrollOffset = 0;
                     
-                    Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId,scrollOffset,panelHeight);
+                    await Writer.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
                     break;
                 
                 case ConsoleKey.DownArrow:
@@ -143,7 +147,7 @@ public abstract class BaseMainMenuManager
                     if(scrollOffset>=(chatResponse.Messages.Count-panelHeight))
                         scrollOffset = chatResponse.Messages.Count-panelHeight;
                     
-                    Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId,scrollOffset,panelHeight);
+                    await Writer.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
                     break;
                 
                 case ConsoleKey.Enter:
@@ -167,7 +171,7 @@ public abstract class BaseMainMenuManager
                     if(scrollOffset>=(chatResponse.Messages.Count-panelHeight))
                         scrollOffset = chatResponse.Messages.Count-panelHeight;
                     
-                    Writer.ChatWriter(chatResponse,chatResponse.CurrentUserId,scrollOffset,panelHeight);
+                    await Writer.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
                     break;
                 
                 case ConsoleKey.Q:
