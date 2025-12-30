@@ -9,7 +9,7 @@ namespace Internship_7_Moodle.Domain.Entities.Messages;
 
 public class PrivateMessage:BaseEntity
 {
-    public const int MaxTextLength = 1000;
+    public const int MaxTextLength = 20;
     public string Text { get; set; }
     public bool IsRead { get; set; }
     
@@ -33,6 +33,7 @@ public class PrivateMessage:BaseEntity
     {
         var validationResult = new ValidationResult();
         
+        CheckTextLength(validationResult);
         return validationResult;
     }
 

@@ -3,10 +3,8 @@ using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.UiState;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Spectre.Console;
 using Spectre.Console.Rendering;
-using Terminal.Gui.Views;
 
 namespace Internship_7_Moodle.Presentation.Helpers.Writers;
 
@@ -19,15 +17,15 @@ public static partial class Writer
         Common.ErrorWriter(result,"[red]Nije moguće otvoriti chat[/]");
     }
 
-    private static void ChatHeaderWriter(ChatResponse chatResponse)
-    {
-        var otherUserName = chatResponse.OtherUserName;
-        AnsiConsole.Write(new Panel($"Chat sa: [yellow]{otherUserName}[/]")
-        {
-            Header = new PanelHeader("[green]Privatni chat[/]", Justify.Center),
-            Border = BoxBorder.Rounded
-        });
-    }
+    // private static void ChatHeaderWriter(ChatResponse chatResponse)
+    // {
+    //     var otherUserName = chatResponse.OtherUserName;
+    //     AnsiConsole.Write(new Panel($"Chat sa: [yellow]{otherUserName}[/]")
+    //     {
+    //         Header = new PanelHeader("[green]Privatni chat[/]", Justify.Center),
+    //         Border = BoxBorder.Rounded
+    //     });
+    // }
 
     public static async Task RunChatLive(ChatUiState state,UserActions actions)
     {
@@ -37,6 +35,24 @@ public static partial class Writer
             {
                 while (!state.Exit)
                 {
+                    bool atBottom = state.ScrollOffset >= state.Chat.Messages.Count - state.MaxVisibleMessages;
+                    
+                    var refreshResult = await state.UserActions.GetChatAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId);
+                    if (refreshResult.IsFailure || refreshResult.Value == null)
+                    {
+                        Writer.Chat.ChatErrorWriter(refreshResult);
+                        ConsoleHelper.ClearAndSleep(2000, "[blue]Izlazak...[/]");
+                        return;
+                    }
+                    
+                    state.Chat.Messages = refreshResult.Value.Messages;                   
+                    if (atBottom)
+                        state.ScrollOffset = Math.Max(0, state.Chat.Messages.Count - state.MaxVisibleMessages);
+                    
+                    await UpdateMessageList(refreshResult.Value,state.UserActions);
+                    
+                    ctx.UpdateTarget(BuildLayout(state));
+                    
                     while (Console.KeyAvailable)
                     {
                         var key = Console.ReadKey(true);
@@ -47,17 +63,33 @@ public static partial class Writer
                                 var text = state.InputBuffer.Trim();
                                 state.InputBuffer = "";
                                 
-                                                                
                                 if (string.Equals(text, "/exit", StringComparison.InvariantCultureIgnoreCase))
                                 {
                                     state.Exit = true;
-                                    state.InputBuffer="[blue]Izlazak...[/]";
+                                    state.Error="[blue]\nIzlazak...[/]";
                                     break;
                                 }
 
                                 if (!string.IsNullOrWhiteSpace(text))
                                 {
                                     var result=await actions.SendPrivateMessageAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId,text);
+
+                                    if (result.IsFailure)
+                                    {
+                                        state.Error = '\n' + string.Join("\n",
+                                            result.Errors.Select(e => $"[red]{e.Message}[/]"));
+                                    }
+
+                                    else
+                                        state.Error = "\n" + "[green]Uspješno unesena nova poruka[/]";
+
+                                    ctx.UpdateTarget(BuildLayout(state));
+
+                                    _ = Task.Run(async () =>
+                                    {
+                                        await Task.Delay(3000);
+                                        state.Error = null;
+                                    });
                                 }
 
                                 break;
@@ -72,7 +104,7 @@ public static partial class Writer
                             case ConsoleKey.DownArrow:
                                 state.ScrollOffset++;
 
-                                if (state.ScrollOffset >= (state.Chat.Messages.Count - state.MaxVisibleMessages))
+                                if (state.ScrollOffset >(state.Chat.Messages.Count - state.MaxVisibleMessages))
                                     state.ScrollOffset = state.Chat.Messages.Count - state.MaxVisibleMessages;
                                 break;
                             
@@ -85,21 +117,9 @@ public static partial class Writer
                                 if (!char.IsControl(key.KeyChar))
                                     state.InputBuffer += key.KeyChar;
                                 break;
-                            }
+                            } 
                         }
                     }
-                    
-                    var refreshResult = await state.UserActions.GetChatAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId);
-                    if (refreshResult.IsFailure || refreshResult.Value == null)
-                    {
-                        Writer.Chat.ChatErrorWriter(refreshResult);
-                        ConsoleHelper.ClearAndSleep(2000, "[blue]Izlazak...[/]");
-                        return;
-                    }
-            
-                    await UpdateMessageList(refreshResult.Value,state.UserActions);
-            
-                    state.Chat.Messages = refreshResult.Value.Messages;
                     
                     ctx.UpdateTarget(BuildLayout(state));
                 }
@@ -107,7 +127,7 @@ public static partial class Writer
 
     }
     
-    private static IRenderable BuildLayout(ChatUiState state)
+    private static Rows BuildLayout(ChatUiState state)
     {
         const string hasReadMarkup = "[blue]✓✓[/]";
         const string hasNotReadMarkup = "[grey]✓✓[/]";
@@ -156,7 +176,7 @@ public static partial class Writer
                 chatGrid.AddRow(emptyPanel, panel);
         }
 
-        var statusText = state.Error ?? "[blue]Upiši poruku| exit za izlaz[/]";
+        var statusText = state.Error ?? "\n[blue]Upiši poruku | exit za izlaz[/]";
 
         var statusPanel = new Panel(new Markup(statusText))
         {
@@ -171,7 +191,7 @@ public static partial class Writer
     }
 
 
-    public static async Task UpdateMessageList(ChatResponse response,UserActions userActions)
+    private static async Task UpdateMessageList(ChatResponse response,UserActions userActions)
     {
         
         var visibleUnreadMsg = response.Messages

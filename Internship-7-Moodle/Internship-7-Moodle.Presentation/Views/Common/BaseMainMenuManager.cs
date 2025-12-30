@@ -101,6 +101,8 @@ public abstract class BaseMainMenuManager
 
     public async Task OpenPrivateChatAsync(int otherUserId)
     {
+        const int maxVisibleMsg = 5;
+        
         ConsoleHelper.ClearAndSleep();
         var result = await UserActions.GetChatAsync(UserId, otherUserId);
         if (result.IsFailure || result.Value == null)
@@ -110,7 +112,11 @@ public abstract class BaseMainMenuManager
             return;
         }
 
-        var state = new ChatUiState(result.Value,UserActions);
+        var state = new ChatUiState(result.Value,UserActions)
+        {
+            MaxVisibleMessages = maxVisibleMsg,
+            ScrollOffset = result.Value.Messages.Count-maxVisibleMsg
+        };
         
         await Writer.Chat.RunChatLive(state,UserActions);
 

@@ -15,8 +15,10 @@ public class ChatUiState
     
     public string InputBuffer { get; set; } = "";
     
-    public int ScrollOffset { get; set; } = 0; 
-    public int MaxVisibleMessages { get; set; } = 5;
+    public int ScrollOffset { get; set; } = 0;
+    public int MaxVisibleMessages { get; set; } = 10;
+    
+    
     public ChatUiState(ChatResponse chat, UserActions userActions)
     {
         Chat = chat;
