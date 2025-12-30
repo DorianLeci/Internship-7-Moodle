@@ -21,6 +21,11 @@ public static class ConsoleHelper
         AnsiConsole.Clear();
     }
 
+    public static void SleepAndClear(int timeout)
+    {
+        Thread.Sleep(timeout);
+        AnsiConsole.Clear();        
+    }
     public static async Task<bool> ShowCountdown(int remainingSeconds,int maxSeconds=30)
     {
         ClearAndSleep();

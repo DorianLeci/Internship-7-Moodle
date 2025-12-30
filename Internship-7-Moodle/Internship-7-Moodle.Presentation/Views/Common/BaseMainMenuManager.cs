@@ -3,6 +3,7 @@ using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
 using Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
+using Internship_7_Moodle.Presentation.Helpers.UiState;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Spectre.Console;
 
@@ -100,8 +101,7 @@ public abstract class BaseMainMenuManager
 
     public async Task OpenPrivateChatAsync(int otherUserId)
     {
-        const int panelHeight = 15;
-
+        ConsoleHelper.ClearAndSleep();
         var result = await UserActions.GetChatAsync(UserId, otherUserId);
         if (result.IsFailure || result.Value == null)
         {
@@ -110,65 +110,12 @@ public abstract class BaseMainMenuManager
             return;
         }
 
-        var chatResponse = result.Value;
-        string? lastError = null;
-
-        var exitChat = false;
-        while (!exitChat)
-        {           
-            
-            await Writer.Chat.ChatWriter(chatResponse, UserActions);
-
-            lastError=await LiveErrorMessage(lastError);
-            
-            var keyInfo = Console.ReadKey(intercept: true);
-            
-            var refreshResult = await UserActions.GetChatAsync(UserId, otherUserId);
-            if (!refreshResult.IsFailure && refreshResult.Value != null)
-                chatResponse = refreshResult.Value;
-
-            switch (keyInfo.Key)
-            {
-                
-                case ConsoleKey.Q:
-                case ConsoleKey.Escape:
-                    exitChat = true;
-                    ConsoleHelper.ClearAndSleep(1500, "[blue]\nIzlazak...[/]");
-                    break;
-            }
-        }
-    }
-
-    private static async Task<string?> LiveErrorMessage(string? lastError)
-    {
-        const int waitingSeconds = 10;
+        var state = new ChatUiState(result.Value,UserActions);
         
-        var statusLive = AnsiConsole.Live(new Markup("\n[blue]Enter = poruka | ↑↓ scroll | Q/Esc = izlaz[/])"))
-            .AutoClear(false);
+        await Writer.Chat.RunChatLive(state,UserActions);
 
-        await statusLive.StartAsync(async ctx =>
-        {
-            if (!string.IsNullOrEmpty(lastError))
-            {
-                
-                for (var i = waitingSeconds; i>0; i--)
-                {
-                    ctx.UpdateTarget(new Markup($"[red]{lastError}[/] [blue](možeš unijeti novu poruku za {i} s)[/]"));
-                    await Task.Delay(1000);
-                }
-                
-                lastError = null;
-
-                ctx.UpdateTarget(new Markup("\n[blue]Enter = poruka | ↑↓ scroll | Q/Esc = izlaz[/])"));
-            }
-
-            ;
-        });
-        
-        return lastError;
+        ConsoleHelper.SleepAndClear(2000);
     }
-
-
-
-
+    
 }
+    

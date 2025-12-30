@@ -2,7 +2,10 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Presentation.Helpers.UiState;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Spectre.Console;
+using Spectre.Console.Rendering;
 using Terminal.Gui.Views;
 
 namespace Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -25,64 +28,154 @@ public static partial class Writer
             Border = BoxBorder.Rounded
         });
     }
-    public static async Task ChatWriter(ChatResponse chatResponse,UserActions userActions)
-    {            
-        ConsoleHelper.ClearAndSleep(10);
-        ChatHeaderWriter(chatResponse);
 
-        const string hasReadMarkup = "[blue]✓✓[/]";
-        const string hasNotReadMarkup="[grey]✓✓[/]";
+    public static async Task RunChatLive(ChatUiState state,UserActions actions)
+    {
+        await AnsiConsole.Live(BuildLayout(state))
+            .AutoClear(false)
+            .StartAsync( async ctx =>
+            {
+                while (!state.Exit)
+                {
+                    while (Console.KeyAvailable)
+                    {
+                        var key = Console.ReadKey(true);
+                        switch (key.Key)
+                        {
+                            case ConsoleKey.Enter:
+                            {
+                                var text = state.InputBuffer.Trim();
+                                state.InputBuffer = "";
+                                
+                                                                
+                                if (string.Equals(text, "/exit", StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    state.Exit = true;
+                                    state.InputBuffer="[blue]Izlazak...[/]";
+                                    break;
+                                }
 
-        var grid = new Grid();
-        grid.AddColumn(new GridColumn { Width = 50 });
-        grid.AddColumn(new GridColumn { Width = 50 });
-        
-       await UpdateMessageList(chatResponse, userActions);
-        
-        foreach (var msg in chatResponse.Messages)
-        {
-            var isCurrentUser = msg.SenderId == chatResponse.CurrentUserId;
-            var senderName=msg.SenderId==chatResponse.CurrentUserId ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
+                                if (!string.IsNullOrWhiteSpace(text))
+                                {
+                                    var result=await actions.SendPrivateMessageAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId,text);
+                                }
+
+                                break;
+                            }
+                            case ConsoleKey.UpArrow:
+                                state.ScrollOffset--;
+                    
+                                if (state.ScrollOffset < 0)
+                                    state.ScrollOffset = 0;
+                                break;
+                            
+                            case ConsoleKey.DownArrow:
+                                state.ScrollOffset++;
+
+                                if (state.ScrollOffset >= (state.Chat.Messages.Count - state.MaxVisibleMessages))
+                                    state.ScrollOffset = state.Chat.Messages.Count - state.MaxVisibleMessages;
+                                break;
+                            
+                            case ConsoleKey.Backspace when state.InputBuffer.Length > 0:
+                                state.InputBuffer = state.InputBuffer[..^1];
+                                break;
+                            
+                            default:
+                            {
+                                if (!char.IsControl(key.KeyChar))
+                                    state.InputBuffer += key.KeyChar;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    var refreshResult = await state.UserActions.GetChatAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId);
+                    if (refreshResult.IsFailure || refreshResult.Value == null)
+                    {
+                        Writer.Chat.ChatErrorWriter(refreshResult);
+                        ConsoleHelper.ClearAndSleep(2000, "[blue]Izlazak...[/]");
+                        return;
+                    }
             
+                    await UpdateMessageList(refreshResult.Value,state.UserActions);
+            
+                    state.Chat.Messages = refreshResult.Value.Messages;
+                    
+                    ctx.UpdateTarget(BuildLayout(state));
+                }
+            });
+
+    }
+    
+    private static IRenderable BuildLayout(ChatUiState state)
+    {
+        const string hasReadMarkup = "[blue]✓✓[/]";
+        const string hasNotReadMarkup = "[grey]✓✓[/]";
+
+        var chatGrid = new Grid();
+        chatGrid.AddColumn(new GridColumn { Width = 50 });
+        chatGrid.AddColumn(new GridColumn { Width = 50 });
+        
+        var visibleMessages=state.Chat.Messages
+            .Skip(Math.Max(0, state.ScrollOffset))
+            .Take(state.MaxVisibleMessages)
+            .ToList();
+
+
+        foreach (var msg in visibleMessages)
+        {
+            bool isCurrentUser = msg.SenderId == state.Chat.CurrentUserId;
+            string senderName = isCurrentUser ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
+
             var infoTable = new Table()
             {
                 Border = TableBorder.None,
-                ShowHeaders = false,
+                ShowHeaders = false
             };
-
             infoTable.AddColumn("");
-            infoTable.AddRow($"[grey]{msg.SentAt}[/] {(isCurrentUser ? (msg.IsRead? hasReadMarkup : hasNotReadMarkup): "") }");
-            
-            var panel = new Panel(new Rows(new Markup(msg.Content),infoTable))
+            infoTable.AddRow(
+                $"[grey]{msg.SentAt:HH:mm}[/] {(isCurrentUser ? (msg.IsRead ? hasReadMarkup : hasNotReadMarkup) : "")}");
+
+            var panel = new Panel(new Rows(new Markup(msg.Content), infoTable))
             {
                 Header = new PanelHeader(senderName, Justify.Left),
                 Border = BoxBorder.Heavy,
-                BorderStyle=isCurrentUser ? new Style(Color.BlueViolet) : new Style(Color.Grey),
-                
+                BorderStyle = isCurrentUser ? new Style(Color.BlueViolet) : new Style(Color.Grey)
             };
-            
-            var emptyPanel = new Panel(" ") 
+
+            var emptyPanel = new Panel(" ")
             {
                 Border = BoxBorder.None,
                 Padding = new Padding(0),
                 Expand = true
             };
-            if(isCurrentUser)
-                grid.AddRow(panel,emptyPanel);
 
+            if (isCurrentUser)
+                chatGrid.AddRow(panel, emptyPanel);
             else
-                grid.AddRow(emptyPanel,panel);   
-            
+                chatGrid.AddRow(emptyPanel, panel);
         }
-        AnsiConsole.Write(grid);
+
+        var statusText = state.Error ?? "[blue]Upiši poruku| exit za izlaz[/]";
+
+        var statusPanel = new Panel(new Markup(statusText))
+        {
+            Border = BoxBorder.None,
+        };
+        var inputPanel = new Panel($"> {state.InputBuffer}")
+        {
+            Border = BoxBorder.Square
+        };
         
+        return new Rows(chatGrid, statusPanel,inputPanel);
     }
 
-    private static async Task UpdateMessageList(ChatResponse chatResponse,UserActions userActions)
+
+    public static async Task UpdateMessageList(ChatResponse response,UserActions userActions)
     {
         
-        var visibleUnreadMsg = chatResponse.Messages
-            .Where(m => m.ReceiverId == chatResponse.CurrentUserId && !m.IsRead)
+        var visibleUnreadMsg = response.Messages
+            .Where(m => m.ReceiverId == response.CurrentUserId && !m.IsRead)
             .Select(m => m.MessageId)
             .ToList();
         
