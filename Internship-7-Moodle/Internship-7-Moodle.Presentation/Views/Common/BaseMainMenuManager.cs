@@ -6,6 +6,7 @@ using Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Spectre.Console;
 
+
 namespace Internship_7_Moodle.Presentation.Views.Common;
 
 public abstract class BaseMainMenuManager
@@ -99,7 +100,7 @@ public abstract class BaseMainMenuManager
 
     public async Task OpenPrivateChatAsync(int otherUserId)
     {
-        const int panelHeight = 5;
+        const int panelHeight = 15;
 
         var result = await UserActions.GetChatAsync(UserId, otherUserId);
         if (result.IsFailure || result.Value == null)
@@ -110,13 +111,13 @@ public abstract class BaseMainMenuManager
         }
 
         var chatResponse = result.Value;
-        var scrollOffset = Math.Max(0, chatResponse.Messages.Count - panelHeight);
         string? lastError = null;
 
-        bool exitChat = false;
+        var exitChat = false;
         while (!exitChat)
-        {
-            await Writer.Chat.ChatWriter(chatResponse, UserActions, scrollOffset, panelHeight);
+        {           
+            
+            await Writer.Chat.ChatWriter(chatResponse, UserActions);
 
             lastError=await LiveErrorMessage(lastError);
             
@@ -128,40 +129,7 @@ public abstract class BaseMainMenuManager
 
             switch (keyInfo.Key)
             {
-                case ConsoleKey.UpArrow:
-                    scrollOffset = Math.Max(0, scrollOffset - 1);
-                    break;
-
-                case ConsoleKey.DownArrow:
-                    scrollOffset = Math.Min(chatResponse.Messages.Count - panelHeight, scrollOffset + 1);
-                    break;
                 
-
-                case ConsoleKey.Enter:
-                    var textResult = FieldPrompt.MessageContentValidation(
-                        "Unesi poruku (max 1000 znakova)",
-                        text => PromptFunctions.Message.ContentCheck(text)
-                    );
-
-                    if (!textResult.Successful)
-                    {
-                        lastError = textResult.Message ?? "Neispravan unos";
-                        break;
-                    }
-
-                    var messageResult = await UserActions.SendPrivateMessageAsync(
-                        UserId,
-                        otherUserId,
-                        textResult.Value
-                    );
-
-                    if (messageResult.Value != null)
-                        chatResponse.Messages.Add(messageResult.Value);
-
-                    scrollOffset = Math.Max(0, chatResponse.Messages.Count - panelHeight);
-                    break;
-                
-
                 case ConsoleKey.Q:
                 case ConsoleKey.Escape:
                     exitChat = true;

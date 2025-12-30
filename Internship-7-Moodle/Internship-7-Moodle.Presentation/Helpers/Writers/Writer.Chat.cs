@@ -3,6 +3,8 @@ using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Spectre.Console;
+using Terminal.Gui.Views;
+
 namespace Internship_7_Moodle.Presentation.Helpers.Writers;
 
 public static partial class Writer
@@ -23,9 +25,9 @@ public static partial class Writer
             Border = BoxBorder.Rounded
         });
     }
-    public static async Task ChatWriter(ChatResponse chatResponse,UserActions userActions,int scrollOffset,int panelHeight)
+    public static async Task ChatWriter(ChatResponse chatResponse,UserActions userActions)
     {            
-        ConsoleHelper.ClearAndSleep(0);
+        ConsoleHelper.ClearAndSleep(10);
         ChatHeaderWriter(chatResponse);
 
         const string hasReadMarkup = "[blue]✓✓[/]";
@@ -34,11 +36,10 @@ public static partial class Writer
         var grid = new Grid();
         grid.AddColumn(new GridColumn { Width = 50 });
         grid.AddColumn(new GridColumn { Width = 50 });
-
         
-        var visibleMsg= await UpdateMessageList(chatResponse, userActions, scrollOffset,panelHeight);
+       await UpdateMessageList(chatResponse, userActions);
         
-        foreach (var msg in visibleMsg)
+        foreach (var msg in chatResponse.Messages)
         {
             var isCurrentUser = msg.SenderId == chatResponse.CurrentUserId;
             var senderName=msg.SenderId==chatResponse.CurrentUserId ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
@@ -77,14 +78,10 @@ public static partial class Writer
         
     }
 
-    private static async Task<List<PrivateMessageResponse>> UpdateMessageList(ChatResponse chatResponse,UserActions userActions,int scrollOffset,int panelHeight)
+    private static async Task UpdateMessageList(ChatResponse chatResponse,UserActions userActions)
     {
-        var visibleMsg = chatResponse.Messages
-            .Skip(Math.Max(0, scrollOffset))
-            .Take(panelHeight)
-            .ToList();
         
-        var visibleUnreadMsg = visibleMsg
+        var visibleUnreadMsg = chatResponse.Messages
             .Where(m => m.ReceiverId == chatResponse.CurrentUserId && !m.IsRead)
             .Select(m => m.MessageId)
             .ToList();
@@ -92,7 +89,6 @@ public static partial class Writer
         if(visibleUnreadMsg.Count>0)
             await userActions.UpdateUnreadMessagesAsync(visibleUnreadMsg);
         
-        return visibleMsg;
     }
     
     }
