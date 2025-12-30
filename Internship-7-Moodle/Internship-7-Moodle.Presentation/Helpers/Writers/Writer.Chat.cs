@@ -35,23 +35,15 @@ public static partial class Writer
             {
                 while (!state.Exit)
                 {
-                    bool atBottom = state.ScrollOffset >= state.Chat.Messages.Count - state.MaxVisibleMessages;
-                    
                     var refreshResult = await state.UserActions.GetChatAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId);
                     if (refreshResult.IsFailure || refreshResult.Value == null)
                     {
-                        Writer.Chat.ChatErrorWriter(refreshResult);
+                        ChatErrorWriter(refreshResult);
                         ConsoleHelper.ClearAndSleep(2000, "[blue]Izlazak...[/]");
                         return;
                     }
-                    
-                    state.Chat.Messages = refreshResult.Value.Messages;                   
-                    if (atBottom)
-                        state.ScrollOffset = Math.Max(0, state.Chat.Messages.Count - state.MaxVisibleMessages);
-                    
-                    await UpdateMessageList(refreshResult.Value,state.UserActions);
-                    
-                    ctx.UpdateTarget(BuildLayout(state));
+
+                    await UpdateGrid(state, refreshResult, ctx);
                     
                     while (Console.KeyAvailable)
                     {
@@ -75,10 +67,7 @@ public static partial class Writer
                                     var result=await actions.SendPrivateMessageAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId,text);
 
                                     if (result.IsFailure)
-                                    {
-                                        state.Error = '\n' + string.Join("\n",
-                                            result.Errors.Select(e => $"[red]{e.Message}[/]"));
-                                    }
+                                        state.Error = '\n' + string.Join("\n", result.Errors.Select(e => $"[red]{e.Message}[/]"));
 
                                     else
                                         state.Error = "\n" + "[green]Uspješno unesena nova poruka[/]";
@@ -94,6 +83,7 @@ public static partial class Writer
 
                                 break;
                             }
+                            
                             case ConsoleKey.UpArrow:
                                 state.ScrollOffset--;
                     
@@ -101,12 +91,14 @@ public static partial class Writer
                                     state.ScrollOffset = 0;
                                 break;
                             
+                            
                             case ConsoleKey.DownArrow:
                                 state.ScrollOffset++;
 
                                 if (state.ScrollOffset >(state.Chat.Messages.Count - state.MaxVisibleMessages))
                                     state.ScrollOffset = state.Chat.Messages.Count - state.MaxVisibleMessages;
                                 break;
+                            
                             
                             case ConsoleKey.Backspace when state.InputBuffer.Length > 0:
                                 state.InputBuffer = state.InputBuffer[..^1];
@@ -144,8 +136,8 @@ public static partial class Writer
 
         foreach (var msg in visibleMessages)
         {
-            bool isCurrentUser = msg.SenderId == state.Chat.CurrentUserId;
-            string senderName = isCurrentUser ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
+            var isCurrentUser = msg.SenderId == state.Chat.CurrentUserId;
+            var senderName = isCurrentUser ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
 
             var infoTable = new Table()
             {
@@ -153,8 +145,7 @@ public static partial class Writer
                 ShowHeaders = false
             };
             infoTable.AddColumn("");
-            infoTable.AddRow(
-                $"[grey]{msg.SentAt:HH:mm}[/] {(isCurrentUser ? (msg.IsRead ? hasReadMarkup : hasNotReadMarkup) : "")}");
+            infoTable.AddRow($"[grey]{msg.SentAt:HH:mm}[/] {(isCurrentUser ? (msg.IsRead ? hasReadMarkup : hasNotReadMarkup) : "")}");
 
             var panel = new Panel(new Rows(new Markup(msg.Content), infoTable))
             {
@@ -163,13 +154,14 @@ public static partial class Writer
                 BorderStyle = isCurrentUser ? new Style(Color.BlueViolet) : new Style(Color.Grey)
             };
 
+            
             var emptyPanel = new Panel(" ")
             {
                 Border = BoxBorder.None,
                 Padding = new Padding(0),
                 Expand = true
             };
-
+            
             if (isCurrentUser)
                 chatGrid.AddRow(panel, emptyPanel);
             else
@@ -190,7 +182,19 @@ public static partial class Writer
         return new Rows(chatGrid, statusPanel,inputPanel);
     }
 
-
+    private static async Task UpdateGrid(ChatUiState state, AppResult<ChatResponse> refreshResult,LiveDisplayContext ctx)
+    {
+        var atBottom = state.ScrollOffset >= state.Chat.Messages.Count - state.MaxVisibleMessages;
+        
+        state.Chat.Messages = refreshResult.Value!.Messages;                   
+        if (atBottom)
+            state.ScrollOffset = Math.Max(0, state.Chat.Messages.Count - state.MaxVisibleMessages);
+                    
+        await UpdateMessageList(refreshResult.Value,state.UserActions);
+                    
+        ctx.UpdateTarget(BuildLayout(state));        
+    }
+    
     private static async Task UpdateMessageList(ChatResponse response,UserActions userActions)
     {
         
@@ -205,4 +209,6 @@ public static partial class Writer
     }
     
     }
+
+
 }
