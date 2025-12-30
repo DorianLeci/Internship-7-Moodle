@@ -11,7 +11,7 @@ public static partial class PromptFunctions
         {
             return text.Length<=PrivateMessage.MaxTextLength
                 ? PresentationValidationResult<string>.Success(text)
-                : PresentationValidationResult<string>.Error("[red]Sadržaj poruke ima previše znakova[/]");
+                : PresentationValidationResult<string>.Error("[red]\nSadržaj poruke ima previše znakova[/]");
         }        
     }
 

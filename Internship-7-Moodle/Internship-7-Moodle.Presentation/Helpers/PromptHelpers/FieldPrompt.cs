@@ -67,28 +67,15 @@ public static class FieldPrompt
         }
     }
 
-    public static async Task<PresentationValidationResult<T>> MessageContentValidation<T>(Func<Task<bool>> showExitMenu,string message, Func<string, PresentationValidationResult<T>> validationFunc)
+    public static PresentationValidationResult<T> MessageContentValidation<T>(string message, Func<string, PresentationValidationResult<T>> validationFunc)
     {
-
-        while (true)
-        {
-            var prompt = new TextPrompt<string>($"{message}: ");   
-            var input = AnsiConsole.Prompt(prompt);
         
-            var result = validationFunc(input);
-            if (result.Successful)
-            {
-                return result;
-            }
-            
-            AnsiConsole.MarkupLine(result.Message ?? "[red]Neispravan unos[/]");
-            
-            var isExitChosen=await showExitMenu();
-            if (isExitChosen)
-                return PresentationValidationResult<T>.Cancelled();        
-        }
-
+        var prompt = new TextPrompt<string>($"{message}: ");   
+        var input = AnsiConsole.Prompt(prompt);
         
+        var result = validationFunc(input);
+        
+        return result;
         
     }
     

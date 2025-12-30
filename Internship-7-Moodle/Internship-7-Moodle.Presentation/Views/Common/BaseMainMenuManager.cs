@@ -12,10 +12,10 @@ public abstract class BaseMainMenuManager
 {
     protected readonly UserActions UserActions;
     protected readonly int UserId;
-    
+
     public int Id => UserId;
 
-    protected BaseMainMenuManager(UserActions userActions,int userId)
+    protected BaseMainMenuManager(UserActions userActions, int userId)
     {
         UserActions = userActions;
         UserId = userId;
@@ -26,10 +26,10 @@ public abstract class BaseMainMenuManager
     public async Task ShowPrivateChatMenuAsync()
     {
         ConsoleHelper.ClearAndSleep();
-        
+
         var exitRequested = false;
         var chatMenu = MenuBuilder.MenuBuilder.CreatePrivateChatMenu(this);
-        
+
         while (!exitRequested)
         {
             var choice = AnsiConsole.Prompt(
@@ -37,17 +37,17 @@ public abstract class BaseMainMenuManager
                     .Title("[yellow] Privatni chat[/]")
                     .AddChoices(chatMenu.Keys));
 
-            exitRequested = await chatMenu[choice]();     
+            exitRequested = await chatMenu[choice]();
         }
     }
 
-    public async Task ShowConversationMenuAsync(bool withoutChat,string title)
+    public async Task ShowConversationMenuAsync(bool withoutChat, string title)
     {
         ConsoleHelper.ClearAndSleep();
-        
+
         var exitRequested = false;
-        var newMsgMenu = MenuBuilder.MenuBuilder.CreateConversationMenu(this,withoutChat,title);
-        
+        var newMsgMenu = MenuBuilder.MenuBuilder.CreateConversationMenu(this, withoutChat, title);
+
         while (!exitRequested)
         {
             var choice = AnsiConsole.Prompt(
@@ -55,27 +55,30 @@ public abstract class BaseMainMenuManager
                     .Title(title)
                     .AddChoices(newMsgMenu.Keys));
 
-            exitRequested = await newMsgMenu[choice]();     
-        }        
+            exitRequested = await newMsgMenu[choice]();
+        }
     }
-    
-    public async Task ShowUsersToChatWithAsync(bool withoutChat,string title,RoleEnum? roleFilter=null)
+
+    public async Task ShowUsersToChatWithAsync(bool withoutChat, string title, RoleEnum? roleFilter = null)
     {
         var exitRequested = false;
-        
+
         while (!exitRequested)
         {
-            var users =withoutChat ? await UserActions.GetAllUsersWithoutChatAsync(UserId, roleFilter): await UserActions.GetAllUsersWithChatAsync(UserId,roleFilter);
+            var users = withoutChat
+                ? await UserActions.GetAllUsersWithoutChatAsync(UserId, roleFilter)
+                : await UserActions.GetAllUsersWithChatAsync(UserId, roleFilter);
             var userList = users.ToList();
-            
+
             var usrChatMenu = MenuBuilder.MenuBuilder.CreateUsersToChatWithMenu(this, userList);
-        
+
             if (userList.Count == 0)
             {
                 AnsiConsole.MarkupLine("[red]Nema dostupnih korisnika[/]");
                 ConsoleHelper.ClearAndSleep(1000);
                 return;
             }
+
             var prompt = new SelectionPrompt<string>()
                 .Title(title)
                 .PageSize(10)
@@ -83,48 +86,41 @@ public abstract class BaseMainMenuManager
                 .EnableSearch()
                 .SearchPlaceholderText("Upiši tekst da pretražuješ")
                 .AddChoices(usrChatMenu.Keys);
-            
-            prompt.SearchHighlightStyle=new Style().Background(ConsoleColor.DarkBlue);
+
+            prompt.SearchHighlightStyle = new Style().Background(ConsoleColor.DarkBlue);
 
             var choice = AnsiConsole.Prompt(prompt);
-            
-            exitRequested = await usrChatMenu[choice]();     
-        }        
-        
+
+            exitRequested = await usrChatMenu[choice]();
+        }
+
 
     }
 
     public async Task OpenPrivateChatAsync(int otherUserId)
     {
         const int panelHeight = 5;
-        
-        var result=await UserActions.GetChatAsync(UserId, otherUserId);
 
-        if (result.IsFailure)
+        var result = await UserActions.GetChatAsync(UserId, otherUserId);
+        if (result.IsFailure || result.Value == null)
         {
             Writer.Chat.ChatErrorWriter(result);
-            ConsoleHelper.ClearAndSleep(2000,"[blue]Izlazak...[/]");
+            ConsoleHelper.ClearAndSleep(2000, "[blue]Izlazak...[/]");
             return;
         }
 
         var chatResponse = result.Value;
+        var scrollOffset = Math.Max(0, chatResponse.Messages.Count - panelHeight);
+        string? lastError = null;
 
-        if (chatResponse == null)
-        {
-            Writer.Chat.ChatErrorWriter(result);
-            ConsoleHelper.ClearAndSleep(2000,"[blue]Izlazak...[/]");
-            return;
-        }
-        
-        var scrollOffset =chatResponse.Messages.Count-panelHeight ;
-        await Writer.Chat.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
-        
-        var exitChat = false;
-        
+        bool exitChat = false;
         while (!exitChat)
         {
-            AnsiConsole.MarkupLine("[blue]Pritisni enter ako želiš unijeti poruku ili q(Esc) za izlazak iz razgovora[/]: ");
-            var keyInfo=Console.ReadKey(intercept:true);
+            await Writer.Chat.ChatWriter(chatResponse, UserActions, scrollOffset, panelHeight);
+
+            lastError=await LiveErrorMessage(lastError);
+            
+            var keyInfo = Console.ReadKey(intercept: true);
             
             var refreshResult = await UserActions.GetChatAsync(UserId, otherUserId);
             if (!refreshResult.IsFailure && refreshResult.Value != null)
@@ -133,29 +129,26 @@ public abstract class BaseMainMenuManager
             switch (keyInfo.Key)
             {
                 case ConsoleKey.UpArrow:
-                    scrollOffset--;
-                    
-                    if (scrollOffset < 0)
-                        scrollOffset = 0;
-                    
-                    await Writer.Chat.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
+                    scrollOffset = Math.Max(0, scrollOffset - 1);
                     break;
-                
+
                 case ConsoleKey.DownArrow:
-                    scrollOffset++;
-                    
-                    if(scrollOffset>=(chatResponse.Messages.Count-panelHeight))
-                        scrollOffset = chatResponse.Messages.Count-panelHeight;
-                    
-                    await Writer.Chat.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
+                    scrollOffset = Math.Min(chatResponse.Messages.Count - panelHeight, scrollOffset + 1);
                     break;
                 
+
                 case ConsoleKey.Enter:
-                    var textResult = await FieldPrompt.MessageContentValidation(()=>ShowChoiceMenuAsync(),"Unesi poruku(max 500 znakova)",
-                        text => PromptFunctions.Message.ContentCheck(text));
-                    
-                    if (!textResult.Successful) break;
-                    
+                    var textResult = FieldPrompt.MessageContentValidation(
+                        "Unesi poruku (max 1000 znakova)",
+                        text => PromptFunctions.Message.ContentCheck(text)
+                    );
+
+                    if (!textResult.Successful)
+                    {
+                        lastError = textResult.Message ?? "Neispravan unos";
+                        break;
+                    }
+
                     var messageResult = await UserActions.SendPrivateMessageAsync(
                         UserId,
                         otherUserId,
@@ -163,54 +156,51 @@ public abstract class BaseMainMenuManager
                     );
 
                     if (messageResult.Value != null)
-                    {
                         chatResponse.Messages.Add(messageResult.Value);
-                    }
 
-                    scrollOffset++;
-                    if(scrollOffset>=(chatResponse.Messages.Count-panelHeight))
-                        scrollOffset = chatResponse.Messages.Count-panelHeight;
-                    
-                    await Writer.Chat.ChatWriter(chatResponse,UserActions,scrollOffset,panelHeight);
+                    scrollOffset = Math.Max(0, chatResponse.Messages.Count - panelHeight);
                     break;
                 
-                case ConsoleKey.Q:
-                case ConsoleKey.Escape :
-                    exitChat = true;
-                    ConsoleHelper.ClearAndSleep(1500,"[blue]Izlazak...[/]");
-                    break;
-                    
 
-                default:
-                    AnsiConsole.MarkupLine("[red]Nije tipka s kojom možeš upravljati[/]");
+                case ConsoleKey.Q:
+                case ConsoleKey.Escape:
+                    exitChat = true;
+                    ConsoleHelper.ClearAndSleep(1500, "[blue]\nIzlazak...[/]");
                     break;
             }
-            
         }
-
- 
-
     }
 
-    
-    private async Task<bool> ShowChoiceMenuAsync((string message,bool value)? confirm=null,(string message,bool value)? quit=null,string title="[yellow]Želiš li odustati od registracije[/]")
+    private static async Task<string?> LiveErrorMessage(string? lastError)
     {
-        var confirmChoice=confirm ?? ("Nastavi", false);
-        var quitChoice= quit ?? ("Odustani", true);
+        const int waitingSeconds = 10;
         
-        var exitMenu = MenuBuilder.MenuBuilder.CreateChoiceMenu(this,confirmChoice,quitChoice);
-        
-        var titlePanel=new Panel(title)
-        {
-            Padding = new Padding(1, 1, 1, 0),
-            Border = BoxBorder.None
-        };
-        AnsiConsole.Write(titlePanel);
-        
-        var choice = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .AddChoices(exitMenu.Keys));
+        var statusLive = AnsiConsole.Live(new Markup("\n[blue]Enter = poruka | ↑↓ scroll | Q/Esc = izlaz[/])"))
+            .AutoClear(false);
 
-        return await exitMenu[choice]();
+        await statusLive.StartAsync(async ctx =>
+        {
+            if (!string.IsNullOrEmpty(lastError))
+            {
+                
+                for (var i = waitingSeconds; i>0; i--)
+                {
+                    ctx.UpdateTarget(new Markup($"[red]{lastError}[/] [blue](možeš unijeti novu poruku za {i} s)[/]"));
+                    await Task.Delay(1000);
+                }
+                
+                lastError = null;
+
+                ctx.UpdateTarget(new Markup("\n[blue]Enter = poruka | ↑↓ scroll | Q/Esc = izlaz[/])"));
+            }
+
+            ;
+        });
+        
+        return lastError;
     }
+
+
+
+
 }
