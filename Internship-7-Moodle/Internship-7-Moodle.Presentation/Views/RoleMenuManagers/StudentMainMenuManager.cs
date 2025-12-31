@@ -35,15 +35,14 @@ public class StudentMainMenuManager:BaseMainMenuManager
     
     public async Task ShowCourseMenuAsync(int studentId)
     {
-        ConsoleHelper.ClearAndSleep();
+        ConsoleHelper.SleepAndClear();
         
         var studentCourses = await UserActions.GetStudentCoursesAsync(studentId);
         
         var studentCoursesList = studentCourses.ToList();
         if (studentCoursesList.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
-            ConsoleHelper.ClearAndSleep(2000);
+            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
             return;
         }
 
@@ -65,7 +64,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
     
     public async Task ShowCourseSubmenuAsync(CourseResponse course)
     {
-        ConsoleHelper.ClearAndSleep();
+        ConsoleHelper.SleepAndClear();
 
         var exitRequested = false;
         var courseSubmenu = MenuBuilder.MenuBuilder.CreateCourseSubmenu(this, course.CourseId);
@@ -83,10 +82,17 @@ public class StudentMainMenuManager:BaseMainMenuManager
 
     public async Task ShowCourseNotificationsAsync(int courseId)
     {
-        ConsoleHelper.ClearAndSleep();
+        ConsoleHelper.SleepAndClear();
 
         var notifications = await _courseActions.GetAllNotificationsAsync(courseId);
         var notificationList = notifications.ToList();
+        
+        if (notificationList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(1000,"[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
+            return;
+        }
+        
         Writer.Course.NotificationWriter(notificationList);
 
         ConsoleHelper.ScreenExit(1500);
@@ -94,10 +100,17 @@ public class StudentMainMenuManager:BaseMainMenuManager
     
     public async Task ShowCourseMaterialsAsync(int courseId)
     {
-        ConsoleHelper.ClearAndSleep();
+        ConsoleHelper.SleepAndClear();
 
         var materials = await _courseActions.GetAllMaterialsAsync(courseId);
         var materialList = materials.ToList();
+        
+        if (materialList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni materijali.Izlazak...[/]");
+            return;
+        }
+        
         Writer.Course.MaterialsWriter(materialList);
 
         ConsoleHelper.ScreenExit(1500); 

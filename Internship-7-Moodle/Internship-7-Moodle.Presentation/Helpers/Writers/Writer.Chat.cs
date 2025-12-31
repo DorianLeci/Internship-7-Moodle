@@ -29,7 +29,7 @@ public static partial class Writer
                     if (refreshResult.IsFailure || refreshResult.Value == null)
                     {
                         ChatErrorWriter(refreshResult);
-                        ConsoleHelper.ClearAndSleep(2000, "[blue]Izlazak...[/]");
+                        ConsoleHelper.SleepAndClear(2000, "[blue]Izlazak...[/]");
                         return;
                     }
 

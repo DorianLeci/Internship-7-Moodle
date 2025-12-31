@@ -11,7 +11,7 @@ public static class FieldPrompt
     {
         while (true)
         {
-            ConsoleHelper.ClearAndSleep();
+            ConsoleHelper.SleepAndClear();
 
             var prompt = new TextPrompt<string>($"{message}: ");
 
@@ -38,7 +38,7 @@ public static class FieldPrompt
     {
         while (true)
         {
-            ConsoleHelper.ClearAndSleep();
+            ConsoleHelper.SleepAndClear();
 
             var prompt = new TextPrompt<string>($"{message}: ");
 

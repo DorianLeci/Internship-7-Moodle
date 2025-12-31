@@ -49,8 +49,7 @@ public partial class MenuBuilder
         
         AddChoice("Odjava", () =>
         {
-            AnsiConsole.MarkupLine("[blue]Odjava...[/]");
-            ConsoleHelper.ClearAndSleep(2000);
+            ConsoleHelper.SleepAndClear(2000,"[blue]Odjava...[/]");
             return true;
         });
 
@@ -61,7 +60,7 @@ public partial class MenuBuilder
     {
         AddChoice("Izlazak iz izbornika", () =>
         {
-            ConsoleHelper.ClearAndSleep(1000,"[blue]Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(1000,"[blue]Izlazak...[/]");
             return true;
         });
 

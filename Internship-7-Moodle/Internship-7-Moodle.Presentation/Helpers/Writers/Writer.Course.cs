@@ -10,13 +10,6 @@ public static partial class Writer
     {
         public static void NotificationWriter(List<NotificationResponse> notificationResponses)
         {
-            if (notificationResponses.Count == 0)
-            {
-                AnsiConsole.MarkupLine("[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
-                ConsoleHelper.ClearAndSleep(1000);
-                return;
-            }
-
             foreach (var notificationResponse in notificationResponses)
             {
                 var table = new Table()
@@ -43,13 +36,6 @@ public static partial class Writer
         
         public static void MaterialsWriter(List<MaterialResponse> materialResponses)
         {
-            if (materialResponses.Count == 0)
-            {
-                AnsiConsole.MarkupLine("[red]Ne postoje dostupni materijali.Izlazak...[/]");
-                ConsoleHelper.ClearAndSleep(2000);
-                return;
-            }
-
             foreach (var materialResponse in materialResponses)
             {
                 var table = new Table()

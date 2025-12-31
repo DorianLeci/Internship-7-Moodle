@@ -51,7 +51,7 @@ public sealed class MenuManager
             if (emailResult.IsCancelled)
             {
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;
             }
 
@@ -63,7 +63,7 @@ public sealed class MenuManager
             if (passwordResult.IsCancelled)
             {
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;
             }
             
@@ -73,7 +73,7 @@ public sealed class MenuManager
             if (confirmPasswordResult.IsCancelled)
             {
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;
             }
             
@@ -82,7 +82,7 @@ public sealed class MenuManager
             if (firstNameResult.IsCancelled)
             {
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;           
             }
 
@@ -93,7 +93,7 @@ public sealed class MenuManager
             if (lastNameResult.IsCancelled)
             {
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;           
             }
 
@@ -104,7 +104,7 @@ public sealed class MenuManager
             if (birthDateResult.IsCancelled)
             {
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;           
             }
 
@@ -114,7 +114,7 @@ public sealed class MenuManager
             if (genderResult.IsCancelled)
             {
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;           
             }
 
@@ -123,7 +123,7 @@ public sealed class MenuManager
             if (!isCaptchaSuccessful)
             {
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;                       
             }
             
@@ -137,12 +137,12 @@ public sealed class MenuManager
                 if (isRegistrationRequested) continue;
 
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,registrationExit);
+                ConsoleHelper.SleepAndClear(2000,registrationExit);
                 return;
 
             }
             
-            ConsoleHelper.ClearAndSleep(2000);
+            ConsoleHelper.SleepAndClear(2000);
             return;
         }
 
@@ -155,12 +155,12 @@ public sealed class MenuManager
         
         while (true)
         {
-            ConsoleHelper.ClearAndSleep();
+            ConsoleHelper.SleepAndClear();
 
             var isCancelled=await _antiBotService.ApplyCooldownAsync();
             if (isCancelled)
             {
-                ConsoleHelper.ClearAndSleep(2000,loginExit);
+                ConsoleHelper.SleepAndClear(2000,loginExit);
                 return;
             }
             
@@ -188,12 +188,12 @@ public sealed class MenuManager
                 if (isLoginRequested) continue;
                 
                 AnsiConsole.Clear();
-                ConsoleHelper.ClearAndSleep(2000,loginExit);
+                ConsoleHelper.SleepAndClear(2000,loginExit);
                 return;
             }
             
             var mainMenu = MainMenuFactory.Create(_menuDependencies,response.Value!.RoleName,response.Value.Id);
-            ConsoleHelper.ClearAndSleep(2000);
+            ConsoleHelper.SleepAndClear(2000);
             await mainMenu.RunAsync();
             
             return;

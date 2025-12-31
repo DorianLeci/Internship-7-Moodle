@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Views.Common;
@@ -17,7 +18,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
     { 
         var logoutRequested = false;
 
-        var mainMenu = MenuBuilder.MenuBuilder.CreateStudentMenu(this);
+        var mainMenu = MenuBuilder.MenuBuilder.CreateProfessorMenu(this);
 
         while (!logoutRequested)
         {
@@ -30,8 +31,50 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
         }
     }
 
-    public async Task ShowCourseManagementMenu(int professorId)
+    public async Task ShowCourseMenuAsync(int professorId,bool isMyCourseSubmenu)
     {
-        ConsoleHelper.ClearAndSleep();
+        ConsoleHelper.SleepAndClear();
+        
+        var professorCourses=await UserActions.GetAllProfessorCoursesAsync(professorId);
+        var professorCoursesList = professorCourses.ToList();
+
+        if (professorCoursesList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
+            return;
+        }
+        
+        var exitRequested = false;
+        
+        var myCourseMenu=MenuBuilder.MenuBuilder.CreateCourseMenu(this,professorCoursesList,isMyCourseSubmenu);
+        
+        while (!exitRequested)
+        {
+            var choice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow] Moji kolegiji[/]")
+                    .AddChoices(myCourseMenu.Keys));
+
+            exitRequested = await myCourseMenu[choice]();     
+        }
+        
+    }
+    
+    public async Task ShowCourseSubmenuAsync(CourseResponse course,bool isMyCourseSubmenu)
+    {
+        ConsoleHelper.SleepAndClear();
+
+        var exitRequested = false;
+        // var courseSubmenu = MenuBuilder.MenuBuilder.CreateCourseSubmenu(this, course.CourseId);
+        //
+        // while (!exitRequested)
+        // {
+        //     var choice = AnsiConsole.Prompt(
+        //         new SelectionPrompt<string>()
+        //             .Title("[yellow] Kolegij screen[/]")
+        //             .AddChoices(courseSubmenu.Keys));
+        //
+        //     exitRequested = await courseSubmenu[choice]();     
+        // }
     }
 }

@@ -4,7 +4,7 @@ namespace Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 
 public static class ConsoleHelper
 {
-    public static void ClearAndSleep(string? message=null)
+    public static void SleepAndClear(string? message=null)
     {
         if(message!=null)
             AnsiConsole.MarkupLine(message);
@@ -12,7 +12,7 @@ public static class ConsoleHelper
         Thread.Sleep(200);
         AnsiConsole.Clear();
     }   
-    public static void ClearAndSleep(int timeout,string? message=null)
+    public static void SleepAndClear(int timeout,string? message=null)
     {
         if(message!=null)
             AnsiConsole.MarkupLine(message);
@@ -20,16 +20,11 @@ public static class ConsoleHelper
         Thread.Sleep(timeout);
         AnsiConsole.Clear();
     }
-
-    public static void SleepAndClear(int timeout)
-    {
-        Thread.Sleep(timeout);
-        AnsiConsole.Clear();        
-    }
+    
     public static async Task<bool> ShowCountdown(int remainingSeconds,int maxSeconds=30)
     {
-        ClearAndSleep();
-        bool cancelled = false;
+        SleepAndClear();
+        var cancelled = false;
         
         await AnsiConsole.Progress()
             .StartAsync(async ctx =>
@@ -63,7 +58,8 @@ public static class ConsoleHelper
     {
         AnsiConsole.MarkupLine("\n[blue]Pritisni bilo koju tipku za izlaz...[/]");
         Console.ReadKey(true);  
-        ClearAndSleep(timeout);
+        
+        SleepAndClear(timeout,"[blue]\nIzlazak...[/]");
     }
 
 

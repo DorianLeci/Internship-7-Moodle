@@ -21,7 +21,7 @@ public class ChatFeature
     
     public async Task ShowPrivateChatMenuAsync()
     {
-        ConsoleHelper.ClearAndSleep();
+        ConsoleHelper.SleepAndClear();
 
         var exitRequested = false;
         var chatMenu = MenuBuilder.MenuBuilder.CreatePrivateChatMenu(this);
@@ -39,7 +39,7 @@ public class ChatFeature
 
     public async Task ShowConversationMenuAsync(bool withoutChat, string title)
     {
-        ConsoleHelper.ClearAndSleep();
+        ConsoleHelper.SleepAndClear();
 
         var exitRequested = false;
         var newMsgMenu = MenuBuilder.MenuBuilder.CreateConversationMenu(this, withoutChat, title);
@@ -70,8 +70,7 @@ public class ChatFeature
 
             if (userList.Count == 0)
             {
-                AnsiConsole.MarkupLine("[red]Nema dostupnih korisnika[/]");
-                ConsoleHelper.ClearAndSleep(1000);
+                ConsoleHelper.SleepAndClear(1000,"[red]Nema dostupnih korisnika[/]");
                 return;
             }
 
@@ -97,12 +96,13 @@ public class ChatFeature
     {
         const int maxVisibleMsg = 5;
         
-        ConsoleHelper.ClearAndSleep();
+        ConsoleHelper.SleepAndClear();
+        
         var result = await _chatActions.GetChatAsync(_userId, otherUserId);
         if (result.IsFailure || result.Value == null)
         {
             Writer.Chat.ChatErrorWriter(result);
-            ConsoleHelper.ClearAndSleep(2000, "[blue]Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000, "[blue]Izlazak...[/]");
             return;
         }
 
