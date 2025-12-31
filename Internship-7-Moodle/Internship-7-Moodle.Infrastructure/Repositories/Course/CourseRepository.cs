@@ -28,4 +28,9 @@ public class CourseRepository:Repository<Domain.Entities.Courses.Course,int>,ICo
             .OrderByDescending(c => c.CreatedAt)
             .ToListAsync();
     }
+
+    public Task<IEnumerable<Domain.Entities.Courses.Course>> AddStudentAsync()
+    {
+        throw new NotImplementedException();
+    }
 }

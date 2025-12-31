@@ -20,6 +20,7 @@
 
     <ItemGroup>
       <Folder Include="Chat\" />
+      <Folder Include="Courses\AddStudentToCourse\" />
     </ItemGroup>
 
 </Project>

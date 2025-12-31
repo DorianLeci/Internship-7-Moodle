@@ -1,4 +1,4 @@
-using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Response.Chat;
 using Internship_7_Moodle.Presentation.Actions;
 
 namespace Internship_7_Moodle.Presentation.Helpers.UiState;
@@ -11,7 +11,7 @@ public class ChatUiState
 
     public bool Exit { get; set; } = false;
     
-    public UserActions UserActions { get; set; }
+    public ChatActions ChatActions { get; set; }
     
     public string InputBuffer { get; set; } = "";
     
@@ -19,9 +19,9 @@ public class ChatUiState
     public int MaxVisibleMessages { get; set; } = 10;
     
     
-    public ChatUiState(ChatResponse chat, UserActions userActions)
+    public ChatUiState(ChatResponse chat, ChatActions chatActions)
     {
         Chat = chat;
-        UserActions = userActions;
+        ChatActions = chatActions;
     }
 }

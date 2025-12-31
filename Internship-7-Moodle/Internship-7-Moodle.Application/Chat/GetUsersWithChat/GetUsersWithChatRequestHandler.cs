@@ -1,5 +1,5 @@
 using Internship_7_Moodle.Application.Common.Model;
-using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Persistence.Chats;
 using MediatR;

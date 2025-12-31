@@ -8,7 +8,7 @@ public class CourseMaterialConfig:IEntityTypeConfiguration<CourseMaterial>
 {
     public void Configure(EntityTypeBuilder<CourseMaterial> builder)
     {
-        builder.ToTable("course_material");
+        builder.ToTable("course_materials");
         
         builder.HasKey(cm=>cm.Id);
         builder.Property(cm=>cm.Id).HasColumnName("id");

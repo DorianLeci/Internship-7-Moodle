@@ -2,6 +2,7 @@
 using Internship_7_Moodle.Application.Dependencies;
 using Internship_7_Moodle.Infrastructure.Dependencies;
 using Internship_7_Moodle.Presentation.Actions;
+using Internship_7_Moodle.Presentation.MenuDependencies;
 using Internship_7_Moodle.Presentation.Service;
 using Internship_7_Moodle.Presentation.Views;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,16 @@ builder.Logging.ClearProviders();
 
 
 builder.Services.AddScoped<UserActions>();
+builder.Services.AddScoped<CourseActions>();
+builder.Services.AddScoped<ChatActions>();
+
+builder.Services.AddScoped<MenuDependencies>(sp => new MenuDependencies
+{
+    UserActions = sp.GetRequiredService<UserActions>(),
+    CourseActions = sp.GetRequiredService<CourseActions>(),
+    ChatActions = sp.GetRequiredService<ChatActions>()
+});
+
 builder.Services.AddScoped<MenuManager>();
 builder.Services.AddScoped<AntiBotService>();
     

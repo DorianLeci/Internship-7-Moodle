@@ -1,6 +1,6 @@
-namespace Internship_7_Moodle.Application.Users.Response.User;
+namespace Internship_7_Moodle.Application.Response.Course;
 
-public class StudentCourseResponse
+public class CourseResponse
 {
     public int CourseId { get; set; }
     
@@ -10,6 +10,6 @@ public class StudentCourseResponse
     
     public int Ects{get;set;}
     
-    public string ProfessorName { get; set; }
+    public string? ProfessorName { get; set; }
     
 }

@@ -1,4 +1,4 @@
-namespace Internship_7_Moodle.Application.Users.Response.User;
+namespace Internship_7_Moodle.Application.Response.Chat;
 
 public class ChatResponse
 {

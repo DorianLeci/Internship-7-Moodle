@@ -8,7 +8,7 @@ public class PrivateMessageConfig:IEntityTypeConfiguration<Domain.Entities.Messa
     
     public void Configure(EntityTypeBuilder<Domain.Entities.Messages.PrivateMessage> builder)
     {
-        builder.ToTable("private_message");
+        builder.ToTable("private_messages");
 
         builder.HasKey(pm=>pm.Id);
         builder.Property(pm=>pm.Id).HasColumnName("id");

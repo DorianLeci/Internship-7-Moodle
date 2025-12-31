@@ -1,5 +1,4 @@
 using Internship_7_Moodle.Domain.Enumerations;
-using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
 using Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
@@ -11,14 +10,14 @@ using CaptchaService = Internship_7_Moodle.Presentation.Service.CaptchaService;
 
 namespace Internship_7_Moodle.Presentation.Views;
 
-public class MenuManager
+public sealed class MenuManager
 {
-    private readonly UserActions _userActions;
+    private readonly MenuDependencies.MenuDependencies _menuDependencies;
     private readonly AntiBotService _antiBotService;
 
-    public MenuManager(UserActions userActions,AntiBotService antiBotService)
+    public MenuManager(MenuDependencies.MenuDependencies menuDependencies,AntiBotService antiBotService)
     {
-        _userActions = userActions;
+        _menuDependencies = menuDependencies;
         _antiBotService = antiBotService;
     }
     public async Task RunAsync()
@@ -128,7 +127,7 @@ public class MenuManager
                 return;                       
             }
             
-            var response=await _userActions.RegisterUserAsync(firstNameResult.Value,lastNameResult.Value,birthDateResult.Value!.Value,emailResult.Value,genderResult.Value,passwordResult.Value,RoleEnum.Student);
+            var response=await _menuDependencies.UserActions.RegisterUserAsync(firstNameResult.Value,lastNameResult.Value,birthDateResult.Value!.Value,emailResult.Value,genderResult.Value,passwordResult.Value,RoleEnum.Student);
             
             var isUserRegistered=Writer.Authentication.RegisterUserWriter(response);
 
@@ -177,7 +176,7 @@ public class MenuManager
             var password = AnsiConsole.Prompt(passwordPrompt);
             
             
-            var response = await _userActions.LoginUserAsync(email, password);
+            var response = await _menuDependencies.UserActions.LoginUserAsync(email, password);
 
             var isLoginSuccessful=Writer.Authentication.LoginUserWriter(response);
 
@@ -193,7 +192,7 @@ public class MenuManager
                 return;
             }
             
-            var mainMenu = MainMenuFactory.Create(_userActions,response.Value!.RoleName,response.Value.Id);
+            var mainMenu = MainMenuFactory.Create(_menuDependencies,response.Value!.RoleName,response.Value.Id);
             ConsoleHelper.ClearAndSleep(2000);
             await mainMenu.RunAsync();
             

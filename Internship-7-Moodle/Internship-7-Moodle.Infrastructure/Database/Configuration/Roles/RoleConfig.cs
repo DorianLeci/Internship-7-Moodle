@@ -11,7 +11,7 @@ public class RoleConfig:IEntityTypeConfiguration<Domain.Entities.Roles.Role>
     {
         var converter = new EnumToStringConverter<RoleEnum>();
         
-        builder.ToTable("role");
+        builder.ToTable("roles");
         
         builder.HasKey(r => r.Id);
 

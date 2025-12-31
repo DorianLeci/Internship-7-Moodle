@@ -8,7 +8,7 @@ public class CourseUserConfig:IEntityTypeConfiguration<CourseUser>
 {
     public void Configure(EntityTypeBuilder<CourseUser> builder)
     {
-        builder.ToTable("course_user");
+        builder.ToTable("course_users");
         
         builder.HasKey(cu=>cu.Id);
         builder.Property(cu=>cu.Id).HasColumnName("id");

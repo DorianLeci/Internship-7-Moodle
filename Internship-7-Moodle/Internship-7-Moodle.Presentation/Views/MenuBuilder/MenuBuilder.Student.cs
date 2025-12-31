@@ -1,8 +1,6 @@
-using Internship_7_Moodle.Application.Users.Response.User;
-using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Application.Response.Course;
+using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
-using Spectre.Console;
-
 namespace Internship_7_Moodle.Presentation.Views.MenuBuilder;
 
 public partial class MenuBuilder
@@ -15,7 +13,7 @@ public partial class MenuBuilder
             .AddCommon(mainMenuManager)  
             .ReturnDictionary();
     }   
-    public static Dictionary<string, Func<Task<bool>>> CreateCourseMenu(StudentMainMenuManager mainMenuManager,List<StudentCourseResponse> list)
+    public static Dictionary<string, Func<Task<bool>>> CreateCourseMenu(StudentMainMenuManager mainMenuManager,List<CourseResponse> list)
     {
         var builder = new MenuBuilder();
 

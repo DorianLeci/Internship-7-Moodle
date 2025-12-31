@@ -1,4 +1,4 @@
-using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -9,13 +9,16 @@ namespace Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 
 public class StudentMainMenuManager:BaseMainMenuManager
 {
-    public StudentMainMenuManager(UserActions userActions,int userId) : base(userActions,userId)
+    private readonly CourseActions _courseActions;
+    
+    public StudentMainMenuManager(int userId, ChatFeature chatFeature, UserActions userActions, CourseActions courseActions) : base(userId,chatFeature,userActions)
     {
+        _courseActions = courseActions;
     }
 
     public override async Task RunAsync()
     {
-        bool logoutRequested = false;
+        var logoutRequested = false;
 
         var mainMenu = MenuBuilder.MenuBuilder.CreateStudentMenu(this);
 
@@ -60,7 +63,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
 
     }
     
-    public async Task ShowCourseSubmenuAsync(StudentCourseResponse course)
+    public async Task ShowCourseSubmenuAsync(CourseResponse course)
     {
         ConsoleHelper.ClearAndSleep();
 
@@ -82,7 +85,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
     {
         ConsoleHelper.ClearAndSleep();
 
-        var notifications = await UserActions.GetAllNotificationsAsync(courseId);
+        var notifications = await _courseActions.GetAllNotificationsAsync(courseId);
         var notificationList = notifications.ToList();
         Writer.Course.NotificationWriter(notificationList);
 
@@ -93,7 +96,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
     {
         ConsoleHelper.ClearAndSleep();
 
-        var materials = await UserActions.GetAllMaterialsAsync(courseId);
+        var materials = await _courseActions.GetAllMaterialsAsync(courseId);
         var materialList = materials.ToList();
         Writer.Course.MaterialsWriter(materialList);
 

@@ -5,10 +5,12 @@ namespace Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 
 public class AdminMainMenuManager:BaseMainMenuManager
 {
-    public AdminMainMenuManager(UserActions userActions, int userId) : base(userActions, userId)
+    private readonly CourseActions _courseActions;
+    public AdminMainMenuManager(int userId,ChatFeature chatFeature,UserActions userActions, CourseActions courseActions) : base(userId,chatFeature,userActions)
     {
+        _courseActions = courseActions;
     }
-
+    
     public override Task RunAsync()
     {
         throw new NotImplementedException();

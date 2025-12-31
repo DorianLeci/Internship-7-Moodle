@@ -1,13 +1,11 @@
 using Internship_7_Moodle.Application.Common.Model;
-using Internship_7_Moodle.Application.Users.Response;
-using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Domain.Services;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 namespace Internship_7_Moodle.Application.Users.LoginUser;
@@ -16,13 +14,11 @@ public class LoginUserCommandHandler:IRequestHandler<LoginUserCommand,AppResult<
 {
     private readonly IUserUnitOfWork _userUnitOfWork;
     private readonly IPasswordHasher<User> _passwordHasher;
-    private readonly UserDomainService  _userDomainService;
 
-    public LoginUserCommandHandler(IUserUnitOfWork userUnitOfWork, IPasswordHasher<User> passwordHasher,UserDomainService userDomainService)
+    public LoginUserCommandHandler(IUserUnitOfWork userUnitOfWork, IPasswordHasher<User> passwordHasher)
     {
         _userUnitOfWork = userUnitOfWork;
         _passwordHasher = passwordHasher;
-        _userDomainService = userDomainService;
     }
     
     public async Task<AppResult<UserLoginResponse>> Handle(LoginUserCommand request, CancellationToken cancellationToken)

@@ -8,7 +8,7 @@ public class ChatConfig:IEntityTypeConfiguration<Chat>
 {
     public void Configure(EntityTypeBuilder<Chat> builder)
     {
-        builder.ToTable("chat");
+        builder.ToTable("chats");
         
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Id).HasColumnName("id");

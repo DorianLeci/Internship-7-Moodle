@@ -1,5 +1,5 @@
 using Internship_7_Moodle.Application.Common.Model;
-using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Response.Chat;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.Messages;

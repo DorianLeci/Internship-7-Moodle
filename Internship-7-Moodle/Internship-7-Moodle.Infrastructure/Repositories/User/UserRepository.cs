@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Domain.Entities.Courses;
+using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Infrastructure.Database;
 using Internship_7_Moodle.Infrastructure.Repositories.Common;
@@ -30,4 +31,23 @@ public class UserRepository:Repository<Domain.Entities.Users.User,int>,IUserRepo
             .Select(cu => cu.Course)
             .ToListAsync();
     }
+    
+    public async Task<IEnumerable<Domain.Entities.Courses.Course>> GetAllProfessorCoursesAsync(int professorId)
+    {
+        return await Context.Courses
+            .Where(cu => cu.OwnerId == professorId)
+            .ToListAsync();
+    }
+    
+    public async Task<IEnumerable<Domain.Entities.Users.User>> GetAllStudentsAsync()
+    {
+        return await DbSet
+            .Include(u=>u.Role)
+            .Where(u=>u.Role.RoleName==RoleEnum.Student)
+            .OrderBy(u=>u.LastName)
+            .ThenBy(u=>u.FirstName)
+            .ToListAsync();
+    }
+
+
 }

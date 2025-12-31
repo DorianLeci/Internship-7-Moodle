@@ -1,6 +1,6 @@
 using Internship_7_Moodle.Domain.Enumerations;
 
-namespace Internship_7_Moodle.Application.Users.Response.User;
+namespace Internship_7_Moodle.Application.Response.User;
 
 public class UserResponse
 {

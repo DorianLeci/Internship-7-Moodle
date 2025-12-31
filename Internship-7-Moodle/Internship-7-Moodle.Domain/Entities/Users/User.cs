@@ -14,9 +14,9 @@ namespace Internship_7_Moodle.Domain.Entities.Users;
 
 public class User:BaseEntity
 {
-    public const int MaxFirstNameLength = 30;
-    public const int MaxLastNameLength = 30;
-    public const int MaxEmailLength = 50;
+    public const int MaxFirstNameLength = 50;
+    public const int MaxLastNameLength = 50;
+    public const int MaxEmailLength = 100;
 
     public string? FirstName { get; set; }
     

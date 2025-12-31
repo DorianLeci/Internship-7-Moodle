@@ -1,4 +1,4 @@
-using Internship_7_Moodle.Application.Users.Response.Course;
+using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Spectre.Console;
 

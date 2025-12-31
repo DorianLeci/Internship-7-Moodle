@@ -1,12 +1,12 @@
 using Internship_7_Moodle.Application.Common.Model;
-using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.GetAllCourses;
 
-public class GetAllStudentCoursesRequestHandler:IRequestHandler<GetStudentCoursesRequest,AppResult<GetAllResponse<StudentCourseResponse>>>
+public class GetAllStudentCoursesRequestHandler:IRequestHandler<GetStudentCoursesRequest,AppResult<GetAllResponse<CourseResponse>>>
 {
     private readonly IUserUnitOfWork _userUnitOfWork;
     
@@ -14,12 +14,12 @@ public class GetAllStudentCoursesRequestHandler:IRequestHandler<GetStudentCourse
     {
         _userUnitOfWork = userUnitOfWork;
     }
-    public async Task<AppResult<GetAllResponse<StudentCourseResponse>>> Handle(GetStudentCoursesRequest request, CancellationToken cancellationToken)
+    public async Task<AppResult<GetAllResponse<CourseResponse>>> Handle(GetStudentCoursesRequest request, CancellationToken cancellationToken)
     {
-        var result=new AppResult<GetAllResponse<StudentCourseResponse>>();
+        var result=new AppResult<GetAllResponse<CourseResponse>>();
         var courses = await _userUnitOfWork.UserRepository.GetAllStudentCoursesAsync(request.StudentId);
 
-        var studentCourseResponses = courses.Select(c => new StudentCourseResponse
+        var studentCourseResponses = courses.Select(c => new CourseResponse
         {
             CourseId = c.Id,
             CourseName =  c.Name,
@@ -28,7 +28,7 @@ public class GetAllStudentCoursesRequestHandler:IRequestHandler<GetStudentCourse
             ProfessorName = c.Owner.FirstName+" "+c.Owner.LastName
         });
         
-        result.SetResult(new GetAllResponse<StudentCourseResponse>(studentCourseResponses));
+        result.SetResult(new GetAllResponse<CourseResponse>(studentCourseResponses));
 
         return result;
     }

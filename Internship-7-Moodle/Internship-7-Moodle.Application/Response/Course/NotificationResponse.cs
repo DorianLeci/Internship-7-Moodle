@@ -1,4 +1,4 @@
-namespace Internship_7_Moodle.Application.Users.Response.Course;
+namespace Internship_7_Moodle.Application.Response.Course;
 
 public class NotificationResponse
 {

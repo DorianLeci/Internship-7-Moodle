@@ -1,5 +1,5 @@
 using Internship_7_Moodle.Application.Common.Model;
-using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Response.Chat;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.UiState;
@@ -16,18 +16,8 @@ public static partial class Writer
     {
         Common.ErrorWriter(result,"[red]Nije moguće otvoriti chat[/]");
     }
-
-    // private static void ChatHeaderWriter(ChatResponse chatResponse)
-    // {
-    //     var otherUserName = chatResponse.OtherUserName;
-    //     AnsiConsole.Write(new Panel($"Chat sa: [yellow]{otherUserName}[/]")
-    //     {
-    //         Header = new PanelHeader("[green]Privatni chat[/]", Justify.Center),
-    //         Border = BoxBorder.Rounded
-    //     });
-    // }
-
-    public static async Task RunChatLive(ChatUiState state,UserActions actions)
+            
+    public static async Task RunChatLive(ChatUiState state)
     {
         await AnsiConsole.Live(BuildLayout(state))
             .AutoClear(false)
@@ -35,7 +25,7 @@ public static partial class Writer
             {
                 while (!state.Exit)
                 {
-                    var refreshResult = await state.UserActions.GetChatAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId);
+                    var refreshResult = await state.ChatActions.GetChatAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId);
                     if (refreshResult.IsFailure || refreshResult.Value == null)
                     {
                         ChatErrorWriter(refreshResult);
@@ -64,7 +54,7 @@ public static partial class Writer
 
                                 if (!string.IsNullOrWhiteSpace(text))
                                 {
-                                    var result=await actions.SendPrivateMessageAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId,text);
+                                    var result=await state.ChatActions.SendPrivateMessageAsync(state.Chat.CurrentUserId, state.Chat.OtherUserId,text);
 
                                     if (result.IsFailure)
                                         state.Error = '\n' + string.Join("\n", result.Errors.Select(e => $"[red]{e.Message}[/]"));
@@ -195,12 +185,12 @@ public static partial class Writer
         if (atBottom)
             state.ScrollOffset = Math.Max(0, state.Chat.Messages.Count - state.MaxVisibleMessages);
                     
-        await UpdateMessageList(refreshResult.Value,state.UserActions);
+        await UpdateMessageList(refreshResult.Value,state.ChatActions);
                     
         ctx.UpdateTarget(BuildLayout(state));        
     }
     
-    private static async Task UpdateMessageList(ChatResponse response,UserActions userActions)
+    private static async Task UpdateMessageList(ChatResponse response,ChatActions chatActions)
     {
         
         var visibleUnreadMsg = response.Messages
@@ -209,7 +199,7 @@ public static partial class Writer
             .ToList();
         
         if(visibleUnreadMsg.Count>0)
-            await userActions.UpdateUnreadMessagesAsync(visibleUnreadMsg);
+            await chatActions.UpdateUnreadMessagesAsync(visibleUnreadMsg);
         
     }
     

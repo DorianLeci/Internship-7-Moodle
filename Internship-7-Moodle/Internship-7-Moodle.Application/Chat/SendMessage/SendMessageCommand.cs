@@ -1,6 +1,6 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.DTO;
-using Internship_7_Moodle.Application.Users.Response.User;
+using Internship_7_Moodle.Application.Response.Chat;
 using MediatR;
 
 namespace Internship_7_Moodle.Application.Chat.SendMessage;

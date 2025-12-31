@@ -8,7 +8,7 @@ public class CourseNotificationConfig:IEntityTypeConfiguration<CourseNotificatio
 {
     public void Configure(EntityTypeBuilder<CourseNotification> builder)
     {
-        builder.ToTable("course_notification");
+        builder.ToTable("course_notifications");
         
         builder.HasKey(cn=>cn.Id);
         builder.Property(cn=>cn.Id).HasColumnName("id");
