@@ -30,10 +30,13 @@ public static class DependencyInjection
         services.AddScoped<IUserUnitOfWork, UserUnitOfWork>();        
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository,RoleRepository>();
+        
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<ICourseUnitOfWork, CourseUnitOfWork>();
+        
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IChatRepository, ChatRepository>();
+        services.AddScoped<IChatUnitOfWork, ChatUnitOfWork>();
     }
 
     

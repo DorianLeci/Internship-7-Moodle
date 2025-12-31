@@ -138,14 +138,14 @@ public static partial class Writer
         {
             var isCurrentUser = msg.SenderId == state.Chat.CurrentUserId;
             var senderName = isCurrentUser ? "[blue]Ti[/]" : $"[yellow]{msg.SenderName}[/]";
-
+            
             var infoTable = new Table()
             {
                 Border = TableBorder.None,
                 ShowHeaders = false
             };
             infoTable.AddColumn("");
-            infoTable.AddRow($"[grey]{msg.SentAt:HH:mm}[/] {(isCurrentUser ? (msg.IsRead ? hasReadMarkup : hasNotReadMarkup) : "")}");
+            infoTable.AddRow($"[grey]{msg.SentAt}[/] {(isCurrentUser ? (msg.IsRead ? hasReadMarkup : hasNotReadMarkup) : "")}");
 
             var panel = new Panel(new Rows(new Markup(msg.Content), infoTable))
             {
@@ -167,7 +167,12 @@ public static partial class Writer
             else
                 chatGrid.AddRow(emptyPanel, panel);
         }
-
+            
+        var headerPanel= new Panel(new Markup($"Razgovor sa [green]{state.Chat.OtherUserName}[/]"))
+        {
+            Border = BoxBorder.Square
+        };
+        
         var statusText = state.Error ?? "\n[blue]Upiši poruku | exit za izlaz[/]";
 
         var statusPanel = new Panel(new Markup(statusText))
@@ -179,7 +184,7 @@ public static partial class Writer
             Border = BoxBorder.Square
         };
         
-        return new Rows(chatGrid, statusPanel,inputPanel);
+        return new Rows(headerPanel,chatGrid, statusPanel,inputPanel);
     }
 
     private static async Task UpdateGrid(ChatUiState state, AppResult<ChatResponse> refreshResult,LiveDisplayContext ctx)

@@ -17,21 +17,21 @@ public class User:BaseEntity
     public const int MaxFirstNameLength = 30;
     public const int MaxLastNameLength = 30;
     public const int MaxEmailLength = 50;
-        
-    public string FirstName{ get; set; }
+
+    public string? FirstName { get; set; }
     
-    public string LastName{ get; set; }
+    public string? LastName{ get; set; }
     
     public DateOnly BirthDate{ get; set; }
     
-    public string Email { get; set; }
+    public string? Email { get; set; }
     
-    public string Password { get; set; }
+    public string? Password { get; set; }
     
     public GenderEnum? Gender { get; set; }
     
     public int RoleId { get; set; }
-    public Role Role { get; set; }
+    public Role Role { get; set; } = null!;
     
     public ICollection<CourseUser> CourseEnrollments { get; set; }=new List<CourseUser>();
     
@@ -86,14 +86,14 @@ public class User:BaseEntity
         if(string.IsNullOrWhiteSpace(Email))
             validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(User),"Email korisnika"));
         
-        if(!CheckEmailFormat(Email))
+        if(Email!=null && !CheckEmailFormat(Email))
             validationResult.Add(EntityValidation.UserValidation.EmailFormat);
         
-        if(Email.Length>MaxEmailLength)
+        if(Email?.Length>MaxEmailLength)
             validationResult.Add(EntityValidation.UserValidation.EmailLength);
     }
 
-    private bool CheckEmailFormat(string email)
+    private static bool CheckEmailFormat(string email)
     {
         var regex = new Regex(@"^[^@]{1,}@[^@]{2,}\.[^@]{3,}$");
         return regex.IsMatch(email);

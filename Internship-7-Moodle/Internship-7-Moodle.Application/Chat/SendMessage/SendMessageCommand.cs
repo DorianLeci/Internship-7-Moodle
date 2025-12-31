@@ -3,7 +3,7 @@ using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Users.Response.User;
 using MediatR;
 
-namespace Internship_7_Moodle.Application.Users.SendMessage;
+namespace Internship_7_Moodle.Application.Chat.SendMessage;
 
 public record SendMessageCommand(int CurrentUserId,int OtherUserId,string Text):IRequest<AppResult<PrivateMessageResponse>>
 {

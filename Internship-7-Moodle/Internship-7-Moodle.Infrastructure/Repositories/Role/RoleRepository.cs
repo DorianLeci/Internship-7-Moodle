@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Domain.Persistence.Roles;
 using Internship_7_Moodle.Infrastructure.Database;
+using Internship_7_Moodle.Infrastructure.Repositories.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Internship_7_Moodle.Infrastructure.Repositories.Role;

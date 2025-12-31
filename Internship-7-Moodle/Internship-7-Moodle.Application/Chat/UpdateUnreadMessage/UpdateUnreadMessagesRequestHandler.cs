@@ -1,31 +1,32 @@
-using FluentValidation.Results;
 using Internship_7_Moodle.Application.Common.Model;
-using Internship_7_Moodle.Domain.Persistence.Users;
+using Internship_7_Moodle.Domain.Persistence.Chats;
 using MediatR;
 
-namespace Internship_7_Moodle.Application.Users.UpdateUnreadMessage;
+namespace Internship_7_Moodle.Application.Chat.UpdateUnreadMessage;
 
 public class UpdateUnreadMessagesRequestHandler:IRequestHandler<UpdateUnreadMessagesRequest,AppResult<EmptyResult>>
 {
-    IUserUnitOfWork _userUnitOfWork;
+    private readonly IChatUnitOfWork _chatUnitOfWork;
 
-    public UpdateUnreadMessagesRequestHandler(IUserUnitOfWork userUnitOfWork)
+    public UpdateUnreadMessagesRequestHandler(IChatUnitOfWork chatUnitOfWork)
     {
-        _userUnitOfWork = userUnitOfWork;
+        _chatUnitOfWork = chatUnitOfWork;
     }
+
+    
     public async Task<AppResult<EmptyResult>> Handle(UpdateUnreadMessagesRequest request, CancellationToken cancellationToken)
     {
         var result=new AppResult<EmptyResult>();
         if (request.MessageIdList != null && request.MessageIdList.Any())
         {
-            var messages = await _userUnitOfWork.MessageRepository.GetPrivateMessagesAsync(request.MessageIdList);
+            var messages = await _chatUnitOfWork.MessageRepository.GetPrivateMessagesAsync(request.MessageIdList);
             
             foreach (var msg in messages)
             {
                 msg.IsRead = true;
             }
 
-            await _userUnitOfWork.SaveAsync();
+            await _chatUnitOfWork.SaveAsync();
         }
 
 

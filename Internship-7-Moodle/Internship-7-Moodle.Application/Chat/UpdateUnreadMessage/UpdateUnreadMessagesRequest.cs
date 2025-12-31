@@ -1,7 +1,7 @@
 using Internship_7_Moodle.Application.Common.Model;
 using MediatR;
 
-namespace Internship_7_Moodle.Application.Users.UpdateUnreadMessage;
+namespace Internship_7_Moodle.Application.Chat.UpdateUnreadMessage;
 
 public class EmptyResult { }
 

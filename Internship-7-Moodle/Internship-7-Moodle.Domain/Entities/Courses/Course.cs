@@ -15,7 +15,7 @@ public class Course:BaseEntity
     public int Ects { get; set; }
     
     public int OwnerId { get; set; }
-    public User Owner { get; set; }
+    public User Owner { get; set; } = null!;
     
     public ICollection<CourseUser> CourseStudents { get; set; }=new List<CourseUser>();
     

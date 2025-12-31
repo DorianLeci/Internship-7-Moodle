@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Infrastructure.Database;
+using Internship_7_Moodle.Infrastructure.Repositories.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Internship_7_Moodle.Infrastructure.Repositories.User;

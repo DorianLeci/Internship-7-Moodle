@@ -12,7 +12,7 @@ public static partial class PromptFunctions
     {
         return EmailFormatCheck.IsEmailValid(email)
             ? PresentationValidationResult<string>.Success(email)
-            : PresentationValidationResult<string>.Error("[red]Email nije u ispravnom formatu[/]");
+            : PresentationValidationResult<string>.Error("[red]\nEmail nije u ispravnom formatu[/]");
     }
     
     public static PresentationValidationResult<string> PasswordCheck(string password)
@@ -23,7 +23,7 @@ public static partial class PromptFunctions
     }
     public static PresentationValidationResult<string> ConfirmPasswordCheck(string confirmPassword,string password)
     {
-        return string.Equals(confirmPassword,password) ? PresentationValidationResult<string>.Success(password) : PresentationValidationResult<string>.Error("Lozinke se ne podudaraju");
+        return string.Equals(confirmPassword,password) ? PresentationValidationResult<string>.Success(password) : PresentationValidationResult<string>.Error("[red]\nLozinke se ne podudaraju[/]");
     }
     
     public static PresentationValidationResult<string> NameCheck(string name)
@@ -31,14 +31,14 @@ public static partial class PromptFunctions
         return NameFormatCheck.IsNameValid(name)
             ? PresentationValidationResult<string>.Success(name)
             : PresentationValidationResult<string>.Error(
-                "[red]Ime nije u ispravnom formatu.Ne smije imati brojeve ili specijalne znakove[/]");
+                "[red]\nIme nije u ispravnom formatu.Ne smije imati brojeve ili specijalne znakove[/]");
     }
     
     public static PresentationValidationResult<DateOnly?> BirthDateCheck(string birthDate)
     {
         return DateFormatCheck.IsDateValid(birthDate,out var dt)
             ? PresentationValidationResult<DateOnly?>.Success(dt)
-            : PresentationValidationResult<DateOnly?>.Error("[red]Datum rođenja nije u ispravnom formatu[/]");
+            : PresentationValidationResult<DateOnly?>.Error("[red]\nDatum rođenja nije u ispravnom formatu[/]");
 
     }
     
@@ -49,7 +49,7 @@ public static partial class PromptFunctions
 
         return GenderFormatCheck.IsGenderValid(gender,out var gd)
             ? PresentationValidationResult<GenderEnum?>.Success(gd)
-            : PresentationValidationResult<GenderEnum?>.Error("[red]Spol nije u ispravnom formatu[/]");
+            : PresentationValidationResult<GenderEnum?>.Error("[red]\nSpol nije u ispravnom formatu[/]");
     }
 }        
     }

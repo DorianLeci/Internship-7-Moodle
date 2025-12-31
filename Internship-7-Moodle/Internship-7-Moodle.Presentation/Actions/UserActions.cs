@@ -1,21 +1,19 @@
+using Internship_7_Moodle.Application.Chat.GetChat;
+using Internship_7_Moodle.Application.Chat.GetUsersWithChat;
+using Internship_7_Moodle.Application.Chat.GetUsersWithoutChat;
+using Internship_7_Moodle.Application.Chat.SendMessage;
+using Internship_7_Moodle.Application.Chat.UpdateUnreadMessage;
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Courses.GetAllMaterials;
 using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
-using Internship_7_Moodle.Application.Users.GetChat;
-using Internship_7_Moodle.Application.Users.GetUsersWithChat;
-using Internship_7_Moodle.Application.Users.GetUsersWithoutChat;
 using Internship_7_Moodle.Application.Users.LoginUser;
 using Internship_7_Moodle.Application.Users.RegisterUser;
-using Internship_7_Moodle.Application.Users.Response;
 using Internship_7_Moodle.Application.Users.Response.Course;
 using Internship_7_Moodle.Application.Users.Response.User;
-using Internship_7_Moodle.Application.Users.SendMessage;
-using Internship_7_Moodle.Application.Users.UpdateUnreadMessage;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
-using Spectre.Console;
 
 
 namespace Internship_7_Moodle.Presentation.Actions;

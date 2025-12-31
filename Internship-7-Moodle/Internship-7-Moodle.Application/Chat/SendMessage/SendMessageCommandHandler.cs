@@ -4,21 +4,24 @@ using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.Messages;
 using Internship_7_Moodle.Domain.Entities.Users;
+using Internship_7_Moodle.Domain.Persistence.Chats;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Domain.Services;
 using MediatR;
 
-namespace Internship_7_Moodle.Application.Users.SendMessage;
+namespace Internship_7_Moodle.Application.Chat.SendMessage;
 
 public class SendMessageCommandHandler:IRequestHandler<SendMessageCommand,AppResult<PrivateMessageResponse>>
 {
+    private readonly IChatUnitOfWork _chatUnitOfWork;
     private readonly IUserUnitOfWork _userUnitOfWork;
     private readonly ChatDomainService _chatDomainService;
 
-    public SendMessageCommandHandler(IUserUnitOfWork userUnitOfWork, ChatDomainService chatDomainService)
+    public SendMessageCommandHandler(IChatUnitOfWork chatUnitOfWork, ChatDomainService chatDomainService, IUserUnitOfWork userUnitOfWork)
     {
-        _userUnitOfWork = userUnitOfWork;
+        _chatUnitOfWork = chatUnitOfWork;
         _chatDomainService = chatDomainService;
+        _userUnitOfWork = userUnitOfWork;
     }
     
     public async Task<AppResult<PrivateMessageResponse>> Handle(SendMessageCommand command, CancellationToken cancellationToken)
@@ -45,7 +48,7 @@ public class SendMessageCommandHandler:IRequestHandler<SendMessageCommand,AppRes
         
         var (userAId, userBId) = _chatDomainService.GetOrderedUserIds(currentUser, otherUser);
 
-        var chat = await _userUnitOfWork.ChatRepository.GetChatAsync(userAId, userBId) 
+        var chat = await _chatUnitOfWork.ChatRepository.GetChatAsync(userAId, userBId) 
                    ?? _chatDomainService.CreateChat(userAId, userBId);
         
         var message = new PrivateMessage
@@ -67,9 +70,9 @@ public class SendMessageCommandHandler:IRequestHandler<SendMessageCommand,AppRes
         chat.PrivateMessages.Add(message);
         
         if(chat.Id==0)
-            await _userUnitOfWork.ChatRepository.InsertAsync(chat);
+            await _chatUnitOfWork.ChatRepository.InsertAsync(chat);
         
-        await _userUnitOfWork.MessageRepository.InsertAsync(message);
+        await _chatUnitOfWork.MessageRepository.InsertAsync(message);
         await _userUnitOfWork.SaveAsync();
         
         result.SetResult(new PrivateMessageResponse

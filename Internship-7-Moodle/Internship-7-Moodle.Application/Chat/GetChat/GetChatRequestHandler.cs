@@ -3,20 +3,23 @@ using Internship_7_Moodle.Application.Users.Response.User;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.Users;
+using Internship_7_Moodle.Domain.Persistence.Chats;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Domain.Services;
 using MediatR;
 
-namespace Internship_7_Moodle.Application.Users.GetChat;
+namespace Internship_7_Moodle.Application.Chat.GetChat;
 
 public class GetChatRequestHandler:IRequestHandler<GetChatRequest,AppResult<ChatResponse>>
 {
     private readonly IUserUnitOfWork _userUnitOfWork;
+    private readonly IChatUnitOfWork _chatUnitOfWork;
     private readonly ChatDomainService _chatDomainService;
 
-    public GetChatRequestHandler(IUserUnitOfWork userUnitOfWork, ChatDomainService chatDomainService)
+    public GetChatRequestHandler(IUserUnitOfWork userUnitOfWork, IChatUnitOfWork chatUnitOfWork, ChatDomainService chatDomainService)
     {
         _userUnitOfWork = userUnitOfWork;
+        _chatUnitOfWork = chatUnitOfWork;
         _chatDomainService = chatDomainService;
     }
     public async Task<AppResult<ChatResponse>> Handle(GetChatRequest request, CancellationToken cancellationToken)
@@ -43,7 +46,7 @@ public class GetChatRequestHandler:IRequestHandler<GetChatRequest,AppResult<Chat
         
         var (userAId, userBId) = _chatDomainService.GetOrderedUserIds(currentUser, otherUser);
 
-        var chat = await _userUnitOfWork.ChatRepository.GetChatAsync(userAId, userBId);
+        var chat = await _chatUnitOfWork.ChatRepository.GetChatAsync(userAId, userBId);
         
         var chatResponse = new ChatResponse
         {
@@ -61,7 +64,7 @@ public class GetChatRequestHandler:IRequestHandler<GetChatRequest,AppResult<Chat
                     SenderId = pm.SenderId,
                     ReceiverId = pm.ReceiverId,
                     SenderName = pm.Sender.FirstName + " " + pm.Sender.LastName,
-                    Content = pm.Text,
+                    Content = pm.Text!,
                     SentAt = pm.CreatedAt,
                     IsRead = pm.IsRead
                 }).ToList(): new List<PrivateMessageResponse>()

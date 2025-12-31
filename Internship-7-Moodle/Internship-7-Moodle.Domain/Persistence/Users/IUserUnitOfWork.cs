@@ -9,6 +9,4 @@ public interface IUserUnitOfWork:IUnitOfWork
 {
     IUserRepository UserRepository { get; }
     IRoleRepository RoleRepository { get; }
-    IMessageRepository MessageRepository { get; }
-    IChatRepository ChatRepository { get; }
 }

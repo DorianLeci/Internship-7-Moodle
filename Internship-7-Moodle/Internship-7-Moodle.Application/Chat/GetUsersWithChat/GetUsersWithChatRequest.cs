@@ -5,7 +5,7 @@ using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
 
-namespace Internship_7_Moodle.Application.Users.GetUsersWithChat;
+namespace Internship_7_Moodle.Application.Chat.GetUsersWithChat;
 
 public record GetUsersWithChatRequest(int UserId,RoleEnum? RoleFilter):IRequest<AppResult<GetAllResponse<UserResponse>>>
 {

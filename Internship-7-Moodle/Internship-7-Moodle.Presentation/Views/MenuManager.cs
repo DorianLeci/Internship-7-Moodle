@@ -51,7 +51,8 @@ public class MenuManager
 
             if (emailResult.IsCancelled)
             {
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                AnsiConsole.Clear();
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;
             }
 
@@ -62,7 +63,8 @@ public class MenuManager
 
             if (passwordResult.IsCancelled)
             {
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                AnsiConsole.Clear();
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;
             }
             
@@ -71,7 +73,8 @@ public class MenuManager
             
             if (confirmPasswordResult.IsCancelled)
             {
-                ConsoleHelper.ClearAndSleep(registrationExit);
+                AnsiConsole.Clear();
+                ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;
             }
             
@@ -79,6 +82,7 @@ public class MenuManager
 
             if (firstNameResult.IsCancelled)
             {
+                AnsiConsole.Clear();
                 ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;           
             }
@@ -89,6 +93,7 @@ public class MenuManager
                
             if (lastNameResult.IsCancelled)
             {
+                AnsiConsole.Clear();
                 ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;           
             }
@@ -99,6 +104,7 @@ public class MenuManager
             
             if (birthDateResult.IsCancelled)
             {
+                AnsiConsole.Clear();
                 ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;           
             }
@@ -108,6 +114,7 @@ public class MenuManager
             
             if (genderResult.IsCancelled)
             {
+                AnsiConsole.Clear();
                 ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;           
             }
@@ -116,6 +123,7 @@ public class MenuManager
 
             if (!isCaptchaSuccessful)
             {
+                AnsiConsole.Clear();
                 ConsoleHelper.ClearAndSleep(2000,registrationExit);
                 return;                       
             }

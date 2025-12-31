@@ -3,7 +3,7 @@ using Internship_7_Moodle.Domain.Persistence.Common;
 using Internship_7_Moodle.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Internship_7_Moodle.Infrastructure;
+namespace Internship_7_Moodle.Infrastructure.Repositories.Common;
 
 public class Repository<TEntity,TId>:IRepository<TEntity,TId> where TEntity : class
 {
