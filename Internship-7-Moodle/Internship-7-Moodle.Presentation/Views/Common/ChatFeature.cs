@@ -21,38 +21,16 @@ public class ChatFeature
     
     public async Task ShowPrivateChatMenuAsync()
     {
-        ConsoleHelper.SleepAndClear();
-
-        var exitRequested = false;
         var chatMenu = MenuBuilder.MenuBuilder.CreatePrivateChatMenu(this);
 
-        while (!exitRequested)
-        {
-            var choice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[yellow] Privatni chat[/]")
-                    .AddChoices(chatMenu.Keys));
-
-            exitRequested = await chatMenu[choice]();
-        }
+        await MenuRunner.RunMenuAsync(chatMenu,"[yellow] Privatni chat[/]");
     }
 
     public async Task ShowConversationMenuAsync(bool withoutChat, string title)
     {
-        ConsoleHelper.SleepAndClear();
-
-        var exitRequested = false;
         var newMsgMenu = MenuBuilder.MenuBuilder.CreateConversationMenu(this, withoutChat, title);
 
-        while (!exitRequested)
-        {
-            var choice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title(title)
-                    .AddChoices(newMsgMenu.Keys));
-
-            exitRequested = await newMsgMenu[choice]();
-        }
+        await MenuRunner.RunMenuAsync(newMsgMenu, title);
     }
 
     public async Task ShowUsersToChatWithAsync(bool withoutChat, string title, RoleEnum? roleFilter = null)
@@ -70,7 +48,7 @@ public class ChatFeature
 
             if (userList.Count == 0)
             {
-                ConsoleHelper.SleepAndClear(1000,"[red]Nema dostupnih korisnika[/]");
+                ConsoleHelper.SleepAndClear(1500,"[red]Nema dostupnih korisnika.Izlazak...[/]");
                 return;
             }
 

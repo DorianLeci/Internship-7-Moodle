@@ -17,24 +17,13 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
     public override async Task RunAsync()
     { 
-        var logoutRequested = false;
-
         var mainMenu = MenuBuilder.MenuBuilder.CreateProfessorMenu(this);
 
-        while (!logoutRequested)
-        {
-            var choice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[yellow] Glavni izbornik[/]")
-                    .AddChoices(mainMenu.Keys));
-
-            logoutRequested = await mainMenu[choice]();            
-        }
+        await MenuRunner.RunMenuAsync(mainMenu,"[yellow] Glavni izbornik[/]",exitChoice:"Odjava");
     }
 
     public async Task ShowCourseMenuAsync(int professorId,bool isMyCourseSubmenu)
     {
-        ConsoleHelper.SleepAndClear();
         
         var professorCourses=await UserActions.GetAllProfessorCoursesAsync(professorId);
         var professorCoursesList = professorCourses.ToList();
@@ -44,45 +33,25 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
             ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
             return;
         }
-        
-        var exitRequested = false;
-        
+
         var myCourseMenu=MenuBuilder.MenuBuilder.CreateCourseMenu(this,professorCoursesList,isMyCourseSubmenu);
 
         var title = isMyCourseSubmenu ? "[yellow] Moji kolegiji[/]" : "[yellow] Upravljanje kolegijima";
-        while (!exitRequested)
-        {
-            var choice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title(title)
-                    .AddChoices(myCourseMenu.Keys));
 
-            exitRequested = await myCourseMenu[choice]();     
-        }
-        
+        await MenuRunner.RunMenuAsync(myCourseMenu, title);
+
     }
     
     public async Task ShowCourseSubmenuAsync(CourseResponse course,bool isMyCourseSubmenu)
     {
-        ConsoleHelper.SleepAndClear();
-
-        var exitRequested = false;
         var courseSubmenu = MenuBuilder.MenuBuilder.CreateCourseScreen(this, course.CourseId);
         
-        while (!exitRequested)
-        {
-            var choice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[yellow] Kolegij screen[/]")
-                    .AddChoices(courseSubmenu.Keys));
-        
-            exitRequested = await courseSubmenu[choice]();     
-        }
+        await MenuRunner.RunMenuAsync(courseSubmenu,"[yellow] Kolegij screen[/]");
     }
 
     public async Task ShowAllStudentsEnrolled(int courseId)
     {
-        ConsoleHelper.SleepAndClear();
+        ConsoleHelper.MenuChoiceSuccess("[green]Uspješan odabir[/]");
         
         var studentsEnrolled=await _courseActions.GetAllStudentsEnrolledAsync(courseId);
         var studentsEnrolledList = studentsEnrolled.ToList();

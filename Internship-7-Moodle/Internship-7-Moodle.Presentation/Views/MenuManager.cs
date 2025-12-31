@@ -5,6 +5,7 @@ using Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Internship_7_Moodle.Presentation.InputValidation;
 using Internship_7_Moodle.Presentation.Service;
+using Internship_7_Moodle.Presentation.Views.Common;
 using Spectre.Console;
 using CaptchaService = Internship_7_Moodle.Presentation.Service.CaptchaService;
 
@@ -23,19 +24,10 @@ public sealed class MenuManager
     public async Task RunAsync()
     {
         AnsiConsole.Clear();
-        bool exitRequested = false;
 
         var guestMenu = MenuBuilder.MenuBuilder.CreateGuestMenu(this);
 
-        while (!exitRequested)
-        {
-            var choice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[yellow] Početni izbornik[/]")
-                    .AddChoices(guestMenu.Keys));
-
-            exitRequested = await guestMenu[choice]();            
-        }
+        await MenuRunner.RunMenuAsync(guestMenu, "[yellow] Početni izbornik[/]",exitChoice:"Izlaz iz aplikacije");
 
     }
 

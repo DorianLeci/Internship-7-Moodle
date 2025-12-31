@@ -6,12 +6,24 @@ public static class ConsoleHelper
 {
     public static void SleepAndClear(string? message=null)
     {
-        if(message!=null)
+        if(!string.IsNullOrEmpty(message))
             AnsiConsole.MarkupLine(message);
         
         Thread.Sleep(200);
         AnsiConsole.Clear();
-    }   
+    }
+
+    public static void MenuChoiceSuccess(string? message=null)
+    {
+        AnsiConsole.Clear();
+        
+        if(!string.IsNullOrEmpty(message))
+            AnsiConsole.MarkupLine(message);
+        
+        Thread.Sleep(500);
+        AnsiConsole.Clear();
+
+    }
     public static void SleepAndClear(int timeout,string? message=null)
     {
         if(message!=null)
