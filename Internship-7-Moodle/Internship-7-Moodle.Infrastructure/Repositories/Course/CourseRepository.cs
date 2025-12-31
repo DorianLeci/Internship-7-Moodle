@@ -29,6 +29,15 @@ public class CourseRepository:Repository<Domain.Entities.Courses.Course,int>,ICo
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<Domain.Entities.Users.User>> GetAllStudentsEnrolledAsync(int courseId)
+    {
+        return await Context.CourseUsers
+            .Where(cu => cu.CourseId == courseId)
+            .OrderByDescending(cu=>cu.CreatedAt)
+            .Select(cu => cu.User)
+            .ToListAsync();
+    }
+
     public Task<IEnumerable<Domain.Entities.Courses.Course>> AddStudentAsync()
     {
         throw new NotImplementedException();

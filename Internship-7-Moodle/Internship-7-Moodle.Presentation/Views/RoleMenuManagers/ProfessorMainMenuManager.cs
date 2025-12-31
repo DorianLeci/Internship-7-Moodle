@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Internship_7_Moodle.Presentation.Views.Common;
 using Spectre.Console;
 
@@ -66,16 +67,35 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
         ConsoleHelper.SleepAndClear();
 
         var exitRequested = false;
-        // var courseSubmenu = MenuBuilder.MenuBuilder.CreateCourseSubmenu(this, course.CourseId);
-        //
-        // while (!exitRequested)
-        // {
-        //     var choice = AnsiConsole.Prompt(
-        //         new SelectionPrompt<string>()
-        //             .Title("[yellow] Kolegij screen[/]")
-        //             .AddChoices(courseSubmenu.Keys));
-        //
-        //     exitRequested = await courseSubmenu[choice]();     
-        // }
+        var courseSubmenu = MenuBuilder.MenuBuilder.CreateCourseScreen(this, course.CourseId);
+        
+        while (!exitRequested)
+        {
+            var choice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[yellow] Kolegij screen[/]")
+                    .AddChoices(courseSubmenu.Keys));
+        
+            exitRequested = await courseSubmenu[choice]();     
+        }
+    }
+
+    public async Task ShowAllStudentsEnrolled(int courseId)
+    {
+        ConsoleHelper.SleepAndClear();
+        
+        var studentsEnrolled=await _courseActions.GetAllStudentsEnrolledAsync(courseId);
+        var studentsEnrolledList = studentsEnrolled.ToList();
+
+        if (studentsEnrolledList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(1000,"[red]Niti jedan student nije upisan na kolegij.Izlazak...[/]");
+            return;
+        }
+        
+        Writer.Course.StudentsEnrolledWriter(studentsEnrolledList);
+        
+        ConsoleHelper.ScreenExit(1500);
+        
     }
 }

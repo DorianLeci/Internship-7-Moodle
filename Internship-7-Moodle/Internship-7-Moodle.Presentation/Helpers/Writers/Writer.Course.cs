@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Response.Course;
+using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Spectre.Console;
 
@@ -56,6 +57,28 @@ public static partial class Writer
             
                 AnsiConsole.Write(panel);
             }        
+        }
+
+        public static void StudentsEnrolledWriter(List<UserResponse> userResponses)
+        {
+            var table = new Table()
+            {
+                Border =TableBorder.Ascii
+            };                
+            table.AddColumn(new TableColumn("[yellow]ID[/]").LeftAligned());
+            table.AddColumn(new TableColumn("[green]Ime[/]").LeftAligned());
+            table.AddColumn(new TableColumn("[green]Prezime[/]").LeftAligned());
+            
+            foreach (var user in userResponses)
+            {
+                table.AddRow(
+                    user.Id.ToString(),
+                    user.FirstName,
+                    user.LastName
+                );
+                
+            }
+            AnsiConsole.Write(table);        
         }
     }
     

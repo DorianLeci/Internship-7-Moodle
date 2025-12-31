@@ -35,7 +35,8 @@ public class UserRepository:Repository<Domain.Entities.Users.User,int>,IUserRepo
     public async Task<IEnumerable<Domain.Entities.Courses.Course>> GetAllProfessorCoursesAsync(int professorId)
     {
         return await Context.Courses
-            .Where(cu => cu.OwnerId == professorId)
+            .Where(c => c.OwnerId == professorId)
+            .OrderByDescending(c=>c.Ects)
             .ToListAsync();
     }
     

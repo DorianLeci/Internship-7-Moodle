@@ -166,6 +166,7 @@ internal static partial class Seeder
         
         public static void CourseUserDataSeed(ModelBuilder modelBuilder,DateTime seedTime)
         {
+            
             modelBuilder.Entity<CourseUser>().HasData(
                 new CourseUser { Id=1,UserId = 1, CourseId = 1, CreatedAt = seedTime, UpdatedAt = seedTime},
                 new CourseUser { Id=2,UserId = 2, CourseId = 1, CreatedAt = seedTime, UpdatedAt = seedTime},
@@ -189,9 +190,34 @@ internal static partial class Seeder
                 new CourseUser { Id=16,UserId = 2, CourseId = 5, CreatedAt = seedTime,UpdatedAt = seedTime },
                 new CourseUser { Id=17,UserId = 3, CourseId = 5, CreatedAt = seedTime,UpdatedAt = seedTime },
                 new CourseUser { Id=18,UserId = 4, CourseId = 5, CreatedAt = seedTime,UpdatedAt = seedTime },
-                new CourseUser { Id=19,UserId = 11, CourseId = 5, CreatedAt = seedTime,UpdatedAt = seedTime }
+                new CourseUser { Id=19,UserId = 11, CourseId = 5, CreatedAt = seedTime,UpdatedAt = seedTime },
                 
+                new CourseUser { Id=20,UserId = 1, CourseId = 6, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=21,UserId = 11, CourseId = 6, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=22,UserId = 12, CourseId = 6, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=23,UserId = 13, CourseId = 6, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=24,UserId = 14, CourseId = 6, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=25,UserId = 15, CourseId = 6, CreatedAt = seedTime,UpdatedAt = seedTime },
                 
+                new CourseUser { Id=26,UserId = 3, CourseId = 7, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=27,UserId = 11, CourseId = 7, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=28,UserId = 12, CourseId = 7, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=29,UserId = 13, CourseId = 7, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=30,UserId = 14, CourseId = 7, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=31,UserId = 15, CourseId = 7, CreatedAt = seedTime,UpdatedAt = seedTime },
+                
+                new CourseUser { Id=32,UserId = 3, CourseId = 8, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=33,UserId = 5, CourseId = 8, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=34,UserId = 13, CourseId = 8, CreatedAt = seedTime,UpdatedAt = seedTime },
+                
+                new CourseUser { Id=35,UserId = 4, CourseId = 9, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=36,UserId = 5, CourseId = 9, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=37,UserId = 14, CourseId = 9, CreatedAt = seedTime,UpdatedAt = seedTime },
+                
+                new CourseUser { Id=38,UserId = 5, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=39,UserId = 4, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=40,UserId = 11, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=41,UserId = 12, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime }
                 
                 );
         }

@@ -26,7 +26,23 @@ public partial class MenuBuilder
         return builder
             .AddMenuExit()
             .ReturnDictionary();
-
+    }
+    
+    public static Dictionary<string, Func<Task<bool>>> CreateCourseScreen(ProfessorMainMenuManager mainMenuManager,int courseId)
+    {
+        return new MenuBuilder()
+            .AddChoice("Pregled studenata na kolegiju", async () =>
+            {
+                await mainMenuManager.ShowAllStudentsEnrolled(courseId);
+                return false;
+            })
+            // .AddChoice("Materijali", async () =>
+            // {
+            //     await mainMenuManager.ShowCourseMaterialsAsync(courseId);
+            //     return false;
+            // })
+            .AddMenuExit()
+            .ReturnDictionary();
     }
     
     
