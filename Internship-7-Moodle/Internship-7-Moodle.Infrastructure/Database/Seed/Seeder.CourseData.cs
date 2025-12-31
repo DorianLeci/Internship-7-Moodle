@@ -217,7 +217,15 @@ internal static partial class Seeder
                 new CourseUser { Id=38,UserId = 5, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime },
                 new CourseUser { Id=39,UserId = 4, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime },
                 new CourseUser { Id=40,UserId = 11, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime },
-                new CourseUser { Id=41,UserId = 12, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime }
+                new CourseUser { Id=41,UserId = 12, CourseId = 10, CreatedAt = seedTime,UpdatedAt = seedTime },
+                
+                new CourseUser { Id=42,UserId = 11, CourseId = 11, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=43,UserId = 14, CourseId = 11, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=44,UserId = 16, CourseId = 11, CreatedAt = seedTime,UpdatedAt = seedTime },
+                
+                new CourseUser { Id=45,UserId = 13, CourseId = 13, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=46,UserId = 14, CourseId = 13, CreatedAt = seedTime,UpdatedAt = seedTime },
+                new CourseUser { Id=47,UserId = 16, CourseId = 13, CreatedAt = seedTime,UpdatedAt = seedTime }
                 
                 );
         }

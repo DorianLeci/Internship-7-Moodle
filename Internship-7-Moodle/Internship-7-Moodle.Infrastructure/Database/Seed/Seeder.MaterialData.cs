@@ -104,9 +104,141 @@ internal static partial class Seeder
                     
                     Title="„Introduction to Algorithms“, second edition",
                     AuthorName = "T.Cormen",
-                    PublishedDate =  new DateOnly(202,05,14),
+                    PublishedDate =  new DateOnly(2020,05,14),
                     Url="https://www.cs.mcgill.ca/~akroit/math/compsci/Cormen%20Introduction%20to%20Algorithms.pdf"
+                },
+                
+                new CourseMaterial
+                {
+                    Id = 9,
+                    CourseId = 5,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Fizička razina",
+                    AuthorName = "Ante Antić",
+                    PublishedDate =  new DateOnly(2020,05,15),
+                    Url="https://fesbmaterijali.net/antic/fizicka%razina/"
+                },
+                                
+                new CourseMaterial
+                {
+                    Id = 10,
+                    CourseId = 5,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Podatkovna razina",
+                    AuthorName = "Ante Antić",
+                    PublishedDate =  new DateOnly(2020,05,15),
+                    Url="https://fesbmaterijali.net/antic/podatkovna%razina/"
+                },
+                new CourseMaterial
+                {
+                    Id = 11,
+                    CourseId = 5,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Transportna razina",
+                    AuthorName = "Ante Antić",
+                    PublishedDate =  new DateOnly(2020,05,15),
+                    Url="https://fesbmaterijali.net/antic/transportna%razina/"
+                },
+                
+                new CourseMaterial
+                {
+                    Id = 12,
+                    CourseId = 6,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Booleova algebra",
+                    AuthorName = "David Davidović",
+                    PublishedDate =  new DateOnly(2010,05,15),
+                    Url="https://fesbmaterijali.net/davidovic/booleova%algebra/"
+                },
+                
+                new CourseMaterial
+                {
+                    Id = 13,
+                    CourseId = 6,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Digitalni sklopovi (1.izadnje)",
+                    AuthorName = "David Davidović",
+                    PublishedDate =  new DateOnly(2008,05,15),
+                    Url="https://fesbmaterijali.net/davidovic/digitalni%sklopovi1/"
+                },
+                
+                new CourseMaterial
+                {
+                    Id = 14,
+                    CourseId = 7,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Računalne mreže u sklopovlju(2007)",
+                    AuthorName = "Vesna Vesnić",
+                    PublishedDate =  new DateOnly(2007,03,14),
+                    Url="https://fesbmaterijali.net/vesnic/mreze%sklopovlje/"
+                },
+                
+                new CourseMaterial
+                {
+                    Id = 15,
+                    CourseId = 8,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Clean Code",
+                    AuthorName = "Robert Cecil Martin",
+                    PublishedDate =  new DateOnly(2005,04,18),
+                    Url="https://ptgmedia.pearsoncmg.com/images/9780132928472/samplepages/0132928477.pdf"
+                },
+                
+                new CourseMaterial
+                {
+                    Id = 16,
+                    CourseId = 8,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="The C Programming Language. 2nd Edition",
+                    AuthorName = "Dennis Ritchie",
+                    PublishedDate =  new DateOnly(1988,01,12),
+                    Url="https://seriouscomputerist.atariverse.com/media/pdf/book/C%20Programming%20Language%20-%202nd%20Edition"
+                },
+                
+                new CourseMaterial
+                {
+                    Id = 17,
+                    CourseId = 9,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Zbirka zadataka-C",
+                    AuthorName = "Maja Majić",
+                    PublishedDate =  new DateOnly(2013,01,13),
+                    Url="https://fesbmaterijali.net/majic/zbirka%zadatakac/"
+                },
+                
+                new CourseMaterial
+                {
+                    Id = 18,
+                    CourseId = 13,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime,
+                    
+                    Title="Uvod u ekonomiju i poduzetništvo",
+                    AuthorName = "Petar Petrović",
+                    PublishedDate =  new DateOnly(2013,07,13),
+                    Url="https://fesbmaterijali.net/petrovic/ekonimija%uvod/"
                 }
+                
+                
+                
                 
                 
                 );
