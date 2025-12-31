@@ -47,12 +47,13 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
         var exitRequested = false;
         
         var myCourseMenu=MenuBuilder.MenuBuilder.CreateCourseMenu(this,professorCoursesList,isMyCourseSubmenu);
-        
+
+        var title = isMyCourseSubmenu ? "[yellow] Moji kolegiji[/]" : "[yellow] Upravljanje kolegijima";
         while (!exitRequested)
         {
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[yellow] Moji kolegiji[/]")
+                    .Title(title)
                     .AddChoices(myCourseMenu.Keys));
 
             exitRequested = await myCourseMenu[choice]();     

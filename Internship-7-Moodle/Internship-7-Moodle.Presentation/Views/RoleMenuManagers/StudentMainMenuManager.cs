@@ -69,13 +69,13 @@ public class StudentMainMenuManager:BaseMainMenuManager
         var exitRequested = false;
         var courseSubmenu = MenuBuilder.MenuBuilder.CreateCourseSubmenu(this, course.CourseId);
         
+        var choice = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("[yellow] Kolegij screen[/]")
+                .AddChoices(courseSubmenu.Keys));
+        
         while (!exitRequested)
         {
-            var choice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[yellow] Kolegij screen[/]")
-                    .AddChoices(courseSubmenu.Keys));
-
             exitRequested = await courseSubmenu[choice]();     
         }
     }
