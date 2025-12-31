@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Domain.Common.Model;
+using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Domain.Persistence.Courses;
 using MediatR;
 
@@ -19,13 +20,13 @@ public class GetAllNotificationsRequestHandler:IRequestHandler<GetAllNotificatio
         var result=new AppResult<GetAllResponse<NotificationResponse>>();
 
         var notifications = await _courseUnitOfWork.CourseRepository.GetAllCourseNotificationsAsync(request.CourseId);
-
+        
         var notificationResponses = notifications.Select(n=>new NotificationResponse
             {
                 NotificationId = n.Id,
                 Subject = n.Subject,
                 Content = n.Content,
-                ProfessorName = n.Course.Owner.FirstName+" "+n.Course.Owner.LastName,
+                ProfessorName = request.ViewerRole==RoleEnum.Professor ? null : n.Course.Owner.FirstName+" "+n.Course.Owner.LastName,
                 CreatedAt =  n.CreatedAt,
             }
         );

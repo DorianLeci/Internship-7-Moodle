@@ -19,9 +19,16 @@ public static partial class Writer
                 };
                 table.HideHeaders();
                 table.AddColumn(new TableColumn("").LeftAligned());
-                table.AddRow($"[green]Profesor: {notificationResponse.ProfessorName}[/] |"
-                             +$"[yellow]Datum objave: {notificationResponse.CreatedAt}[/] |"
-                             + $"[blue]Predmet: {notificationResponse.Subject}[/]");
+
+                var headerRow = "";
+
+                if (!string.IsNullOrEmpty(notificationResponse.ProfessorName))
+                    headerRow += $"[green]Profesor: {notificationResponse.ProfessorName}[/] |";
+
+                headerRow += $"[yellow]Datum objave: {notificationResponse.CreatedAt}[/] |"
+                             + $"[blue]Predmet: {notificationResponse.Subject}[/]";
+
+                table.AddRow(headerRow);
 
                 table.AddRow($"\n[b]{notificationResponse.Content}[/]");
             

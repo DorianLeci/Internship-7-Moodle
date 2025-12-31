@@ -90,7 +90,80 @@ internal static partial class Seeder
                     CourseId =4,
                     CreatedAt = new DateTime(2025, 10, 18, 07, 45, 0),
                     UpdatedAt = new   DateTime(2025, 10, 18, 07, 45, 0)
-                }          
+                },
+                new CourseNotification
+                {
+                    Id=10,
+                    Subject="Promjena rasporeda",
+                    Content="Poštovani,\nidući tjedan (25.10.) predavanje će se održati s početkom u 11:45 (umjesto 10:45) u sali A102.",
+                    CourseId =5,
+                    CreatedAt = new DateTime(2025, 10, 18, 07, 45, 0),
+                    UpdatedAt = new   DateTime(2025, 10, 18, 07, 45, 0)
+                },
+                new CourseNotification
+                {
+                    Id=11,
+                    Subject="Laboratorijske vježbe",
+                    Content="Poštovani,\nu prvom mjesecu kreću laboratorijske vježbe.U prvom mjesecu će biti obavijest o rasporedu po grupama",
+                    CourseId =5,
+                    CreatedAt = new DateTime(2025, 12, 20, 15, 03, 0),
+                    UpdatedAt = new   DateTime(2025, 12, 20, 15, 03, 0)
+                },
+                new CourseNotification
+                {
+                    Id=12,
+                    Subject="Laboratorijske vježbe: Napomena",
+                    Content="Poštovani,\nNapomena u vezi laboratorijskih vježbi.Prije svake vježbe pisati će se ulazni ispiti.",
+                    CourseId =5,
+                    CreatedAt = new DateTime(2025, 12, 20, 16, 10, 0),
+                    UpdatedAt = new   DateTime(2025, 12, 20, 16, 10, 0)
+                },
+                new CourseNotification
+                {
+                    Id=13,
+                    Subject="Laboratorijske vježbe: Napomena",
+                    Content="Poštovani,\nNapomena u vezi laboratorijskih vježbi.Prije svake vježbe pisati će se ulazni ispiti.",
+                    CourseId =5,
+                    CreatedAt = new DateTime(2025, 12, 20, 16, 10, 0),
+                    UpdatedAt = new   DateTime(2025, 12, 20, 16, 10, 0)
+                },
+                new CourseNotification
+                {
+                    Id=14,
+                    Subject="Promjena predavača",
+                    Content="Poštovani,\nu prvom mjesecu ću biti na poslovnom putu u Japanu,pa će asistent držati sva predavanja kroz mjesec.",
+                    CourseId =6,
+                    CreatedAt = new DateTime(2025, 12, 21, 16, 10, 0),
+                    UpdatedAt = new   DateTime(2025, 12, 21, 16, 10, 0)
+                },
+                new CourseNotification
+                {
+                    Id=15,
+                    Subject="Konzultacije",
+                    Content="Poštovani,\ndobio sam dosta upita što se tiče konzultacija. Možete doći bilo kada dok sam na faksu,samo se najavite preko maila.",
+                    CourseId =6,
+                    CreatedAt = new DateTime(2025, 11, 21, 13, 12, 0),
+                    UpdatedAt = new   DateTime(2025, 11, 21, 13, 12, 0)
+                },
+                new CourseNotification
+                {
+                    Id=16,
+                    Subject="Predaja praktičnog rada",
+                    Content="Poštovani,\nrok za predaju praktičnog rada je do kraja prvog mjeseca.Sretno!",
+                    CourseId =7,
+                    CreatedAt = new DateTime(2025, 12, 30, 13, 12, 0),
+                    UpdatedAt = new   DateTime(2025, 12, 30, 13, 12, 0)
+                },
+                new CourseNotification
+                {
+                    Id=17,
+                    Subject="Drugi kolokvij",
+                    Content="Poštovani,\novaj kolegij ne sadrži drugi kolokvij.U završnu ocjenu ulazi prvi kolokvij i ocjena iz praktičnog rada.",
+                    CourseId =7,
+                    CreatedAt = new DateTime(2025, 12, 30, 20, 0, 0),
+                    UpdatedAt = new   DateTime(2025, 12, 30, 20, 0, 0)
+                }
+                
                 
             );
 

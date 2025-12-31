@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Response.Course;
+using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -51,12 +52,12 @@ public class StudentMainMenuManager:BaseMainMenuManager
 
     public async Task ShowCourseNotificationsAsync(int courseId)
     {
-        var notifications = await _courseActions.GetAllNotificationsAsync(courseId);
+        var notifications = await _courseActions.GetAllNotificationsAsync(courseId,RoleEnum.Student);
         var notificationList = notifications.ToList();
         
         if (notificationList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(1000,"[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupne obavijesti.Izlazak...[/]");
             return;
         }
         

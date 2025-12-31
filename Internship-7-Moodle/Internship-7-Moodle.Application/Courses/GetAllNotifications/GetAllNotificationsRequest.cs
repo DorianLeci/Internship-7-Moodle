@@ -2,10 +2,11 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Domain.Common.Model;
+using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
 
 namespace Internship_7_Moodle.Application.Courses.GetAllNotifications;
 
-public record GetAllNotificationsRequest(int CourseId): IRequest<AppResult<GetAllResponse<NotificationResponse>>>
+public record GetAllNotificationsRequest(int CourseId,RoleEnum ViewerRole): IRequest<AppResult<GetAllResponse<NotificationResponse>>>
 {
 }

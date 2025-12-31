@@ -29,6 +29,8 @@ public class UserRepository:Repository<Domain.Entities.Users.User,int>,IUserRepo
             .Where(cu => cu.UserId == studentId)
             .Include(cu => cu.Course).ThenInclude(c=>c.Owner)
             .Select(cu => cu.Course)
+            .OrderByDescending(c=>c.Ects)
+            .ThenBy(c=>c.Name)
             .ToListAsync();
     }
     
@@ -37,6 +39,7 @@ public class UserRepository:Repository<Domain.Entities.Users.User,int>,IUserRepo
         return await Context.Courses
             .Where(c => c.OwnerId == professorId)
             .OrderByDescending(c=>c.Ects)
+            .ThenBy(c=>c.Name)
             .ToListAsync();
     }
     

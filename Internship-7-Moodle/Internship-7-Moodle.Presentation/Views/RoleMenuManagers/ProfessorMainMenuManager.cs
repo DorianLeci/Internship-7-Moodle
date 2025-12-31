@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Response.Course;
+using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -58,13 +59,45 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
         if (studentsEnrolledList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(1000,"[red]Niti jedan student nije upisan na kolegij.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red]Niti jedan student nije upisan na kolegij.Izlazak...[/]");
             return;
         }
         
         Writer.Course.StudentsEnrolledWriter(studentsEnrolledList);
         
         ConsoleHelper.ScreenExit(1500);
+    }
+    
+    public async Task ShowCourseNotificationsAsync(int courseId)
+    {
+        var notifications = await _courseActions.GetAllNotificationsAsync(courseId,RoleEnum.Professor);
+        var notificationList = notifications.ToList();
         
+        if (notificationList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupne obavijesti.Izlazak...[/]");
+            return;
+        }
+        
+        Writer.Course.NotificationWriter(notificationList);
+
+        ConsoleHelper.ScreenExit(1500);
+    }
+    
+    public async Task ShowCourseMaterialsAsync(int courseId)
+    {
+        
+        var materials = await _courseActions.GetAllMaterialsAsync(courseId);
+        var materialList = materials.ToList();
+        
+        if (materialList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni materijali.Izlazak...[/]");
+            return;
+        }
+        
+        Writer.Course.MaterialsWriter(materialList);
+
+        ConsoleHelper.ScreenExit(1500); 
     }
 }

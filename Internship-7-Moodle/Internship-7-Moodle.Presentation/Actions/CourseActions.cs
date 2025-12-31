@@ -3,6 +3,7 @@ using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.Courses.GetAllStudentsEnrolled;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
 
 namespace Internship_7_Moodle.Presentation.Actions;
@@ -16,10 +17,10 @@ public class CourseActions
         _mediator = mediator;
     }
     
-    public async Task<IEnumerable<NotificationResponse>> GetAllNotificationsAsync(int courseId)
+    public async Task<IEnumerable<NotificationResponse>> GetAllNotificationsAsync(int courseId,RoleEnum viewerRole)
     {
         
-        var result = await _mediator.Send(new GetAllNotificationsRequest(courseId));
+        var result = await _mediator.Send(new GetAllNotificationsRequest(courseId,viewerRole));
 
         if (result.Value == null)
             return [];
