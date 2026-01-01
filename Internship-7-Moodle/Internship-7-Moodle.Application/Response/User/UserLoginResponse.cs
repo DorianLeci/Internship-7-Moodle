@@ -7,4 +7,10 @@ public class UserLoginResponse
     public int Id { get; init; }
     public RoleEnum RoleName { get; init; }
     
+    public string FirstName { get; init; } = null!;
+    
+    public string LastName { get; init; } = null!;
+    
+    public string FullName=> $"{FirstName} {LastName}";
+    
 }

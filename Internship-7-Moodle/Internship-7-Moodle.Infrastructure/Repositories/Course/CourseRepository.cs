@@ -1,5 +1,6 @@
 using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Entities.Courses.Materials;
+using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Domain.Persistence.Courses;
 using Internship_7_Moodle.Infrastructure.Database;
 using Internship_7_Moodle.Infrastructure.Repositories.Common;
@@ -40,8 +41,18 @@ public class CourseRepository:Repository<Domain.Entities.Courses.Course,int>,ICo
             .ToListAsync();
     }
 
-    public Task<IEnumerable<Domain.Entities.Courses.Course>> AddStudentAsync()
+    public async Task<IEnumerable<Domain.Entities.Users.User>> GetAllStudentsNotEnrolledAsync(int courseId)
     {
-        throw new NotImplementedException();
+        var enrolledStudentIdList=await Context.CourseUsers
+            .Where(cu => cu.CourseId == courseId)
+            .Select(cu => cu.UserId)
+            .ToListAsync();
+        
+        return await Context.Users
+            .Include(u => u.Role)
+            .Where(u=>u.Role.RoleName==RoleEnum.Student && !enrolledStudentIdList.Contains(u.Id))
+            .OrderByDescending(cu=>cu.CreatedAt)
+            .ToListAsync();
     }
+    
 }

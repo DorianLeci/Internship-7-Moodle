@@ -43,8 +43,9 @@ public static partial class Writer
         
             var idText = $"[yellow] -Id korisnika: {appResult.Value!.Id}[/]";
             var roleText=$"[yellow] -Uloga korisnika: {appResult.Value.RoleName}[/]";
+            var nameText=$"[yellow] -Dobrodošao: {appResult.Value.FullName}[/]";
             
-            AnsiConsole.Write(new Panel(string.Join("\n",idText,roleText))
+            AnsiConsole.Write(new Panel(string.Join("\n",idText,roleText,nameText))
             {
                 Header = new PanelHeader("[green]Korisnik uspješno prijavljen[/]",Justify.Center),
                 Border=BoxBorder.Rounded,

@@ -108,7 +108,7 @@ public partial class MenuBuilder
         
         foreach (var user in users)
         {
-            var stringKey = $"{user.Id}-{user.FirstName} {user.LastName}-{user.RoleName}";
+            var stringKey = $"{user.Id}-{user.FullName}-{user.RoleName}";
             builder.AddChoice(stringKey,async () => { await chatFeature.OpenPrivateChatAsync(user.Id); return false; });
         }
 

@@ -9,4 +9,6 @@ public interface ICourseUnitOfWork:IUnitOfWork
     ICourseNotificationRepository CourseNotificationRepository { get; }
     
     ICourseMaterialRepository CourseMaterialRepository { get; }
+    
+    ICourseUserRepository CourseUserRepository { get; }
 }

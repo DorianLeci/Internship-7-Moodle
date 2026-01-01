@@ -44,7 +44,15 @@ public class LoginUserCommandHandler:IRequestHandler<LoginUserCommand,AppResult<
             return result;
         }
         
-        result.SetResult(new UserLoginResponse{Id=user.Id, RoleName = user.Role.RoleName});
+        result.SetResult(new UserLoginResponse
+            {
+                Id=user.Id, 
+                RoleName = user.Role.RoleName,
+                FirstName = user.FirstName!,
+                LastName = user.LastName!,
+            }
+            );
+        
         return result;
 
     }

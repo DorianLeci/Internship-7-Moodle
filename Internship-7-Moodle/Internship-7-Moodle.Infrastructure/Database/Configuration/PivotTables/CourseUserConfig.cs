@@ -22,5 +22,6 @@ public class CourseUserConfig:IEntityTypeConfiguration<CourseUser>
         builder.Property(cu=>cu.UserId).HasColumnName("user_id");
         builder.Property(cu=>cu.CourseId).HasColumnName("course_id");
         
+        builder.HasIndex(cu=> new{cu.CourseId,cu.UserId}).IsUnique();
     }
 }

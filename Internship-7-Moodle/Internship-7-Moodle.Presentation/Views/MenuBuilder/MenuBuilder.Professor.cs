@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Response.Course;
+using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 
 namespace Internship_7_Moodle.Presentation.Views.MenuBuilder;
@@ -42,10 +43,27 @@ public partial class MenuBuilder
     public static Dictionary<string, Func<Task<bool>>> CreateCourseManagementScreen(ProfessorMainMenuManager mainMenuManager,int courseId)
     {
         return new MenuBuilder()
+            .AddChoice("Dodaj studenta na kolegij", async () => { await mainMenuManager.ShowStudentsToAdd(courseId); return false; })
             .AddChoice("Dodaj obavijest", async () => { await mainMenuManager.HandleCourseNotificationPublish(courseId); return false; })
             .AddChoice("Dodaj materijal", async () => { await mainMenuManager.HandleCourseMaterialPublish(courseId); return false; })
             .AddMenuExit()
             .ReturnDictionary();
+    }
+    
+    public static Dictionary<string, Func<Task<bool>>> CreateStudentsToAddMenu(ProfessorMainMenuManager mainMenuManager,List <UserResponse> students,int courseId)
+    {
+        var builder = new MenuBuilder();
+        builder.AddMenuExit();
+        
+        foreach (var student in students)
+        {
+            var currentStudent = student; 
+            var stringKey = $"{currentStudent.Id}-{currentStudent.FullName}";
+            builder.AddChoice(stringKey,async () => { await mainMenuManager.HandleStudentAddingToCourse(courseId,currentStudent.Id); return false; });
+        }
+
+        return builder.ReturnDictionary();
+
     }
     
     

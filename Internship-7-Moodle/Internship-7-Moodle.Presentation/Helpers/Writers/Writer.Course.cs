@@ -1,6 +1,6 @@
+using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
-using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -96,6 +96,28 @@ public static partial class Writer
         public static void MaterialPublishedWriter()
         {
             AnsiConsole.MarkupLine("[green]Materijal uspješno dodan![/]");
+        }
+
+        public static void StudentAddedWriter(AppResult<UserResponse> result)
+        {
+            Console.WriteLine();
+            
+            if (result.IsFailure)
+                Common.ErrorWriter(result,"[red]Dodavanje studenta na kolegij nije uspjelo[/]");
+
+            else
+            {
+                var idText = $"[yellow] -Id korisnika: {result.Value!.Id}[/]";
+                var roleText = $"[yellow] -Ime i prezime: {result.Value.FullName}[/]";
+                
+                AnsiConsole.Write(new Panel(string.Join("\n",idText,roleText))
+                {
+                    Header = new PanelHeader("[green]Korisnik uspješno dodan[/]",Justify.Center),
+                    Border=BoxBorder.Rounded,
+                    Width=40
+                });   
+            }
+                
         }
 
     }

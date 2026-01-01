@@ -3,6 +3,7 @@ using System;
 using Internship_7_Moodle.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Internship_7_Moodle.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260101211535_MigrationUpdateRequired")]
+    partial class MigrationUpdateRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -967,10 +970,9 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CourseId");
 
-                    b.HasIndex("CourseId", "UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("course_users", "public");
 
@@ -1489,7 +1491,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "John",
                             Gender = "M",
                             LastName = "Doe",
-                            Password = "AQAAAAEAACcQAAAAEPD+L8RXHv7ClK097ht3JzUu+i2aqFfUCaIXcACZgsyXUv8NRQIQXvHXYBURRwdj7Q==",
+                            Password = "AQAAAAEAACcQAAAAELlVtvsc8M4EiRZ7FmLD4Btf214yEXkXnWlwce2E9hMHsGGeZdZhhZxXvT6/V/dm3w==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1502,7 +1504,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Dorian",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEPcq/ghyWOccIgpVBF+Ab+B05Ippdrwh3n6mtxfpf7w6UOO/hCVZ4fudReLwzyun1w==",
+                            Password = "AQAAAAEAACcQAAAAEL1wJ0JEOjLD2VhH7kB/TXnPNdRahIkEzHiCiPMr/iCP5GVGbunkaanoPiRRa8iN6g==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1515,7 +1517,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Damir",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEMzrzmN6zPqh8Ys8tlBIpVVLsd1QQJjDTqqAZsylikkzGQ/VVLR3vnVNU8oOBCMbbw==",
+                            Password = "AQAAAAEAACcQAAAAELKCxygVaRPanhMMXMcwMp8YiF1cOt+pc6yaqKKhAMw48frlo2cJgimkPS2wf9YppA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1528,7 +1530,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Vesna",
                             Gender = "F",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEPlg43EPxiIDNzdMy50v+DN5yuNjGNrWZM8stXwtNSipAIE/5MkJgfkkxkAXonb4DQ==",
+                            Password = "AQAAAAEAACcQAAAAEOqosTg6DcBkkMfOfHeAwz0F+VwNzFOrLFiMdG0jMr4qqzrb25rOMIakvCwIKkKE8Q==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1541,7 +1543,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Zora",
                             Gender = "F",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAED4i6IA8lv2Ro4zbpMH3akTkrp/tfA8uf2bl461dGH7Vb9RdWGdoV/b7prxXfu7u6Q==",
+                            Password = "AQAAAAEAACcQAAAAEMPvAdlvX5DjAmd++1BhVR/seLcn3LCMbsjayt1c0iU6sdh+q7QGo/TWWBuPzrQfaQ==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1554,7 +1556,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Ivo",
                             Gender = "M",
                             LastName = "Ivić",
-                            Password = "AQAAAAEAACcQAAAAEKvcqmF7o1q1+L1O3T8Q34pEHKNcH5ENlAOp3cAJpJeS9CEoq4kE+LdT2rK5dgbVgA==",
+                            Password = "AQAAAAEAACcQAAAAEEkgqoHclO9AR5eCPQCP6fURv6WlJJNE3bj6ls6SwHSjW8+gYtpsyHuimyB86TSzag==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1567,7 +1569,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Petar",
                             Gender = "M",
                             LastName = "Petrović",
-                            Password = "AQAAAAEAACcQAAAAEHKFIQraFDcB/psFNNBVHEXedhUH5GAnYjwWFx3hA4vMkrxYosjS5E/ffHwqvgWFjA==",
+                            Password = "AQAAAAEAACcQAAAAEJoCDo9HT5s3jZbLoYX/zuZFmRODEZ8ISaTfIWuPrtBddOKRUZ6lutBD5ZN8SbHZ/w==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1580,7 +1582,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Maja",
                             Gender = "F",
                             LastName = "Majić",
-                            Password = "AQAAAAEAACcQAAAAED1IMdvS7CCfimJ8xGsoY4EOj6R9by2wSyrTFHML/e/o8hML+HTtUJEfX5oLAnUSLg==",
+                            Password = "AQAAAAEAACcQAAAAEMjWaVzxsRkghmOqPEYSVHOwHAYNXbO0WClhFfLK3yYVKPmzN5pQt01eOswbpN/iTQ==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1593,7 +1595,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Vesna",
                             Gender = "F",
                             LastName = "Vesnić",
-                            Password = "AQAAAAEAACcQAAAAEL7JHg2QBL33S67svqH7hxpPK8aDY8t742mYgygGRulE7JXFsuHV5gulz7c5hDjQcw==",
+                            Password = "AQAAAAEAACcQAAAAEBfQsmM1tkjz9bc14N82dVoJhcOXyfvR5sZljOjAtex/+9N4vlf1kpIAiWRuTU+OXQ==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1606,7 +1608,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Sebastian",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEOrBOlbvTLKx2Pw1oyK+TwFGJN71FHmuEXqJEfvwWE+MKb3pIa2a+6AbUc7jWhMtKA==",
+                            Password = "AQAAAAEAACcQAAAAEFjNqmNq0eTao3nroh4roz5gXYJHQl19ZFtVFo5j19iNxsV22KxoBQ6r5GSFx2h3qg==",
                             RoleId = 3,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1619,7 +1621,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Nikola",
                             Gender = "M",
                             LastName = "Filipović",
-                            Password = "AQAAAAEAACcQAAAAEMPU0r4iUAZQH9aY9fygngrBMH7iUac4QmQJcjH2Gppoy5/aNF78BZFZoH4h71pT1Q==",
+                            Password = "AQAAAAEAACcQAAAAEMdYSeuRIbVWW6qPJsTPLylliFsOUt97rFOxMmTwia+RXUALlyJdORFlasPLh9GEJg==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1632,7 +1634,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Toni",
                             Gender = "M",
                             LastName = "Crnčić",
-                            Password = "AQAAAAEAACcQAAAAEMkmxEcIeK8qDnoM4lnhahj2fYeBdYAVCGvHyRsqzoBO11616MaO2Y8+OMDRlaRkLw==",
+                            Password = "AQAAAAEAACcQAAAAEO7xt7VRnkC5bbkrVIK8rH/2Xb4gHzUDX3QCNcWLAzn66uOfwJpsgQREHdR9h++qQA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1645,7 +1647,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Marija",
                             Gender = "F",
                             LastName = "Hanić",
-                            Password = "AQAAAAEAACcQAAAAEJteQFHgXKznRu22NF45Itz2qzoNu9y+c5QvqWpu/O74F1nc4y8NWddv6rmodMCg9w==",
+                            Password = "AQAAAAEAACcQAAAAEH8lgFHiNeMBVUPZk85vUxdszpF4raKMSj/RrePHs+8BvLAS8gess82LG3dD1w3/eg==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1658,7 +1660,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Tomislav",
                             Gender = "M",
                             LastName = "Turjan",
-                            Password = "AQAAAAEAACcQAAAAEOww8zzK089iiKT8cgQzUMEvlqOS8S+lgE/QY8M1H4DPswEYuOt0Ys5yJvycJxaR6g==",
+                            Password = "AQAAAAEAACcQAAAAENDR1J3mjWCwNgYLV+cY0JgREqDuEuoh8iXMppuy4RFrXe4rXPRgHKhT08YmTrozXQ==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1671,7 +1673,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Ema",
                             Gender = "F",
                             LastName = "Boljevčan",
-                            Password = "AQAAAAEAACcQAAAAEDDVXRfoDntjurF1ZeaGfl3dGicowb9sz3L4zB31y+JI4hY6CT287hioq9fcWMrmwQ==",
+                            Password = "AQAAAAEAACcQAAAAEF0hWn2KSQo3ZADOc+BhWOg6lfoAxlrLkvgOGl1kPBqp6U1ngTlyygcQ4wobOj4KlA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1684,7 +1686,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Luka",
                             Gender = "M",
                             LastName = "Jerković",
-                            Password = "AQAAAAEAACcQAAAAEH0oEHehh2B0rRQqEjGkAiblr6Zr2g10IBUK4AD0P4ZQNkV4a0f1FW3qp3K2baoaDg==",
+                            Password = "AQAAAAEAACcQAAAAEF4XXYl/MnC1I3n+7Kz1b75TSkh6VH+QNInPopONm4PxofHirRjXf8Pb7xpHKBxGaA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });

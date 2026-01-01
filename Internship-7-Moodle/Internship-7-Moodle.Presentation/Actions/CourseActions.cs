@@ -1,9 +1,11 @@
 using Internship_7_Moodle.Application.Common.Model;
+using Internship_7_Moodle.Application.Courses.AddStudentToCourse;
 using Internship_7_Moodle.Application.Courses.GetAllMaterials;
 using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.Courses.GetAllStudentsEnrolled;
 using Internship_7_Moodle.Application.Courses.PublishCourseMaterial;
 using Internship_7_Moodle.Application.Courses.PublishCourseNotification;
+using Internship_7_Moodle.Application.Courses.StudentsNotEnrolled;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
@@ -57,6 +59,18 @@ public class CourseActions
 
         return studentsEnrolled;        
     }
+    
+    public async Task<IEnumerable<UserResponse>> GetAllStudentsNotEnrolledAsync(int courseId)
+    {
+        var result = await _mediator.Send(new StudentsNotEnrolledRequest(courseId));
+
+        if (result.Value == null)
+            return [];
+
+        var studentsNotEnrolled = result.Value.Entities;
+
+        return studentsNotEnrolled;        
+    }
 
     public async Task<AppResult<SuccessPostResponse>> PublishCourseNotificationAsync(string subject, string content, int courseId)
     {
@@ -70,5 +84,10 @@ public class CourseActions
         var courseMaterialDto=new PublishCourseMaterialDto(title,authorName,publishDate,Url,courseId);
         
         return await _mediator.Send(PublishCourseMaterialCommand.FromDto(courseMaterialDto));
+    }
+
+    public async Task<AppResult<UserResponse>> AddStudentToCourseAsync(int courseId, int studentId)
+    {
+        return await _mediator.Send(new AddStudentToCourseCommand(courseId, studentId));
     }
 }

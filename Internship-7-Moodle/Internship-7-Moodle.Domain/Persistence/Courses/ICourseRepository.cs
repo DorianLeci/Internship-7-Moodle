@@ -14,5 +14,6 @@ public interface ICourseRepository:IRepository<Course,int>
     
     Task<IEnumerable<User>> GetAllStudentsEnrolledAsync(int courseId);
     
-    Task<IEnumerable<Course>> AddStudentAsync();
+    Task<IEnumerable<User>> GetAllStudentsNotEnrolledAsync(int courseId);
+    
 }

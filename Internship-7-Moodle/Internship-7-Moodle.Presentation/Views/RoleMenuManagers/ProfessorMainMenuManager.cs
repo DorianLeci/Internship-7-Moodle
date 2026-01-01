@@ -231,4 +231,60 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
             return;
         }
     }
+
+    public async Task ShowStudentsToAdd(int courseId)
+    {
+        var exitRequested = false;
+
+        while (!exitRequested)
+        {
+            var students=await _courseActions.GetAllStudentsNotEnrolledAsync(courseId);
+            
+            var studentList=students.ToList();
+            
+            if (studentList.Count == 0)
+            {
+                ConsoleHelper.SleepAndClear(1500,"[red]Nema dostupnih korisnika.Izlazak...[/]");
+                return;
+            }
+
+            var studentsToAddMenu = MenuBuilder.MenuBuilder.CreateStudentsToAddMenu(this, studentList, courseId);
+            
+            var prompt = new SelectionPrompt<string>()
+                .Title(" [yellow]Dodaj studenta na kolegij[/]")
+                .PageSize(10)
+                .MoreChoicesText("[grey](Stisni strelicu prema dolje da vidiš više)[/]")
+                .EnableSearch()
+                .SearchPlaceholderText("Upiši ime studenta da pretražuješ")
+                .AddChoices(studentsToAddMenu.Keys);
+
+            prompt.SearchHighlightStyle = new Style().Background(ConsoleColor.DarkBlue);
+
+            var choice = AnsiConsole.Prompt(prompt);
+            
+            exitRequested = await studentsToAddMenu[choice]();
+        }
+    }
+    
+    public async Task HandleStudentAddingToCourse(int courseId,int studentId)
+    {
+        var choice = await ChoiceMenu.ShowChoiceMenuAsync(("Da", true), ("Ne", false),
+            "[yellow]Želiš li dodati studenta na kolegij[/]");
+
+        if (!choice)
+        {
+            AnsiConsole.Clear();
+            ConsoleHelper.SleepAndClear(2000,"[blue]Odustao si od dodavanja studenta na kolegij.Izlazak...[/]");
+            return;            
+        }
+
+        var response=await _courseActions.AddStudentToCourseAsync(courseId, studentId);
+
+        AnsiConsole.Clear();
+        Writer.Course.StudentAddedWriter(response);
+        
+        ConsoleHelper.SleepAndClear(2000);
+        
+        
+    }
 }

@@ -38,8 +38,6 @@ public static partial class PromptFunctions
         public static PresentationValidationResult<string> AuthorNameCheck(string authorName)
         {
             var authorNameFormatted=FormatAuthorName.FormatInput(authorName);
-
-            Console.WriteLine(authorNameFormatted);
             
             if (authorNameFormatted.Length > CourseMaterial.MaxAuthorNameLength)
                 return PresentationValidationResult<string>.Error(
