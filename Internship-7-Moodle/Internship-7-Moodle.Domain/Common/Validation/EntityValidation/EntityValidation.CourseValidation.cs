@@ -1,4 +1,6 @@
 using Internship_7_Moodle.Domain.Entities.Courses;
+using CourseMaterial = Internship_7_Moodle.Domain.Entities.Courses.Materials.CourseMaterial;
+using CourseNotification = Internship_7_Moodle.Domain.Entities.Courses.Notifications.CourseNotification;
 
 namespace Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 
@@ -32,6 +34,12 @@ public static partial class EntityValidation
             ValidationSeverity.Error,
             $"{CourseMaterialPrefix}_{nameof(CourseMaterial.MaxAuthorNameLength)}",
             $"Ime autora ne smije biti duže od {CourseMaterial.MaxTitleLength} znakova");
+        
+        public static readonly ValidationItem AuthorNameInvalid = new ValidationItem(
+            ValidationType.BussinessRule,
+            ValidationSeverity.Error,
+            $"{CourseMaterialPrefix}_AuthorNameInvalid",
+            $"Format imena autora nije ispravan");
         
         public static readonly ValidationItem PublishedDateTooNew = new ValidationItem(
             ValidationType.BussinessRule,

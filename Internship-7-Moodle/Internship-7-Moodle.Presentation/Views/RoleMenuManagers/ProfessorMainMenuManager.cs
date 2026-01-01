@@ -2,6 +2,7 @@ using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Presentation.Helpers.Format;
 using Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
 using Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Reader;
@@ -116,7 +117,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
         while (true)
         {
             var subjectResult = await FieldPrompt.PromptWithValidation(() => ChoiceMenu.ShowChoiceMenuAsync(title: title),
-                    "Unesi naslov",subject=>PromptFunctions.Course.SubjectCheck(subject));
+                    "Unesi naslov",PromptFunctions.Course.SubjectCheck);
             
             if (subjectResult.IsCancelled)
             {
@@ -126,7 +127,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
             }
                 
             var contentResult = await MultilineReader.ReadMultilineInput(() => ChoiceMenu.ShowChoiceMenuAsync(title: title),
-                "Unesi sadržaj",content=>PromptFunctions.Course.ContentCheck(content));
+                "Unesi sadržaj",PromptFunctions.Course.ContentCheck);
 
             if (contentResult.IsCancelled)
             {
@@ -163,8 +164,71 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
     public async Task HandleCourseMaterialPublish(int courseId)
     {
-        const string publishNotificationExit="[blue]Izlazak iz unosa materijala...[/]";
-        const string title = "[yellow]Želiš li odustati od unosa materijala[/]";  
-        
+        const string publishMaterialExit="[blue]Izlazak iz unosa materijala...[/]";
+        const string title = "[yellow]Želiš li odustati od unosa materijala[/]";
+
+        while (true)
+        {
+            var titleResult=await FieldPrompt.PromptWithValidation(() => ChoiceMenu.ShowChoiceMenuAsync(title: title),
+                "Unesi naslov",PromptFunctions.Course.TitleCheck);
+
+            if (titleResult.IsCancelled)
+            {
+                AnsiConsole.Clear();
+                ConsoleHelper.SleepAndClear(2000,publishMaterialExit);
+                return;                
+            }
+            
+            var authorNameResult=await FieldPrompt.PromptWithValidation(() => ChoiceMenu.ShowChoiceMenuAsync(title: title),
+                "Unesi ime i prezime autora",PromptFunctions.Course.AuthorNameCheck);
+            
+            if (authorNameResult.IsCancelled)
+            {
+                AnsiConsole.Clear();
+                ConsoleHelper.SleepAndClear(2000,publishMaterialExit);
+                return;                
+            }
+            
+            var publishedDateResult=await FieldPrompt.PromptWithValidation(() => ChoiceMenu.ShowChoiceMenuAsync(title: title),
+                "Unesi datum izdavanja(može biti prazno)",PromptFunctions.Course.PublishedDateCheck,allowEmpty:true);
+            
+            if (publishedDateResult.IsCancelled)
+            {
+                AnsiConsole.Clear();
+                ConsoleHelper.SleepAndClear(2000,publishMaterialExit);
+                return;                
+            }
+            
+            var urlResult=await FieldPrompt.PromptWithValidation(() => ChoiceMenu.ShowChoiceMenuAsync(title: title),
+                "Unesi url",PromptFunctions.Course.UrlCheck);
+            
+            if (urlResult.IsCancelled)
+            {
+                AnsiConsole.Clear();
+                ConsoleHelper.SleepAndClear(2000,publishMaterialExit);
+                return;                
+            }
+            
+            var response=await _courseActions.PublishCourseMaterialAsync
+                (titleResult.Value,authorNameResult.Value,publishedDateResult.Value,urlResult.Value,courseId);
+
+            AnsiConsole.WriteLine();
+            
+            if (response.IsFailure)
+            {
+                Writer.Common.ErrorWriter(response,"[red]Unos materijala nesupješan[/]");
+                
+                var isPublishingRequested = await ChoiceMenu.ShowChoiceMenuAsync(("Pokušaj ponovno",true),("Odustani",false),"[yellow]Želiš li pokušati ponovno?[/]");
+                if (isPublishingRequested) continue;
+                
+                AnsiConsole.Clear();
+                ConsoleHelper.SleepAndClear(2000,publishMaterialExit);
+                return;
+            }
+            
+            Writer.Course.MaterialPublishedWriter();
+            ConsoleHelper.SleepAndClear(2000);
+            return;
+        }
     }
 }

@@ -43,6 +43,7 @@ public partial class MenuBuilder
     {
         return new MenuBuilder()
             .AddChoice("Dodaj obavijest", async () => { await mainMenuManager.HandleCourseNotificationPublish(courseId); return false; })
+            .AddChoice("Dodaj materijal", async () => { await mainMenuManager.HandleCourseMaterialPublish(courseId); return false; })
             .AddMenuExit()
             .ReturnDictionary();
     }

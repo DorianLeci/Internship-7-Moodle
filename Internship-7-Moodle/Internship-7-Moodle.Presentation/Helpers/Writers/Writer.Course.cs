@@ -92,6 +92,11 @@ public static partial class Writer
         {
             AnsiConsole.MarkupLine("[green]Obavijest uspješno kreirana![/]");
         }
+        
+        public static void MaterialPublishedWriter()
+        {
+            AnsiConsole.MarkupLine("[green]Materijal uspješno dodan![/]");
+        }
 
     }
 

@@ -1,10 +1,12 @@
 using Internship_7_Moodle.Domain.Entities.Chats;
 using Internship_7_Moodle.Domain.Entities.Courses;
+using Internship_7_Moodle.Domain.Entities.Courses.Materials;
 using Internship_7_Moodle.Domain.Entities.Messages;
 using Internship_7_Moodle.Domain.Entities.PivotTables;
 using Internship_7_Moodle.Infrastructure.Database.Configuration.Common;
 using Internship_7_Moodle.Infrastructure.Database.Seed;
 using Microsoft.EntityFrameworkCore;
+using CourseNotification = Internship_7_Moodle.Domain.Entities.Courses.Notifications.CourseNotification;
 
 namespace Internship_7_Moodle.Infrastructure.Database;
 

@@ -1,4 +1,5 @@
 using System.Globalization;
+using Internship_7_Moodle.Domain.Entities.Courses.Materials;
 using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Enumerations;
 
@@ -30,6 +31,17 @@ public static class FormatCheck
     {
         return User.NameRegex.IsMatch(name);
     }
+
+    public static bool IsAuthorNameValid(string authorName)
+    {
+        return CourseMaterial.NameRegex.IsMatch(authorName);
+    }
+    
+    public static bool IsUrlValid(string url)
+    {
+        return Uri.TryCreate(url, UriKind.Absolute, out _);
+    }
+
     
     public static List<string> IsPasswordValid(string password)
     {

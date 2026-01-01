@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Domain.Entities.Courses;
+using Internship_7_Moodle.Domain.Entities.Courses.Materials;
 using Microsoft.EntityFrameworkCore;
 
 namespace Internship_7_Moodle.Infrastructure.Database.Seed;

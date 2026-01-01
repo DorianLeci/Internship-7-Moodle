@@ -1,5 +1,6 @@
 using Internship_7_Moodle.Domain.Entities.Courses;
 using Microsoft.EntityFrameworkCore;
+using CourseNotification = Internship_7_Moodle.Domain.Entities.Courses.Notifications.CourseNotification;
 
 namespace Internship_7_Moodle.Infrastructure.Database.Seed;
 

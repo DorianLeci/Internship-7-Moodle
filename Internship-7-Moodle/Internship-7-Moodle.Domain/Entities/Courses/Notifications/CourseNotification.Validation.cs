@@ -1,29 +1,10 @@
-using Internship_7_Moodle.Domain.Common.Abstractions;
-using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
-using Internship_7_Moodle.Domain.Entities.Users;
 
-namespace Internship_7_Moodle.Domain.Entities.Courses;
+namespace Internship_7_Moodle.Domain.Entities.Courses.Notifications;
 
-public class CourseNotification:BaseEntity
+public partial class CourseNotification
 {
-    public const int SubjectMaxLength = 100;
-    public const int ContentMaxLength = 300;
-    public string? Subject { get; set; }
-
-    public string? Content { get; set; }
-    
-    public int CourseId { get; set; }
-    public Course Course { get; set; } = null!;
-
-    
-    public Result<int> Create()
-    {
-        var result = Validate();
-        return result.HasErrors ? Result<int>.Failure(result) : Result<int>.Success(Id);
-    }
-    
     private ValidationResult Validate()
     {
         var validationResult = new ValidationResult();
@@ -40,7 +21,7 @@ public class CourseNotification:BaseEntity
         if(string.IsNullOrWhiteSpace(Subject))
             validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(CourseNotification),"Naslov obavijesti"));
         
-        if(Subject?.Length>SubjectMaxLength)
+        if(Subject?.Length>CourseNotification.SubjectMaxLength)
             validationResult.Add(EntityValidation.CourseValidation.MaxSubjectLength);  
     }
 
@@ -49,8 +30,7 @@ public class CourseNotification:BaseEntity
         if(string.IsNullOrWhiteSpace(Content))
             validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(CourseNotification),"Sadržaj obavijesti"));
         
-        if(Subject?.Length>ContentMaxLength)
+        if(Subject?.Length>CourseNotification.ContentMaxLength)
             validationResult.Add(EntityValidation.CourseValidation.MaxContentLength);          
     }
-    
 }

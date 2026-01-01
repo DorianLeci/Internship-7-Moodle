@@ -19,6 +19,6 @@ public class Course:BaseEntity
     
     public ICollection<CourseUser> CourseStudents { get; set; }=new List<CourseUser>();
     
-    public ICollection<CourseMaterial> Materials { get; set; }=new List<CourseMaterial>();
-    public ICollection<CourseNotification> Notifications { get; set; }=new List<CourseNotification>();
+    public ICollection<Materials.CourseMaterial> Materials { get; set; }=new List<Materials.CourseMaterial>();
+    public ICollection<Notifications.CourseNotification> Notifications { get; set; }=new List<Notifications.CourseNotification>();
 }

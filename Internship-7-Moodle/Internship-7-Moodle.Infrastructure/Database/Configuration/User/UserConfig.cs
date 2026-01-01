@@ -14,7 +14,7 @@ public class UserConfig:IEntityTypeConfiguration<Domain.Entities.Users.User>
         builder.Property(u => u.Id).HasColumnName("id");
         builder.Property(u => u.FirstName).HasColumnName("first_name").IsRequired().HasMaxLength(Domain.Entities.Users.User.MaxFirstNameLength);
         builder.Property(u => u.LastName).HasColumnName("last_name").IsRequired().HasMaxLength(Domain.Entities.Users.User.MaxLastNameLength);
-        builder.Property(u=>u.BirthDate).HasColumnName("birth_date");
+        builder.Property(u=>u.BirthDate).HasColumnName("birth_date").IsRequired();
         builder.Property(u => u.Email).HasColumnName("email").IsRequired().HasMaxLength(Domain.Entities.Users.User.MaxEmailLength);
         builder.Property(u => u.Password).HasColumnName("password").IsRequired();
         builder.Property(u=>u.Gender).HasConversion<string>().HasColumnName("gender");

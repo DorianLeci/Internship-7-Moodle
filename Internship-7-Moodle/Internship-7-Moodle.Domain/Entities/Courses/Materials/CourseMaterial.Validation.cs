@@ -1,33 +1,10 @@
-using Internship_7_Moodle.Domain.Common.Abstractions;
-using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 
-namespace Internship_7_Moodle.Domain.Entities.Courses;
+namespace Internship_7_Moodle.Domain.Entities.Courses.Materials;
 
-public class CourseMaterial:BaseEntity
+public partial class CourseMaterial
 {
-    public const int MaxTitleLength = 50;
-    public const int MaxAuthorNameLength = 100;
-
-    public string? Title { get; set; }
-
-    public string? AuthorName { get; set; }
-    
-    public DateOnly? PublishedDate { get; set; }
-
-    public string? Url { get; set; }
-    
-    public int CourseId { get; set; }
-    public Course Course { get; set; } = null!;
-    
-    
-    public Result<int> Create()
-    {
-        var result = Validate();
-        return result.HasErrors ? Result<int>.Failure(result) : Result<int>.Success(Id);
-    }
-    
     private ValidationResult Validate()
     {
         var validationResult = new ValidationResult();
@@ -37,6 +14,8 @@ public class CourseMaterial:BaseEntity
         CheckAuthorName(validationResult);
         
         CheckPublishedDate(validationResult);
+        
+        CheckUrl(validationResult);
         
         return validationResult;
     }
@@ -52,11 +31,17 @@ public class CourseMaterial:BaseEntity
 
     private void CheckAuthorName(ValidationResult validationResult)
     {
-        if(string.IsNullOrWhiteSpace(AuthorName))
+        if (string.IsNullOrWhiteSpace(AuthorName))
+        {
             validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(CourseMaterial),"Ime autora"));
+            return;
+        }
         
-        if(AuthorName?.Length>MaxAuthorNameLength)
-            validationResult.Add(EntityValidation.CourseValidation.MaxAuthorNameLength);          
+        if(AuthorName.Length>MaxAuthorNameLength)
+            validationResult.Add(EntityValidation.CourseValidation.MaxAuthorNameLength);
+
+        if (!NameRegex.IsMatch(AuthorName))
+            validationResult.Add(EntityValidation.CourseValidation.AuthorNameInvalid);
     }
 
     private void CheckPublishedDate(ValidationResult validationResult)
@@ -77,5 +62,5 @@ public class CourseMaterial:BaseEntity
         
         if (!Uri.TryCreate(Url, UriKind.Absolute, out var uriResult))
             validationResult.Add(EntityValidation.CourseValidation.InvalidUrl);
-    }
+    }    
 }

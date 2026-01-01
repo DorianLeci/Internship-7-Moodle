@@ -38,7 +38,7 @@ public sealed class MenuManager
         while (true)
         {
              var emailResult = await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(),"Unesi email",
-                email => PromptFunctions.UserRegister.EmailCheck(email));
+                PromptFunctions.UserRegister.EmailCheck);
 
             if (emailResult.IsCancelled)
             {
@@ -50,7 +50,7 @@ public sealed class MenuManager
             var hidePassword = await ChoiceMenu.ShowChoiceMenuAsync(("Da",true), ("Ne",false), "[yellow]Zeliš li sakriti lozinku[/]");
             
             var passwordResult = await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(),"Unesi lozinku",
-                password =>PromptFunctions.UserRegister.PasswordCheck(password),hidden:hidePassword);
+                PromptFunctions.UserRegister.PasswordCheck,hidden:hidePassword);
 
             if (passwordResult.IsCancelled)
             {
@@ -69,7 +69,7 @@ public sealed class MenuManager
                 return;
             }
             
-            var firstNameResult =await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(),"Unesi ime",firstName=>PromptFunctions.UserRegister.NameCheck(firstName));
+            var firstNameResult =await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(),"Unesi ime",PromptFunctions.UserRegister.NameCheck);
 
             if (firstNameResult.IsCancelled)
             {
@@ -80,7 +80,7 @@ public sealed class MenuManager
 
 
             var lastNameResult = await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(), "Unesi prezime",
-                lastName => PromptFunctions.UserRegister.NameCheck(lastName));
+                PromptFunctions.UserRegister.NameCheck);
                
             if (lastNameResult.IsCancelled)
             {
@@ -91,7 +91,7 @@ public sealed class MenuManager
 
 
             var birthDateResult = await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(), "Unesi datum rođenja",
-                birthDate => PromptFunctions.UserRegister.BirthDateCheck(birthDate));
+                PromptFunctions.UserRegister.BirthDateCheck);
             
             if (birthDateResult.IsCancelled)
             {
