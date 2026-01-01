@@ -9,6 +9,7 @@ public partial class MenuBuilder
     {
         return new MenuBuilder()
             .AddChoice("Moji kolegiji", async () => { await mainMenuManager.ShowCourseMenuAsync(mainMenuManager.Id,true); return false; })
+            .AddChoice("Upravljanje kolegijima", async () => { await mainMenuManager.ShowCourseMenuAsync(mainMenuManager.Id,false); return false; })
             .AddCommon(mainMenuManager)  
             .ReturnDictionary();
     }   
@@ -34,6 +35,14 @@ public partial class MenuBuilder
             .AddChoice("Pregled studenata na kolegiju", async () => { await mainMenuManager.ShowAllStudentsEnrolled(courseId); return false; })
             .AddChoice("Obavijesti",async()=>{await mainMenuManager.ShowCourseNotificationsAsync(courseId); return false; })
             .AddChoice("Materijali", async () => { await mainMenuManager.ShowCourseMaterialsAsync(courseId); return false; })
+            .AddMenuExit()
+            .ReturnDictionary();
+    }
+    
+    public static Dictionary<string, Func<Task<bool>>> CreateCourseManagementScreen(ProfessorMainMenuManager mainMenuManager,int courseId)
+    {
+        return new MenuBuilder()
+            .AddChoice("Dodaj obavijest", async () => { await mainMenuManager.HandleCourseNotificationPublish(courseId); return false; })
             .AddMenuExit()
             .ReturnDictionary();
     }

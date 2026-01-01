@@ -28,7 +28,7 @@ public class RegisterUserCommandHandler:IRequestHandler<RegisterUserCommand,AppR
         var result=new AppResult<SuccessPostResponse>();
         var validationResult = new ValidationResult();
         
-        var newUser = new User()
+        var newUser = new User
         {
             FirstName = request.FirstName,
             LastName = request.LastName,

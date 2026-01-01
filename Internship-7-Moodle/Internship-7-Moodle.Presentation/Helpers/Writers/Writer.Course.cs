@@ -87,7 +87,14 @@ public static partial class Writer
             }
             AnsiConsole.Write(table);        
         }
+        
+        public static void NotificationPublishedWriter()
+        {
+            AnsiConsole.MarkupLine("[green]Obavijest uspješno kreirana![/]");
+        }
+
     }
-    
+
+
     
 }

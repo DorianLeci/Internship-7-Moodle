@@ -7,10 +7,13 @@ namespace Internship_7_Moodle.Infrastructure.Repositories.Course;
 public class CourseUnitOfWork:UnitOfWork,ICourseUnitOfWork
 {
     public ICourseRepository CourseRepository { get; }
+    
+    public ICourseNotificationRepository CourseNotificationRepository { get; }
 
-    public CourseUnitOfWork(ICourseRepository courseRepository, ApplicationDbContext dbContext) : base(dbContext)
+    public CourseUnitOfWork(ICourseRepository courseRepository, ApplicationDbContext dbContext, ICourseNotificationRepository courseNotificationRepository) : base(dbContext)
     {
         CourseRepository = courseRepository;
+        CourseNotificationRepository = courseNotificationRepository;
     }
     
     

@@ -42,7 +42,7 @@ public static partial class Writer
                         {
                             case ConsoleKey.Enter:
                             {
-                                var text = state.InputBuffer.Trim();
+                                var text = state.InputBuffer.Trim().Replace("\\n","\n");
                                 state.InputBuffer = "";
                                 
                                 if (string.Equals(text, "/exit", StringComparison.InvariantCultureIgnoreCase))

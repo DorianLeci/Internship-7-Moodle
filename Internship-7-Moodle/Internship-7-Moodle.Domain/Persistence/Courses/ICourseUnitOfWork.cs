@@ -5,4 +5,6 @@ namespace Internship_7_Moodle.Domain.Persistence.Courses;
 public interface ICourseUnitOfWork:IUnitOfWork
 {
     ICourseRepository CourseRepository { get; }
+    
+    ICourseNotificationRepository CourseNotificationRepository { get; }
 }

@@ -13,7 +13,7 @@ public static class FieldPrompt
         {
             ConsoleHelper.SleepAndClear();
 
-            var prompt = new TextPrompt<string>($"{message}: ");
+            var prompt = new TextPrompt<string>($"[bold]{message}:[/] ");
 
             if (allowEmpty)
                 prompt.AllowEmpty();
@@ -40,7 +40,7 @@ public static class FieldPrompt
         {
             ConsoleHelper.SleepAndClear();
 
-            var prompt = new TextPrompt<string>($"{message}: ");
+            var prompt = new TextPrompt<string>($"[bold]{message}:[/] ");
 
             if (allowEmpty)
                 prompt.AllowEmpty();
@@ -66,19 +66,4 @@ public static class FieldPrompt
 
         }
     }
-
-    public static PresentationValidationResult<T> MessageContentValidation<T>(string message, Func<string, PresentationValidationResult<T>> validationFunc)
-    {
-        
-        var prompt = new TextPrompt<string>($"{message}: ");   
-        var input = AnsiConsole.Prompt(prompt);
-        
-        var result = validationFunc(input);
-        
-        return result;
-        
-    }
-    
-    
-
 }

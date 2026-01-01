@@ -26,7 +26,7 @@ public partial class MenuBuilder
         return _menuOptions;
     }
     
-    public static Dictionary<string, Func<Task<bool>>> CreateChoiceMenu(MenuManager menuManager,(string message,bool value) confirm,(string message,bool value) quit)
+    public static Dictionary<string, Func<Task<bool>>> CreateChoiceMenu((string message,bool value) confirm,(string message,bool value) quit)
     {
         return new MenuBuilder()
             .AddChoice(confirm.message,()=>confirm.value)
