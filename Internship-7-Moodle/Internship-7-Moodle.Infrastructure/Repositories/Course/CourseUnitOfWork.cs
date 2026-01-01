@@ -9,11 +9,14 @@ public class CourseUnitOfWork:UnitOfWork,ICourseUnitOfWork
     public ICourseRepository CourseRepository { get; }
     
     public ICourseNotificationRepository CourseNotificationRepository { get; }
+    
+    public ICourseMaterialRepository CourseMaterialRepository { get; }
 
-    public CourseUnitOfWork(ICourseRepository courseRepository, ApplicationDbContext dbContext, ICourseNotificationRepository courseNotificationRepository) : base(dbContext)
+    public CourseUnitOfWork(ICourseRepository courseRepository, ApplicationDbContext dbContext, ICourseNotificationRepository courseNotificationRepository, ICourseMaterialRepository courseMaterialRepository) : base(dbContext)
     {
         CourseRepository = courseRepository;
         CourseNotificationRepository = courseNotificationRepository;
+        CourseMaterialRepository = courseMaterialRepository;
     }
     
     

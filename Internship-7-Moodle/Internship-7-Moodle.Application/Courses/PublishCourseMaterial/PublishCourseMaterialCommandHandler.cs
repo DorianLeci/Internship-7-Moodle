@@ -5,29 +5,31 @@ using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Persistence.Courses;
 using MediatR;
 
-namespace Internship_7_Moodle.Application.Courses.PublishCourseNotification;
+namespace Internship_7_Moodle.Application.Courses.PublishCourseMaterial;
 
-public class PublishCourseNotificationHandler:IRequestHandler<PublishCourseNotificationCommand,AppResult<SuccessPostResponse>>
+public class PublishCourseMaterialCommandHandler:IRequestHandler<PublishCourseMaterialCommand,AppResult<SuccessPostResponse>>
 {
     private readonly ICourseUnitOfWork _courseUnitOfWork;
 
-    public PublishCourseNotificationHandler(ICourseUnitOfWork unitOfWork)
+    public PublishCourseMaterialCommandHandler(ICourseUnitOfWork unitOfWork)
     {
         _courseUnitOfWork = unitOfWork;
     }
     
-    public async Task<AppResult<SuccessPostResponse>> Handle(PublishCourseNotificationCommand request, CancellationToken cancellationToken)
+    public async Task<AppResult<SuccessPostResponse>> Handle(PublishCourseMaterialCommand request, CancellationToken cancellationToken)
     {
         var result = new AppResult<SuccessPostResponse>();
         var validationResult = new ValidationResult();
 
-        var newNotification = new CourseNotification
+        var newMaterial = new CourseMaterial
         {
-            Subject = request.Subject,
-            Content = request.Content,
+            Title = request.Title,
+            AuthorName = request.AuthorName,
+            PublishedDate = request.PublishDate,
+            Url = request.Url,
         };
         
-        var domainResult= newNotification.Create();
+        var domainResult= newMaterial.Create();
         
         if (domainResult.IsFailure)
             validationResult.AddRange(domainResult.ValidationResult!.ValidationItems);
@@ -43,12 +45,12 @@ public class PublishCourseNotificationHandler:IRequestHandler<PublishCourseNotif
             return result;
         }
 
-        newNotification.Course = course!;
+        newMaterial.Course = course!;
         
-        await _courseUnitOfWork.CourseNotificationRepository.InsertAsync(newNotification);
+        await _courseUnitOfWork.CourseMaterialRepository.InsertAsync(newMaterial);
         await _courseUnitOfWork.SaveAsync();
         
-        result.SetResult(new SuccessPostResponse(newNotification.Id));
+        result.SetResult(new SuccessPostResponse(newMaterial.Id));
         return result;
 
     }
