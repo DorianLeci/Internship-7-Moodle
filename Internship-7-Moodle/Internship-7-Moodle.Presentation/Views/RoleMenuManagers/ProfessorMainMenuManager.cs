@@ -159,4 +159,12 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
         }
     }
+
+
+    public async Task HandleCourseMaterialPublish(int courseId)
+    {
+        const string publishNotificationExit="[blue]Izlazak iz unosa materijala...[/]";
+        const string title = "[yellow]Želiš li odustati od unosa materijala[/]";  
+        
+    }
 }

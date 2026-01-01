@@ -1,5 +1,7 @@
+using Internship_7_Moodle.Domain.Common.Helper;
+using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Enumerations;
-using Internship_7_Moodle.Presentation.Helpers.FormatCheck;
+using Internship_7_Moodle.Presentation.Helpers.Format;
 using Internship_7_Moodle.Presentation.InputValidation;
 
 namespace Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
@@ -10,14 +12,14 @@ public static partial class PromptFunctions
     {
     public static PresentationValidationResult<string> EmailCheck(string email)
     {
-        return EmailFormatCheck.IsEmailValid(email)
+        return FormatCheck.IsEmailValid(email)
             ? PresentationValidationResult<string>.Success(email)
             : PresentationValidationResult<string>.Error("[red]\nEmail nije u ispravnom formatu[/]");
     }
     
     public static PresentationValidationResult<string> PasswordCheck(string password)
     {
-        var errors=PasswordFormatCheck.IsPasswordValid(password);
+        var errors=FormatCheck.IsPasswordValid(password);
                         
         return errors.Count==0 ? PresentationValidationResult<string>.Success(password) : PresentationValidationResult<string>.Error(string.Join("\n",errors));
     }
@@ -28,7 +30,7 @@ public static partial class PromptFunctions
     
     public static PresentationValidationResult<string> NameCheck(string name)
     {
-        return NameFormatCheck.IsNameValid(name)
+        return FormatCheck.IsNameValid(name)
             ? PresentationValidationResult<string>.Success(name)
             : PresentationValidationResult<string>.Error(
                 "[red]\nIme nije u ispravnom formatu.Ne smije imati brojeve ili specijalne znakove[/]");
@@ -36,10 +38,20 @@ public static partial class PromptFunctions
     
     public static PresentationValidationResult<DateOnly?> BirthDateCheck(string birthDate)
     {
-        return DateFormatCheck.IsDateValid(birthDate,out var dt)
-            ? PresentationValidationResult<DateOnly?>.Success(dt)
-            : PresentationValidationResult<DateOnly?>.Error("[red]\nDatum rođenja nije u ispravnom formatu[/]");
+        if (!FormatCheck.IsDateValid(birthDate,out var dt))
+            return PresentationValidationResult<DateOnly?>.Error("[red]\nDatum rođenja nije u ispravnom formatu[/]");
 
+        var errors = new List<string>();
+        
+        if (DomainHelper.IsAdult(dt) == false)
+            errors.Add("[red]\nKorisnik mora biti punoljetan[/]");
+        
+        if (DomainHelper.IsTooOld(dt) == true)
+            errors.Add($"[red]\nKorisnik ne smije biti stariji od {User.MaxAge} godina[/]");
+        
+        return errors.Count != 0
+            ? PresentationValidationResult<DateOnly?>.Error(string.Join("\n",errors))
+            : PresentationValidationResult<DateOnly?>.Success(dt);
     }
     
     public static PresentationValidationResult<GenderEnum?> GenderCheck(string gender)
@@ -47,7 +59,7 @@ public static partial class PromptFunctions
         if (string.IsNullOrEmpty(gender))
             return PresentationValidationResult<GenderEnum?>.Success();
 
-        return GenderFormatCheck.IsGenderValid(gender,out var gd)
+        return FormatCheck.IsGenderValid(gender,out var gd)
             ? PresentationValidationResult<GenderEnum?>.Success(gd)
             : PresentationValidationResult<GenderEnum?>.Error("[red]\nSpol nije u ispravnom formatu[/]");
     }
