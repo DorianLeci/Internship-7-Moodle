@@ -11,8 +11,29 @@ public class AdminMainMenuManager:BaseMainMenuManager
         _courseActions = courseActions;
     }
     
-    public override Task RunAsync()
+    public override async Task RunAsync()
     {
-        throw new NotImplementedException();
+        var mainMenu = MenuBuilder.MenuBuilder.CreateAdminMenu(this);
+
+        await MenuRunner.RunMenuAsync(mainMenu,"[yellow] Glavni izbornik[/]",exitChoice:"Odjava");
+    }
+
+    public async Task ShowDeleteUserMenuAsync()
+    {
+                
+        // var professorCourses=await UserActions.GetAllProfessorCoursesAsync(professorId);
+        // var professorCoursesList = professorCourses.ToList();
+        //
+        // if (professorCoursesList.Count == 0)
+        // {
+        //     ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje dostupni kolegiji.Izlazak...[/]");
+        //     return;
+        // }
+        //
+        // var myCourseMenu=MenuBuilder.MenuBuilder.CreateCourseMenu(this,professorCoursesList,isMyCourseSubmenu);
+        //
+        // var title = isMyCourseSubmenu ? "[yellow] Moji kolegiji[/]" : "[yellow] Upravljanje kolegijima[/]";
+        //
+        // await MenuRunner.RunMenuAsync(myCourseMenu, title);
     }
 }

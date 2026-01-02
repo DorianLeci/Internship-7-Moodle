@@ -17,7 +17,7 @@ public partial class User:BaseEntity
     public const int MinPasswordLength = 8;
     public const int MaxAge = 90;
     
-    [GeneratedRegex(@"^[\p{L}-]+$")]
+    [GeneratedRegex(@"^[\p{L}]+$")]
     private static partial Regex NameRegexGenerated();
 
     [GeneratedRegex(@"^[^@]{1,}@[^@]{2,}\.[^@]{3,}$")]

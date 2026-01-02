@@ -12,7 +12,7 @@ public interface IRepository<TEntity,TId> where TEntity:class
     
     Task DeleteAsync(TId id);
     
-    void Delete(TEntity? entity)
-        ;
+    void Delete(TEntity? entity);
+    
     Task<TEntity?> GetByIdAsync(int entityId);
 }

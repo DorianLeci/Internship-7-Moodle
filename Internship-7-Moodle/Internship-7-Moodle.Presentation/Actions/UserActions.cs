@@ -2,6 +2,7 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Application.Users.DeleteUser;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
 using Internship_7_Moodle.Application.Users.GetAllProfessorCourses;
 using Internship_7_Moodle.Application.Users.LoginUser;
@@ -60,6 +61,11 @@ public class UserActions
         var courses = result.Value.Entities;
 
         return courses;
+    }
+
+    public async Task<AppResult<SuccessResponse>> DeleteUserAsync(int userId)
+    {
+        return await _mediator.Send(new DeleteUserCommand(userId));
     }
     
 }
