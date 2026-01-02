@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Views.Admin;
 using Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
@@ -55,10 +56,31 @@ public partial class MenuBuilder
     public static Dictionary<string, Func<Task<bool>>> CreateStatisticsMenu(AdminMainMenuManager mainMenuManager)
     {
         return new MenuBuilder()
-            .AddChoice("Broj registriranih korisnika po rolama", async () => { return false; })
+            .AddChoice("Broj registriranih korisnika po ulogama", async () => 
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.UsersByRole,"[yellow] Broj registriranih korisnika po ulogama[/]"); return false; })
             .AddMenuExit()
             .ReturnDictionary();
     }
+    
+    public static Dictionary<string, Func<Task<bool>>> CreateMetricsMenu(AdminMainMenuManager mainMenuManager,StatisticsMenuAction action)
+    {
+        Func<PeriodEnum,Task> functionToCall = action switch
+        {
+            StatisticsMenuAction.UsersByRole=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
+            StatisticsMenuAction.CoursesCount=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
+            StatisticsMenuAction.TopCoursesByStudents=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
+            StatisticsMenuAction.TopUsersByMessages=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
+            _ => throw new ArgumentOutOfRangeException(nameof(action), "Nepoznata akcija")
+        };
+        
+        return new MenuBuilder()
+            .AddChoice("Trenutni dan", async () => { await functionToCall(PeriodEnum.Today); return false; })
+            .AddChoice("Trenutni mjesec", async () => { await functionToCall(PeriodEnum.ThisMonth); return false; })
+            .AddChoice("Ukupno", async () => { await functionToCall(PeriodEnum.Total); return false; })
+            .AddMenuExit()
+            .ReturnDictionary();
+    }
+
 
     
 }

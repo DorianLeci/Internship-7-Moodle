@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
@@ -169,5 +170,29 @@ public class AdminMainMenuManager : BaseMainMenuManager
         var statMenu = MenuBuilder.MenuBuilder.CreateStatisticsMenu(this);
         
         await MenuRunner.RunMenuAsync(statMenu,title);
+    }
+
+    public async Task ShowMetricsMenuAsync(StatisticsMenuAction action,string title)
+    {
+        var metricsMenu=MenuBuilder.MenuBuilder.CreateMetricsMenu(this,action);
+        
+        await MenuRunner.RunMenuAsync(metricsMenu,title);
+    }
+    
+    public async Task ShowRegisteredUserCountByRoleAsync(PeriodEnum period)
+    {
+        var countByRole = await UserActions.GetAllUsersByRoleCountAsync(period);
+        
+        var countByRoleList=countByRole.ToList();
+
+        if (countByRoleList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje registrirani korisnici u ovom razdoblju.Izlazak...[/]");
+            return;            
+        }
+        
+        Writer.Admin.RegisteredUserCountWriter(countByRoleList);
+            
+        ConsoleHelper.ScreenExit(1500);
     }
 }

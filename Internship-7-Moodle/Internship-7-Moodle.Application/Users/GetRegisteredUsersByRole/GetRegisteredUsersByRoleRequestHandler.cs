@@ -6,11 +6,11 @@ using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.GetRegisteredUsersByRole;
 
-public class GetRegisteredUsersByRoleHandler : IRequestHandler<GetRegisteredUsersByRoleRequest, AppResult<GetAllResponse<CountByRoleResponse>>>
+public class GetRegisteredUsersByRoleRequestHandler : IRequestHandler<GetRegisteredUsersByRoleRequest, AppResult<GetAllResponse<CountByRoleResponse>>>
 {
     private readonly IUserUnitOfWork _userUnitOfWork;
 
-    public GetRegisteredUsersByRoleHandler(IUserUnitOfWork userUnitOfWork)
+    public GetRegisteredUsersByRoleRequestHandler(IUserUnitOfWork userUnitOfWork)
     {
         _userUnitOfWork = userUnitOfWork;
     }

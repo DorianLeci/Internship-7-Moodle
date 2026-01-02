@@ -8,8 +8,10 @@ using Internship_7_Moodle.Application.Users.DeleteUser;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
 using Internship_7_Moodle.Application.Users.GetAllProfessorCourses;
 using Internship_7_Moodle.Application.Users.GetAllUsers;
+using Internship_7_Moodle.Application.Users.GetRegisteredUsersByRole;
 using Internship_7_Moodle.Application.Users.LoginUser;
 using Internship_7_Moodle.Application.Users.RegisterUser;
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
 
@@ -57,6 +59,18 @@ public class UserActions
     public async Task<IEnumerable<CourseResponse>> GetAllProfessorCoursesAsync(int professorId)
     {
         var result = await _mediator.Send(new GetAllProfessorCoursesRequest(professorId));
+
+        if (result.Value == null)
+            return [];
+        
+        var courses = result.Value.Entities;
+
+        return courses;
+    }
+    
+    public async Task<IEnumerable<CountByRoleResponse>> GetAllUsersByRoleCountAsync(PeriodEnum period)
+    {
+        var result = await _mediator.Send(new GetRegisteredUsersByRoleRequest(period));
 
         if (result.Value == null)
             return [];

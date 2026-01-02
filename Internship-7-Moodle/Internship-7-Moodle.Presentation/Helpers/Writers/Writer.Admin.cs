@@ -1,6 +1,7 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -68,6 +69,23 @@ public static partial class Writer
                     Width = 40
                 });
             }
+        }
+
+        public static void RegisteredUserCountWriter(List<CountByRoleResponse> responses)
+        {
+            
+            var table = new Table()
+                .Border(TableBorder.Rounded)
+                .AddColumn(new TableColumn("Uloga").Centered().Width(15)) 
+                .AddColumn(new TableColumn("Broj").Centered().Width(10));
+            
+            foreach (var response in responses)
+            {
+                table.AddRow(response.RoleNameCroatian, response.Count.ToString());
+            }
+            
+            AnsiConsole.MarkupLine("[yellow] Broj registiranih korisnika po ulozi\n[/]");
+            AnsiConsole.Write(table);
         }
     }
 }
