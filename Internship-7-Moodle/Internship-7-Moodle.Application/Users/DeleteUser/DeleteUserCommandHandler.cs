@@ -39,7 +39,7 @@ public class DeleteUserCommandHandler:IRequestHandler<DeleteUserCommand,AppResul
             
             if (profCourses.Any())
             {
-                validationResult.Add(EntityValidation.UserValidation.ProfessorHasActiveCourses);
+                validationResult.Add(EntityValidation.UserValidation.ProfessorDeletionError);
                 result.SetValidationResult(validationResult);
                 return result;
             }

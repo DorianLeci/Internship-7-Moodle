@@ -103,11 +103,17 @@ public static partial class EntityValidation
                 "Lozinka ne smije sadržavati razmake."
             );
         
-        public static readonly ValidationItem ProfessorHasActiveCourses = new ValidationItem(
+        public static readonly ValidationItem ProfessorDeletionError = new ValidationItem(
             ValidationType.BussinessRule,
             ValidationSeverity.Error,
             $"{Prefix}_ProfessorHasActiveCourses",
             $"Profesor drži kolegije i ne može biti obrisan.");
+        
+        public static readonly ValidationItem ProfessorRoleChangeError = new ValidationItem(
+            ValidationType.BussinessRule,
+            ValidationSeverity.Error,
+            $"{Prefix}_ProfessorHasActiveCourses",
+            $"Profesor drži kolegije te ne može postati student.");
 
         
     }

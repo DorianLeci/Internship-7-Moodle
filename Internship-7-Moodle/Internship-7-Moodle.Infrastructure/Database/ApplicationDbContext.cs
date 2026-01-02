@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Common.Abstractions;
 using Internship_7_Moodle.Domain.Entities.Chats;
 using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Entities.Courses.Materials;
@@ -41,5 +42,19 @@ public sealed class ApplicationDbContext:DbContext
         
         Seeder.SeedData(modelBuilder);
         
+    }
+    
+    public override async Task<int> SaveChangesAsync(
+        CancellationToken cancellationToken = default)
+    {
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        {
+            if (entry.State == EntityState.Modified)
+            {
+                entry.Entity.UpdatedAt = DateTime.Now;
+            }
+        }
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }

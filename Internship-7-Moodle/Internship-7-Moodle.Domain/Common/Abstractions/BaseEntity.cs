@@ -12,6 +12,4 @@ public abstract class BaseEntity
     [Column(TypeName = "timestamp without time zone")]
     public DateTime UpdatedAt { get; set; }
     
-    [NotMapped]
-    public DateTime? DeletedAt { get; set; }
 }

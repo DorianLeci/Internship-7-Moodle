@@ -2,6 +2,7 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Application.Users.ChangeRole;
 using Internship_7_Moodle.Application.Users.DeleteUser;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
 using Internship_7_Moodle.Application.Users.GetAllProfessorCourses;
@@ -67,6 +68,11 @@ public class UserActions
     public async Task<AppResult<SuccessResponse>> DeleteUserAsync(int userId)
     {
         return await _mediator.Send(new DeleteUserCommand(userId));
+    }
+    
+    public async Task<AppResult<UserResponse>> ChangeUserRoleAsync(int userId)
+    {
+        return await _mediator.Send(new ChangeRoleCommand(userId));
     }
 
     public async Task<IEnumerable<UserResponse>> GetAllUsersAsync(int adminId,RoleEnum ? roleFilter=null)
