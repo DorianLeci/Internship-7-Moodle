@@ -70,7 +70,7 @@ public class UserActions
         return await _mediator.Send(new DeleteUserCommand(userId));
     }
     
-    public async Task<AppResult<UserResponse>> ChangeUserRoleAsync(int userId)
+    public async Task<AppResult<ChangeRoleResponse>> ChangeUserRoleAsync(int userId)
     {
         return await _mediator.Send(new ChangeRoleCommand(userId));
     }

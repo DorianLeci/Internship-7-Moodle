@@ -36,7 +36,7 @@ public partial class MenuBuilder
         {
             AdminMenuAction.Delete => mainMenuManager.HandleUserDeleteAsync,
             AdminMenuAction.ChangeRole => mainMenuManager.HandleUserRoleChangeAsync,
-            AdminMenuAction.ChangeEmail => mainMenuManager.HandleUserRoleChangeAsync,
+            AdminMenuAction.ChangeEmail => mainMenuManager.HandleUserEmailChangeAsync,
             _ => throw new ArgumentOutOfRangeException(nameof(action), "Nepoznata akcija")
         };
         

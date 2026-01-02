@@ -4,12 +4,12 @@ public class NotificationResponse
 {
     public int NotificationId { get; set; }
 
-    public string Subject { get; set; } = null!;
+    public string Subject { get; init; } = null!;
 
-    public string Content { get; set; } = null!;
+    public string Content { get; init; } = null!;
     
-    public string? ProfessorName{get;set;}
+    public string? ProfessorName{get;init;}
     
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; init; }
     
 }

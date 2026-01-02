@@ -96,7 +96,7 @@ public class AdminMainMenuManager:BaseMainMenuManager
         ConsoleHelper.SleepAndClear(2000);
     }
     
-    public async Task HandleUserRoleChangeAsync(int userToDeleteId)
+    public async Task HandleUserRoleChangeAsync(int userToChangeId)
     {
         var choice = await ChoiceMenu.ShowChoiceMenuAsync(("Da", true), ("Ne", false),
             "[yellow]Želiš li promjeniti ulogu korisnika[/]");
@@ -108,13 +108,35 @@ public class AdminMainMenuManager:BaseMainMenuManager
             return;            
         }
 
-        var response = await UserActions.ChangeUserRoleAsync(userToDeleteId);
+        var response = await UserActions.ChangeUserRoleAsync(userToChangeId);
 
         AnsiConsole.Clear();
         Writer.Admin.UserRoleChangeWriter(response);
         
         ConsoleHelper.SleepAndClear(2000);
     }
+    
+    
+    public async Task HandleUserEmailChangeAsync(int userToChangeId)
+    {
+        var choice = await ChoiceMenu.ShowChoiceMenuAsync(("Da", true), ("Ne", false),
+            "[yellow]Želiš li promjeniti ulogu korisnika[/]");
+
+        if (!choice)
+        {
+            AnsiConsole.Clear();
+            ConsoleHelper.SleepAndClear(2000,"[blue bold]Odustao si od promjene uloge korisnika.Izlazak...[/]");
+            return;            
+        }
+
+        var response = await UserActions.ChangeUserRoleAsync(userToChangeId);
+
+        AnsiConsole.Clear();
+        Writer.Admin.UserRoleChangeWriter(response);
+        
+        ConsoleHelper.SleepAndClear(2000);
+    }
+
     
 
     

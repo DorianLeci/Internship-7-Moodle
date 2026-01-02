@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.ChangeRole;
 
-public class ChangeRoleCommandHandler:IRequestHandler<ChangeRoleCommand,AppResult<UserResponse>>
+public class ChangeRoleCommandHandler:IRequestHandler<ChangeRoleCommand,AppResult<ChangeRoleResponse>>
 {
     private readonly IUserUnitOfWork _userUnitOfWork;
 
@@ -18,9 +18,9 @@ public class ChangeRoleCommandHandler:IRequestHandler<ChangeRoleCommand,AppResul
         _userUnitOfWork = userUnitOfWork;
     }
     
-    public async Task<AppResult<UserResponse>> Handle(ChangeRoleCommand request, CancellationToken cancellationToken)
+    public async Task<AppResult<ChangeRoleResponse>> Handle(ChangeRoleCommand request, CancellationToken cancellationToken)
     {
-        var result=new AppResult<UserResponse>();
+        var result=new AppResult<ChangeRoleResponse>();
 
         var validationResult = new ValidationResult();
         
@@ -44,8 +44,9 @@ public class ChangeRoleCommandHandler:IRequestHandler<ChangeRoleCommand,AppResul
                 return result;
             }
         }    
-
-        var newRole=(userToChange.Role.RoleName==RoleEnum.Professor) ? RoleEnum.Student : RoleEnum.Professor;
+        
+        var oldRole = userToChange.Role.RoleName;
+        var newRole=(oldRole==RoleEnum.Professor) ? RoleEnum.Student : RoleEnum.Professor;
         
         userToChange.RoleId=(int)newRole+1;
         
@@ -53,12 +54,11 @@ public class ChangeRoleCommandHandler:IRequestHandler<ChangeRoleCommand,AppResul
 
         await _userUnitOfWork.SaveAsync();
 
-        result.SetResult(new UserResponse
+        result.SetResult(new ChangeRoleResponse
         {
             Id=userToChange.Id,
-            FirstName = userToChange.FirstName!,
-            LastName = userToChange.LastName!,
-            RoleName = newRole
+            OldRoleName = oldRole,
+            NewRoleName = newRole
         });
 
         return result;

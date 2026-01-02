@@ -1,22 +1,17 @@
+using Internship_7_Moodle.Application.Response.Common;
 using Internship_7_Moodle.Domain.Enumerations;
 
 namespace Internship_7_Moodle.Application.Response.User;
 
 public class UserResponse
 {
-    public int Id { get; set; }
-    public string FirstName { get; set; } = null!;
-    public string LastName { get; set; } = null!;
+    public int Id { get; init; }
+    public string FirstName { get; init; } = null!;
+    public string LastName { get; init; } = null!;
     
     public string FullName=> $"{FirstName} {LastName}";
     
-    public RoleEnum? RoleName { get; set; }
+    public RoleEnum? RoleName { get; init; }
 
-    public string RoleNameCroatian => RoleName switch
-    {
-        RoleEnum.Admin => "Administrator",
-        RoleEnum.Professor => "Profesor",
-        RoleEnum.Student => "Student",
-        _ => "Nepoznato"
-    };
+    public string RoleNameCroatian => RoleName.ToCroatian();
 }

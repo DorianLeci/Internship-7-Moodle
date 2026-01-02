@@ -25,7 +25,7 @@ public static partial class Writer
                 
         }
         
-        public static void UserRoleChangeWriter(AppResult<UserResponse> result)
+        public static void UserRoleChangeWriter(AppResult<ChangeRoleResponse> result)
         {
             
             if (result.IsFailure)
@@ -34,10 +34,10 @@ public static partial class Writer
             else
             {
                 var idText = $"[yellow] -Id korisnika: {result.Value!.Id}[/]";
-                var nameText = $"[yellow] -Ime i prezime: {result.Value.FullName}[/]";
-                var roleText = $"[yellow] -Uloga: {result.Value.RoleNameCroatian}[/]";
+                var oldRoleText = $"[yellow] -Stara uloga: {result.Value.NewRoleNameCroatian}[/]";
+                var newRoleText = $"[yellow] -Nova uloga: {result.Value.OldRoleNameCroatian}[/]";
                 
-                AnsiConsole.Write(new Panel(string.Join("\n",idText,nameText,roleText))
+                AnsiConsole.Write(new Panel(string.Join("\n",idText,oldRoleText,newRoleText))
                 {
                     Header = new PanelHeader("[rgb(0,200,0)]Uloga uspješno izmijenjena[/]",Justify.Center),
                     Border=BoxBorder.Rounded,

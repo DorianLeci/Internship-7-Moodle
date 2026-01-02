@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Application.Response.Common;
 using Internship_7_Moodle.Domain.Enumerations;
 
 namespace Internship_7_Moodle.Application.Response.User;
@@ -12,13 +13,6 @@ public class UserLoginResponse
     public string LastName { get; init; } = null!;
     
     public string FullName=> $"{FirstName} {LastName}";
-    
-    public string RoleNameCroatian => RoleName switch
-    {
-        RoleEnum.Admin => "Administrator",
-        RoleEnum.Professor => "Profesor",
-        RoleEnum.Student => "Student",
-        _ => "Nepoznato"
-    };
-    
+
+    public string RoleNameCroatian => RoleName.ToCroatian();
 }
