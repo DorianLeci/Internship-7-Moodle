@@ -69,6 +69,21 @@ public partial class User
         if(Email.Length>MaxEmailLength)
             validationResult.Add(EntityValidation.UserValidation.EmailLength);
     }
+    
+    private void CheckEmail(string newEmail,ValidationResult validationResult)
+    {
+        if (string.IsNullOrWhiteSpace(newEmail))
+        {
+            validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(User),"Email korisnika"));
+            return;
+        }
+        
+        if(!CheckEmailFormat(newEmail))
+            validationResult.Add(EntityValidation.UserValidation.EmailFormat);
+        
+        if(newEmail.Length>MaxEmailLength)
+            validationResult.Add(EntityValidation.UserValidation.EmailLength);
+    }
 
     private static bool CheckEmailFormat(string email)
     {
@@ -114,5 +129,19 @@ public partial class User
 
         if (!PasswordSpecialRegex.IsMatch(Password))
             validationResult.Add(EntityValidation.UserValidation.PasswordMissingSpecialChar);        
-    }  
+    }
+
+
+    public ValidationResult CanChangeEmail(string newEmail)
+    {
+        var validationResult = new ValidationResult();
+        
+        CheckEmail(newEmail, validationResult);
+        
+        if (string.Equals(Email, newEmail))
+            validationResult.Add(EntityValidation.UserValidation.EmailSameAsOld);
+
+        return validationResult;
+
+    }
 }

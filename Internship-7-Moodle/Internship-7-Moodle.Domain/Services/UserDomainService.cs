@@ -17,12 +17,5 @@ public class UserDomainService
         return !exists;
     }
 
-    public bool IsEmailSame(string oldEmail, string newEmail)
-    {
-        return string.Equals(oldEmail, newEmail);
-    }
-
-
-
-
+    
 }

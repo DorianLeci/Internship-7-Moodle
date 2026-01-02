@@ -35,10 +35,11 @@ public class ChangeEmailCommandHandler:IRequestHandler<ChangeEmailCommand,AppRes
             return result;
         }
 
-        if (_userDomainService.IsEmailSame(userToChange.Email!, request.NewEmail))
+        var domainValidationResult = userToChange.CanChangeEmail(request.NewEmail);
+        
+        if (domainValidationResult.HasErrors)
         {
-            validationResult.Add(EntityValidation.UserValidation.EmailSameAsOld);
-            result.SetValidationResult(validationResult);
+            result.SetValidationResult(domainValidationResult);
             return result;            
         }
         

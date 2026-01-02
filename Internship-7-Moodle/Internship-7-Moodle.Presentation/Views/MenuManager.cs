@@ -185,7 +185,7 @@ public sealed class MenuManager
             }
             
             var mainMenu = MainMenuFactory.Create(_menuDependencies,response.Value!.RoleName,response.Value.Id);
-            ConsoleHelper.SleepAndClear(2500);
+            ConsoleHelper.SleepAndClear(4000);
             await mainMenu.RunAsync();
             
             return;

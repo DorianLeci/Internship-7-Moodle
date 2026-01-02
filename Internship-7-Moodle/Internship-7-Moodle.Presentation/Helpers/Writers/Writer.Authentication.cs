@@ -34,7 +34,7 @@ public static partial class Writer
 
         public static bool LoginUserWriter(AppResult<UserLoginResponse> appResult)
         {
-            ConsoleHelper.SleepAndClear(1000);
+            ConsoleHelper.SleepAndClear(500);
             
             if (appResult.IsFailure)
             {

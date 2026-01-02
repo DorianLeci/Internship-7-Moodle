@@ -261,6 +261,9 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
             var choice = AnsiConsole.Prompt(prompt);
             
+            if(choice!=MenuRunner.exitChoiceConst)
+                ConsoleHelper.MenuChoiceSuccess(MenuRunner.successMsg);
+            
             exitRequested = await studentsToAddMenu[choice]();
         }
     }
