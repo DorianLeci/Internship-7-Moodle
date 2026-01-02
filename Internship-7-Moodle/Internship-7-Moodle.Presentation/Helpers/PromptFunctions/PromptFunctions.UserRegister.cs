@@ -21,7 +21,7 @@ public static partial class PromptFunctions
     {
         var errors=FormatCheck.IsPasswordValid(password);
                         
-        return errors.Count==0 ? PresentationValidationResult<string>.Success(password) : PresentationValidationResult<string>.Error(string.Join("\n",errors));
+        return errors.Count==0 ? PresentationValidationResult<string>.Success(password) : PresentationValidationResult<string>.Error("\n"+string.Join("\n",errors));
     }
     public static PresentationValidationResult<string> ConfirmPasswordCheck(string confirmPassword,string password)
     {
@@ -30,8 +30,10 @@ public static partial class PromptFunctions
     
     public static PresentationValidationResult<string> NameCheck(string name)
     {
-        return FormatCheck.IsNameValid(name)
-            ? PresentationValidationResult<string>.Success(name)
+        var formattedName = name.FormatInput();
+        
+        return FormatCheck.IsNameValid(formattedName)
+            ? PresentationValidationResult<string>.Success(formattedName)
             : PresentationValidationResult<string>.Error(
                 "[red]\nIme nije u ispravnom formatu.Ne smije imati brojeve ili specijalne znakove[/]");
     }

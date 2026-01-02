@@ -71,7 +71,7 @@ public static class ConsoleHelper
         AnsiConsole.MarkupLine("\n[blue]Pritisni bilo koju tipku za izlaz...[/]");
         Console.ReadKey(true);  
         
-        SleepAndClear(timeout,"[blue]\nIzlazak...[/]");
+        SleepAndClear(timeout,"[blue bold]\nIzlazak...[/]");
     }
 
 

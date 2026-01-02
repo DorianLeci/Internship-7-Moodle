@@ -49,7 +49,7 @@ public partial class MenuBuilder
         
         AddChoice("Odjava", () =>
         {
-            ConsoleHelper.SleepAndClear(2000,"[blue]Odjava...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[blue bold]Odjava...[/]");
             return true;
         });
 
@@ -60,7 +60,7 @@ public partial class MenuBuilder
     {
         AddChoice("Izlazak iz izbornika", () =>
         {
-            ConsoleHelper.SleepAndClear(1000,"[blue]Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(1000,"[blue bold]Izlazak...[/]");
             return true;
         });
 
@@ -76,7 +76,7 @@ public partial class MenuBuilder
                 { await menuManager.HandleLoginUserAsync(); return false; })
             .AddChoice("Izlaz iz aplikacije", ()=>
             {
-                AnsiConsole.MarkupLine("[blue]Izlaz iz aplikacije...[/]"); return true; })
+                AnsiConsole.MarkupLine("[blue bold]Izlaz iz aplikacije...[/]"); return true; })
             
             .ReturnDictionary();
     }

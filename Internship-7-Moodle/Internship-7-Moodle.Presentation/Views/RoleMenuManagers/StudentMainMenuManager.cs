@@ -32,7 +32,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
         var studentCoursesList = studentCourses.ToList();
         if (studentCoursesList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje dostupni kolegiji.Izlazak...[/]");
             return;
         }
         
@@ -57,7 +57,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
         
         if (notificationList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupne obavijesti.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje dostupne obavijesti.Izlazak...[/]");
             return;
         }
         
@@ -74,7 +74,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
         
         if (materialList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni materijali.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje dostupni materijali.Izlazak...[/]");
             return;
         }
         

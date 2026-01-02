@@ -2,6 +2,7 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Response.Chat;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Presentation.Helpers.Format;
 using Internship_7_Moodle.Presentation.Helpers.UiState;
 using Spectre.Console;
 using Spectre.Console.Rendering;
@@ -14,7 +15,7 @@ public static partial class Writer
     {
             public static void ChatErrorWriter(AppResult<ChatResponse> result)
     {
-        Common.ErrorWriter(result,"[red]Nije moguće otvoriti chat[/]");
+        Common.ErrorWriter(result,"[red bold]Nije moguće otvoriti chat[/]");
     }
             
     public static async Task RunChatLive(ChatUiState state)
@@ -29,7 +30,7 @@ public static partial class Writer
                     if (refreshResult.IsFailure || refreshResult.Value == null)
                     {
                         ChatErrorWriter(refreshResult);
-                        ConsoleHelper.SleepAndClear(2000, "[blue]Izlazak...[/]");
+                        ConsoleHelper.SleepAndClear(2000, "[blue bold]Izlazak...[/]");
                         return;
                     }
 
@@ -48,7 +49,7 @@ public static partial class Writer
                                 if (string.Equals(text, "/exit", StringComparison.InvariantCultureIgnoreCase))
                                 {
                                     state.Exit = true;
-                                    state.Error="[blue]\nIzlazak...[/]";
+                                    state.Error="[blue bold]\nIzlazak...[/]";
                                     break;
                                 }
 
@@ -60,7 +61,7 @@ public static partial class Writer
                                         state.Error = '\n' + string.Join("\n", result.Errors.Select(e => $"[red]{e.Message}[/]"));
 
                                     else
-                                        state.Error = "\n" + "[green]Uspješno unesena nova poruka[/]";
+                                        state.Error = "\n" + "[rgb(0,200,0) bold]Uspješno unesena nova poruka[/]";
 
                                     ctx.UpdateTarget(BuildLayout(state));
 
@@ -135,7 +136,7 @@ public static partial class Writer
                 ShowHeaders = false
             };
             infoTable.AddColumn("");
-            infoTable.AddRow($"[grey]{msg.SentAt}[/] {(isCurrentUser ? (msg.IsRead ? hasReadMarkup : hasNotReadMarkup) : "")}");
+            infoTable.AddRow($"[grey]{msg.SentAt.ToDisplayString()}[/] {(isCurrentUser ? (msg.IsRead ? hasReadMarkup : hasNotReadMarkup) : "")}");
 
             var panel = new Panel(new Rows(new Markup(msg.Content), infoTable))
             {
@@ -158,7 +159,7 @@ public static partial class Writer
                 chatGrid.AddRow(emptyPanel, panel);
         }
             
-        var headerPanel= new Panel(new Markup($"Razgovor sa [green]{state.Chat.OtherUserName}[/]"))
+        var headerPanel= new Panel(new Markup($"Razgovor sa [rgb(0,200,0) bold]{state.Chat.OtherUserName}[/]"))
         {
             Border = BoxBorder.Square
         };

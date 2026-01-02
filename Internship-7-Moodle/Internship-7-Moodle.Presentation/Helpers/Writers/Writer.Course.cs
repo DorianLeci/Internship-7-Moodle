@@ -1,6 +1,8 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
+using Internship_7_Moodle.Presentation.Helpers.Format;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -23,9 +25,9 @@ public static partial class Writer
                 var headerRow = "";
 
                 if (!string.IsNullOrEmpty(notificationResponse.ProfessorName))
-                    headerRow += $"[green]Profesor: {notificationResponse.ProfessorName}[/] |";
+                    headerRow += $"[rgb(0,200,0)]Profesor: {notificationResponse.ProfessorName}[/] |";
 
-                headerRow += $"[yellow]Datum objave: {notificationResponse.CreatedAt}[/] |"
+                headerRow += $"[yellow]Datum objave: {notificationResponse.CreatedAt.ToDisplayString()}[/] |"
                              + $"[blue]Predmet: {notificationResponse.Subject}[/]";
 
                 table.AddRow(headerRow);
@@ -52,8 +54,8 @@ public static partial class Writer
                 };
                 table.HideHeaders();
                 table.AddColumn(new TableColumn("").LeftAligned());
-                table.AddRow($"[green]Materijal: {materialResponse.Title+", "+materialResponse.AuthorName}[/] |"
-                             + $"[yellow]Datum objave: {materialResponse.CreatedAt}[/] |" );
+                table.AddRow($"[rgb(0,200,0)]Materijal: {materialResponse.Title+", "+materialResponse.AuthorName}[/] |"
+                             + $"[yellow]Datum objave: {materialResponse.CreatedAt.ToDisplayString()}[/] |" );
 
                 table.AddRow($"[blue]Link: {materialResponse.Url}[/] |");
             
@@ -73,8 +75,8 @@ public static partial class Writer
                 Border =TableBorder.Ascii
             };                
             table.AddColumn(new TableColumn("[yellow]ID[/]").LeftAligned());
-            table.AddColumn(new TableColumn("[green]Ime[/]").LeftAligned());
-            table.AddColumn(new TableColumn("[green]Prezime[/]").LeftAligned());
+            table.AddColumn(new TableColumn("[rgb(0,200,0)]Ime[/]").LeftAligned());
+            table.AddColumn(new TableColumn("[rgb(0,200,0)]Prezime[/]").LeftAligned());
             
             foreach (var user in userResponses)
             {
@@ -90,17 +92,17 @@ public static partial class Writer
         
         public static void NotificationPublishedWriter()
         {
-            AnsiConsole.MarkupLine("[green]Obavijest uspješno kreirana![/]");
+            
+            AnsiConsole.MarkupLine("[rgb(0,200,0) bold]Obavijest uspješno kreirana![/]");
         }
         
         public static void MaterialPublishedWriter()
         {
-            AnsiConsole.MarkupLine("[green]Materijal uspješno dodan![/]");
+            AnsiConsole.MarkupLine("[rgb(0,200,0) bold]Materijal uspješno dodan![/]");
         }
 
         public static void StudentAddedWriter(AppResult<UserResponse> result)
         {
-            Console.WriteLine();
             
             if (result.IsFailure)
                 Common.ErrorWriter(result,"[red]Dodavanje studenta na kolegij nije uspjelo[/]");
@@ -112,7 +114,7 @@ public static partial class Writer
                 
                 AnsiConsole.Write(new Panel(string.Join("\n",idText,roleText))
                 {
-                    Header = new PanelHeader("[green]Korisnik uspješno dodan[/]",Justify.Center),
+                    Header = new PanelHeader("[rgb(0,200,0)]Korisnik uspješno dodan[/]",Justify.Center),
                     Border=BoxBorder.Rounded,
                     Width=40
                 });   

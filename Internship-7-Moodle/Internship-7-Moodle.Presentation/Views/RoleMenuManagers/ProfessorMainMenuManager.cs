@@ -35,7 +35,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
         if (professorCoursesList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni kolegiji.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje dostupni kolegiji.Izlazak...[/]");
             return;
         }
 
@@ -60,14 +60,13 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
     public async Task ShowAllStudentsEnrolled(int courseId)
     {
-        ConsoleHelper.MenuChoiceSuccess("[green]Uspješan odabir[/]");
         
         var studentsEnrolled=await _courseActions.GetAllStudentsEnrolledAsync(courseId);
         var studentsEnrolledList = studentsEnrolled.ToList();
 
         if (studentsEnrolledList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(2000,"[red]Niti jedan student nije upisan na kolegij.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Niti jedan student nije upisan na kolegij.Izlazak...[/]");
             return;
         }
         
@@ -83,7 +82,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
         
         if (notificationList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupne obavijesti.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje dostupne obavijesti.Izlazak...[/]");
             return;
         }
         
@@ -100,7 +99,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
         
         if (materialList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(2000,"[red]Ne postoje dostupni materijali.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje dostupni materijali.Izlazak...[/]");
             return;
         }
         
@@ -111,7 +110,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
     public async Task HandleCourseNotificationPublish(int courseId)
     {
-        const string publishNotificationExit="[blue]Izlazak iz unosa obavijesti...[/]";
+        const string publishNotificationExit="[blue bold]Izlazak iz unosa obavijesti...[/]";
         const string title = "[yellow]Želiš li odustati od unosa obavijesti[/]";
             
         while (true)
@@ -164,7 +163,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
     public async Task HandleCourseMaterialPublish(int courseId)
     {
-        const string publishMaterialExit="[blue]Izlazak iz unosa materijala...[/]";
+        const string publishMaterialExit="[blue bold]Izlazak iz unosa materijala...[/]";
         const string title = "[yellow]Želiš li odustati od unosa materijala[/]";
 
         while (true)
@@ -244,7 +243,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
             
             if (studentList.Count == 0)
             {
-                ConsoleHelper.SleepAndClear(1500,"[red]Nema dostupnih korisnika.Izlazak...[/]");
+                ConsoleHelper.SleepAndClear(1500,"[red bold]Nema dostupnih korisnika.Izlazak...[/]");
                 return;
             }
 
@@ -274,7 +273,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
         if (!choice)
         {
             AnsiConsole.Clear();
-            ConsoleHelper.SleepAndClear(2000,"[blue]Odustao si od dodavanja studenta na kolegij.Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[blue bold]Odustao si od dodavanja studenta na kolegij.Izlazak...[/]");
             return;            
         }
 

@@ -48,7 +48,7 @@ public class ChatFeature
 
             if (userList.Count == 0)
             {
-                ConsoleHelper.SleepAndClear(1500,"[red]Nema dostupnih korisnika.Izlazak...[/]");
+                ConsoleHelper.SleepAndClear(1500,"[red bold]Nema dostupnih korisnika.Izlazak...[/]");
                 return;
             }
 
@@ -80,7 +80,7 @@ public class ChatFeature
         if (result.IsFailure || result.Value == null)
         {
             Writer.Chat.ChatErrorWriter(result);
-            ConsoleHelper.SleepAndClear(2000, "[blue]Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000, "[blue bold]Izlazak...[/]");
             return;
         }
 

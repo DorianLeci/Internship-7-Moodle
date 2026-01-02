@@ -1,5 +1,6 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Helpers.Writers;
@@ -10,7 +11,7 @@ public static partial class Writer
     {
         public static bool RegisterUserWriter(AppResult<SuccessPostResponse> appResult)
         {
-            AnsiConsole.WriteLine();
+            ConsoleHelper.SleepAndClear(1000);
             
             if (appResult.IsFailure)
             {
@@ -22,9 +23,9 @@ public static partial class Writer
             
             AnsiConsole.Write(new Panel(text)
             {
-                Header = new PanelHeader("[green]Korisnik uspješno registriran[/]",Justify.Center),
+                Header = new PanelHeader("[rgb(0,200,0)]Korisnik uspješno registriran[/]",Justify.Center),
                 Border=BoxBorder.Rounded,
-                Width=40
+                Width=40,
             });   
         
             return true;
@@ -33,11 +34,11 @@ public static partial class Writer
 
         public static bool LoginUserWriter(AppResult<UserLoginResponse> appResult)
         {
-            AnsiConsole.WriteLine();
+            ConsoleHelper.SleepAndClear(1000);
             
             if (appResult.IsFailure)
             {
-                Common.ErrorWriter(appResult,"[red]Prijava nije uspjela[/]","[red]Ako ne želiš odustati od prijave pričekaj 30 sekundi prije ponovnog pokušaja[/]");
+                Common.ErrorWriter(appResult,"[red]Prijava nije uspjela[/]","[red bold]Ako ne želiš odustati od prijave pričekaj 30 sekundi prije ponovnog pokušaja[/]");
                 return false;
             }
         
@@ -47,9 +48,9 @@ public static partial class Writer
             
             AnsiConsole.Write(new Panel(string.Join("\n",idText,roleText,nameText))
             {
-                Header = new PanelHeader("[green]Korisnik uspješno prijavljen[/]",Justify.Center),
+                Header = new PanelHeader("[rgb(0,200,0)]Korisnik uspješno prijavljen[/]",Justify.Center),
                 Border=BoxBorder.Rounded,
-                Width=40
+                Width=40,
             });   
         
             return true;        

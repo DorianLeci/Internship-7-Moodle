@@ -33,7 +33,7 @@ public sealed class MenuManager
 
     public async Task HandleRegisterUserAsync()
     {
-        const string registrationExit="[blue]Izlazak iz registracije...[/]";
+        const string registrationExit="[blue bold]Izlazak iz registracije...[/]";
 
         while (true)
         {
@@ -90,7 +90,7 @@ public sealed class MenuManager
             }
 
 
-            var birthDateResult = await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(), "Unesi datum rođenja",
+            var birthDateResult = await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(), "Unesi datum rođenja(yyyy-MM-dd)",
                 PromptFunctions.UserRegister.BirthDateCheck);
             
             if (birthDateResult.IsCancelled)
@@ -143,7 +143,7 @@ public sealed class MenuManager
 
     public async Task HandleLoginUserAsync()
     {
-        const string loginExit="[blue]Izlazak iz prijave...[/]";
+        const string loginExit="[blue bold]Izlazak iz prijave...[/]";
         
         while (true)
         {
@@ -197,10 +197,8 @@ public sealed class MenuManager
     
     private async Task<bool> ShowCaptchaMenuAsync()
     {
-        var captchaString = CaptchaService.GenerateCaptcha();
-        
-        var isCaptchaValid = await FieldPrompt.PromptWithValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(), 
-            $"[white on DarkBlue]{captchaString}[/]\nUnesi captcha prikazan na ekranu",
+        var isCaptchaValid = await FieldPrompt.PromptWithCaptchaValidation(()=>ChoiceMenu.ShowChoiceMenuAsync(), 
+            "Unesi captcha prikazan na ekranu",
             input=>CaptchaService.IsCaptchaValid(input)? PresentationValidationResult<string>.Success():PresentationValidationResult<string>.Error("[red]\nUnesena captcha se ne podudara s prikazanom[/]"));
 
         return isCaptchaValid.Successful;

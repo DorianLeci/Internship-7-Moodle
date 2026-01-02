@@ -2,9 +2,9 @@ using System.Text.RegularExpressions;
 
 namespace Internship_7_Moodle.Presentation.Helpers.Format;
 
-public static class FormatAuthorName
+public static class FormatName
 {
-    public static string FormatInput(string input)
+    public static string FormatInput(this string input)
     {
         if (string.IsNullOrWhiteSpace(input))
             return input;
@@ -16,7 +16,7 @@ public static class FormatAuthorName
 
         for (var i = 0; i < words.Length; i++)
         {
-            words[i]=char.ToUpper(words[i][0])+ words[i][1..];
+            words[i]=char.ToUpper(words[i][0])+ words[i][1..].ToLower();
         }
         
         return string.Join(" ",words);
