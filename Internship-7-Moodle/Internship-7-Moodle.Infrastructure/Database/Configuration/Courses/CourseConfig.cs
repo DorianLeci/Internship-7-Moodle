@@ -20,7 +20,12 @@ public class CourseConfig:IEntityTypeConfiguration<Course>
         
         builder.Property(c=>c.Ects).HasColumnName("ects").IsRequired();
         
-        builder.HasOne(c=>c.Owner).WithMany().HasForeignKey(c=>c.OwnerId);
+        builder.HasOne(c=>c.Owner)
+            .WithMany()
+            .HasForeignKey(c=>c.OwnerId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+        
         builder.Property(c=>c.OwnerId).HasColumnName("owner_id");
         
     }

@@ -30,8 +30,7 @@ public static class MainMenuFactory
             RoleEnum.Admin => new AdminMainMenuManager(
                 userId, 
                 chatFeature, 
-                menuDependencies.UserActions,
-                menuDependencies.CourseActions
+                menuDependencies.UserActions
             ),
 
             _ => throw new ArgumentException("Nepoznata uloga")

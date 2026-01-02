@@ -1,6 +1,8 @@
 using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.Users;
+using Internship_7_Moodle.Domain.Enumerations;
+using Internship_7_Moodle.Domain.Persistence.Courses;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using MediatR;
 using ValidationResult = Internship_7_Moodle.Domain.Common.Validation.ValidationResult;
@@ -22,13 +24,25 @@ public class DeleteUserCommandHandler:IRequestHandler<DeleteUserCommand,AppResul
 
         var validationResult = new ValidationResult();
         
-        var userToDelete = await _userUnitOfWork.UserRepository.GetByIdAsync(request.UserId);
+        var userToDelete = await _userUnitOfWork.UserRepository.GetByIdAsync(request.UserId,u=>u.Role);
 
         if (userToDelete == null)
         {
             validationResult.Add(EntityValidation.CommonValidation.ItemMustExist(nameof(User), "Korisnik"));
             result.SetValidationResult(validationResult);
             return result;
+        }
+
+        if (userToDelete.Role.RoleName == RoleEnum.Professor)
+        {
+            var profCourses=await _userUnitOfWork.UserRepository.GetAllProfessorCoursesAsync(request.UserId);
+            
+            if (profCourses.Any())
+            {
+                validationResult.Add(EntityValidation.UserValidation.ProfessorHasActiveCourses);
+                result.SetValidationResult(validationResult);
+                return result;
+            }
         }
         
         _userUnitOfWork.UserRepository.Delete(userToDelete);

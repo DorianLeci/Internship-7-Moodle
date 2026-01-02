@@ -102,6 +102,12 @@ public static partial class EntityValidation
                 $"{Prefix}_PasswordContainsSpaces",
                 "Lozinka ne smije sadržavati razmake."
             );
+        
+        public static readonly ValidationItem ProfessorHasActiveCourses = new ValidationItem(
+            ValidationType.BussinessRule,
+            ValidationSeverity.Error,
+            $"{Prefix}_ProfessorHasActiveCourses",
+            $"Profesor drži kolegije i ne može biti obrisan.");
 
         
     }

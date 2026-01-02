@@ -110,9 +110,9 @@ public static partial class Writer
             else
             {
                 var idText = $"[yellow] -Id korisnika: {result.Value!.Id}[/]";
-                var roleText = $"[yellow] -Ime i prezime: {result.Value.FullName}[/]";
+                var nameText = $"[yellow] -Ime i prezime: {result.Value.FullName}[/]";
                 
-                AnsiConsole.Write(new Panel(string.Join("\n",idText,roleText))
+                AnsiConsole.Write(new Panel(string.Join("\n",idText,nameText))
                 {
                     Header = new PanelHeader("[rgb(0,200,0)]Korisnik uspješno dodan[/]",Justify.Center),
                     Border=BoxBorder.Rounded,

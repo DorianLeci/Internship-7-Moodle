@@ -9,8 +9,8 @@ public partial class MenuBuilder
     public static Dictionary<string, Func<Task<bool>>> CreateProfessorMenu(ProfessorMainMenuManager mainMenuManager)
     {
         return new MenuBuilder()
-            .AddChoice("Moji kolegiji", async () => { await mainMenuManager.ShowCourseMenuAsync(mainMenuManager.Id,true); return false; })
-            .AddChoice("Upravljanje kolegijima", async () => { await mainMenuManager.ShowCourseMenuAsync(mainMenuManager.Id,false); return false; })
+            .AddChoice("Moji kolegiji", async () => { await mainMenuManager.ShowCourseMenuAsync(true); return false; })
+            .AddChoice("Upravljanje kolegijima", async () => { await mainMenuManager.ShowCourseMenuAsync(false); return false; })
             .AddCommon(mainMenuManager)  
             .ReturnDictionary();
     }   

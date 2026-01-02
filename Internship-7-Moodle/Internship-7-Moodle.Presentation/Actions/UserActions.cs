@@ -5,6 +5,7 @@ using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Application.Users.DeleteUser;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
 using Internship_7_Moodle.Application.Users.GetAllProfessorCourses;
+using Internship_7_Moodle.Application.Users.GetAllUsers;
 using Internship_7_Moodle.Application.Users.LoginUser;
 using Internship_7_Moodle.Application.Users.RegisterUser;
 using Internship_7_Moodle.Domain.Enumerations;
@@ -66,6 +67,18 @@ public class UserActions
     public async Task<AppResult<SuccessResponse>> DeleteUserAsync(int userId)
     {
         return await _mediator.Send(new DeleteUserCommand(userId));
+    }
+
+    public async Task<IEnumerable<UserResponse>> GetAllUsersAsync(int adminId,RoleEnum ? roleFilter=null)
+    {
+        var result = await _mediator.Send(new GetAllUsersToDeleteRequest(adminId,roleFilter));
+        
+        if (result.Value == null)
+            return [];
+        
+        var allUsers = result.Value.Entities;
+
+        return allUsers;
     }
     
 }

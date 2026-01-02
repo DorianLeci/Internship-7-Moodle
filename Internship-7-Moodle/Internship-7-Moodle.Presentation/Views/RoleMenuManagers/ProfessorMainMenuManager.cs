@@ -27,10 +27,10 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
         await MenuRunner.RunMenuAsync(mainMenu,"[yellow] Glavni izbornik[/]",exitChoice:"Odjava");
     }
 
-    public async Task ShowCourseMenuAsync(int professorId,bool isMyCourseSubmenu)
+    public async Task ShowCourseMenuAsync(bool isMyCourseSubmenu)
     {
         
-        var professorCourses=await UserActions.GetAllProfessorCoursesAsync(professorId);
+        var professorCourses=await UserActions.GetAllProfessorCoursesAsync(Id);
         var professorCoursesList = professorCourses.ToList();
 
         if (professorCoursesList.Count == 0)

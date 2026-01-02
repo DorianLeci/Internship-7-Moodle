@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+using Internship_7_Moodle.Domain.Common.Abstractions;
 using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Persistence.Common;
 using Internship_7_Moodle.Infrastructure.Database;
@@ -5,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Internship_7_Moodle.Infrastructure.Repositories.Common;
 
-public class Repository<TEntity,TId>:IRepository<TEntity,TId> where TEntity : class
+public class Repository<TEntity,TId>:IRepository<TEntity,TId> where TEntity :BaseEntity
 {
     protected readonly ApplicationDbContext Context;
     protected readonly DbSet<TEntity> DbSet;
@@ -16,10 +18,21 @@ public class Repository<TEntity,TId>:IRepository<TEntity,TId> where TEntity : cl
         DbSet = context.Set<TEntity>();
     }
     
-    public async Task<GetAllResponse<TEntity>> GetAllAsync()
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        var entityList=await DbSet.ToListAsync();
-        return new GetAllResponse<TEntity>(entityList);
+        return await DbSet.ToListAsync();
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity,bool>>? predicate=null,params Expression<Func<TEntity, object>>[] includeProperties)
+    {
+        var query= DbSet.AsQueryable();
+
+        query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        
+        if(predicate != null)
+            query = query.Where(predicate);
+        
+        return await query.ToListAsync();
     }
 
     public async Task InsertAsync(TEntity entity)
@@ -45,8 +58,17 @@ public class Repository<TEntity,TId>:IRepository<TEntity,TId> where TEntity : cl
             DbSet.Remove(entity);
     }
 
-    public async Task<TEntity?> GetByIdAsync(int entityId)
+    public async Task<TEntity?> GetByIdAsync(TId entityId)
     {
         return await DbSet.FindAsync(entityId);
+    }
+
+    public async Task<TEntity?> GetByIdAsync(TId id, params Expression<Func<TEntity, object>>[] includeProperties)
+    {
+        var query = DbSet.AsQueryable();
+        
+        query = includeProperties.Aggregate(query, (current, include) => current.Include(include));
+
+        return await query.FirstOrDefaultAsync(e => e.Id.Equals(id));
     }
 }
