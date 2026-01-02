@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Domain.Persistence.Users;
@@ -53,5 +54,22 @@ public class UserRepository:Repository<Domain.Entities.Users.User,int>,IUserRepo
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<(RoleEnum Role, int Count)>> GetUserCountGroupedByRole(PeriodEnum period)
+    {
+        var query = DbSet.Include(u => u.Role);
 
+        var filteredQuery = period switch
+        {
+            PeriodEnum.Today => query.Where(u =>
+                u.CreatedAt >= DateTimeProvider.StarOfToday && u.CreatedAt < DateTimeProvider.EndOfToday),
+            PeriodEnum.ThisMonth => query.Where(u =>
+                u.CreatedAt >= DateTimeProvider.StartOfMonth && u.CreatedAt < DateTimeProvider.EndOfMonth),
+            _ => query
+        };
+                
+        return await filteredQuery
+            .GroupBy(u => u.Role.RoleName)
+            .Select(g => new ValueTuple<RoleEnum, int>(g.Key, g.Count()))
+            .ToListAsync();
+    }
 }

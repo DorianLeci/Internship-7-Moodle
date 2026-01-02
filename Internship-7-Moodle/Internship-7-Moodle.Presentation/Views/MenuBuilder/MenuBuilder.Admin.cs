@@ -13,6 +13,7 @@ public partial class MenuBuilder
             .AddChoice("Brisanje korisnika", async () => { await mainMenuManager.ShowUserDeletionMenuAsync("[yellow] Brisanje korisnika[/]",AdminMenuAction.Delete); return false; })
             .AddChoice("Promjena uloge", async () => { await mainMenuManager.ShowUserRoleChangeMenuAsync("[yellow] Promjena uloge[/]",AdminMenuAction.ChangeRole); return false; })
             .AddChoice("Promjena emaila", async () => { await mainMenuManager.ShowUserRoleChangeMenuAsync("[yellow] Promjena emaila[/]",AdminMenuAction.ChangeEmail); return false; })
+            .AddChoice("Statistika", async () => { await mainMenuManager.ShowStatisticsMenuAsync("[yellow] Statistika[/]"); return false; })
             .AddCommon(mainMenuManager)  
             .ReturnDictionary();
     }   
@@ -50,5 +51,14 @@ public partial class MenuBuilder
         return builder.ReturnDictionary();
 
     }
+    
+    public static Dictionary<string, Func<Task<bool>>> CreateStatisticsMenu(AdminMainMenuManager mainMenuManager)
+    {
+        return new MenuBuilder()
+            .AddChoice("Broj registriranih korisnika po rolama", async () => { return false; })
+            .AddMenuExit()
+            .ReturnDictionary();
+    }
+
     
 }

@@ -163,4 +163,11 @@ public class AdminMainMenuManager : BaseMainMenuManager
         }
 
     }
+
+    public async Task ShowStatisticsMenuAsync(string title)
+    {
+        var statMenu = MenuBuilder.MenuBuilder.CreateStatisticsMenu(this);
+        
+        await MenuRunner.RunMenuAsync(statMenu,title);
+    }
 }
