@@ -2,6 +2,7 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Application.Users.ChangeEmail;
 using Internship_7_Moodle.Application.Users.ChangeRole;
 using Internship_7_Moodle.Application.Users.DeleteUser;
 using Internship_7_Moodle.Application.Users.GetAllCourses;
@@ -85,6 +86,13 @@ public class UserActions
         var allUsers = result.Value.Entities;
 
         return allUsers;
+    }
+
+    public async Task<AppResult<ChangeEmailResponse>> ChangeUserEmailAsync(int userId, string newEmail)
+    {
+        var dto = new ChangeEmailDto(userId, newEmail);
+        
+        return await _mediator.Send(ChangeEmailCommand.FromDto(dto));        
     }
     
 }

@@ -56,6 +56,12 @@ public static partial class EntityValidation
             ValidationSeverity.Error,
             $"$\"{{Prefix}}_EmailNotUnique",
             $"Email mora biti jedinstven");
+        
+        public static readonly ValidationItem EmailSameAsOld = new ValidationItem(
+            ValidationType.BussinessRule,
+            ValidationSeverity.Error,
+            $"$\"{{Prefix}}_EmailSameAsOld",
+            $"Email je isti kao prethodni");
 
         public static readonly ValidationItem InvalidPassword = new ValidationItem(
             ValidationType.Authentication,

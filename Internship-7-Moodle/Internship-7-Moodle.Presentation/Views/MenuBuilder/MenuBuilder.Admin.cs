@@ -12,6 +12,7 @@ public partial class MenuBuilder
         return new MenuBuilder()
             .AddChoice("Brisanje korisnika", async () => { await mainMenuManager.ShowUserDeletionMenuAsync("[yellow] Brisanje korisnika[/]",AdminMenuAction.Delete); return false; })
             .AddChoice("Promjena uloge", async () => { await mainMenuManager.ShowUserRoleChangeMenuAsync("[yellow] Promjena uloge[/]",AdminMenuAction.ChangeRole); return false; })
+            .AddChoice("Promjena emaila", async () => { await mainMenuManager.ShowUserRoleChangeMenuAsync("[yellow] Promjena emaila[/]",AdminMenuAction.ChangeEmail); return false; })
             .AddCommon(mainMenuManager)  
             .ReturnDictionary();
     }   

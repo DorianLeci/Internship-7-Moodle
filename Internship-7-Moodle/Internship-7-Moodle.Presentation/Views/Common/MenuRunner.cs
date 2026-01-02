@@ -5,8 +5,11 @@ namespace Internship_7_Moodle.Presentation.Views.Common;
 
 public static class MenuRunner
 {
+    public const string successMsg="[rgb(0,200,0) bold]Uspješan odabir[/]";
+    public const string exitChoiceConst = "Izlazak iz izbornika";
+    
     public static async Task RunMenuAsync(Dictionary<string, Func<Task<bool>>> menuOptions, string title,
-        string successMessage ="[rgb(0,200,0) bold]Uspješan odabir[/]",string exitChoice="Izlazak iz izbornika")
+        string successMessage=successMsg,string exitChoice=exitChoiceConst)
     {
         
         var exitRequested = false;
