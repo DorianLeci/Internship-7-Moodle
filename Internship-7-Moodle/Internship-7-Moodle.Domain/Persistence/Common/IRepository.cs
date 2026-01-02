@@ -8,7 +8,8 @@ public interface IRepository<TEntity,TId> where TEntity:BaseEntity
 {
     Task<IEnumerable<TEntity>> GetAllAsync();
     
-    Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity,bool>>? predicate=null,params Expression<Func<TEntity, object>>[] includeProperties);
+    Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity,bool>>? predicate=null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy=null,
+            params Expression<Func<TEntity, object>>[] includeProperties);
     
     
     Task InsertAsync(TEntity entity);

@@ -36,8 +36,9 @@ public class CourseRepository:Repository<Domain.Entities.Courses.Course,int>,ICo
     {
         return await Context.CourseUsers
             .Where(cu => cu.CourseId == courseId)
-            .OrderByDescending(cu=>cu.CreatedAt)
             .Select(cu => cu.User)
+            .OrderBy(u=>u.FirstName)
+            .ThenBy(u=>u.LastName)
             .ToListAsync();
     }
 
@@ -51,7 +52,8 @@ public class CourseRepository:Repository<Domain.Entities.Courses.Course,int>,ICo
         return await Context.Users
             .Include(u => u.Role)
             .Where(u=>u.Role.RoleName==RoleEnum.Student && !enrolledStudentIdList.Contains(u.Id))
-            .OrderByDescending(cu=>cu.CreatedAt)
+            .OrderBy(u=>u.FirstName)
+            .ThenBy(u=>u.LastName)
             .ToListAsync();
     }
     

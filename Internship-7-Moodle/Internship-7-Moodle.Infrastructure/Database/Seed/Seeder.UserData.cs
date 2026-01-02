@@ -234,6 +234,71 @@ internal static partial class Seeder
                     RoleId = 1,
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime
+                },
+                new User
+                {
+                    Id = 17,
+                    Email = "matijam@gmail.com",
+                    Password = "ProfesorMatija#",
+                    FirstName = "Matija",
+                    LastName = "Matijović",
+                    BirthDate = new DateOnly(1977, 10, 17),
+                    Gender = GenderEnum.M,
+                    RoleId = 2,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime
+                },
+                new User
+                {
+                    Id = 18,
+                    Email = "mirkom@gmail.com",
+                    Password = "ProfesorMirko#",
+                    FirstName = "Mirko",
+                    LastName = "Mirković",
+                    BirthDate = new DateOnly(1978, 10, 19),
+                    Gender = GenderEnum.M,
+                    RoleId = 2,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime
+                },
+                new User
+                {
+                    Id = 19,
+                    Email = "tarat@gmail.com",
+                    Password = "ProfesorTara#",
+                    FirstName = "Tara",
+                    LastName = "Tarić",
+                    BirthDate = new DateOnly(1979, 10, 19),
+                    Gender = GenderEnum.F,
+                    RoleId = 2,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime
+                },
+                new User
+                {
+                    Id = 20,
+                    Email = "zlatkol@gmail.com",
+                    Password = "ProfesorZlatko#",
+                    FirstName = "Zlatko",
+                    LastName = "Leci",
+                    BirthDate = new DateOnly(1960, 11, 19),
+                    Gender = GenderEnum.M,
+                    RoleId = 2,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime
+                },
+                new User
+                {
+                    Id = 21,
+                    Email = "dragol@gmail.com",
+                    Password = "ProfesorDrago#",
+                    FirstName = "Drago",
+                    LastName = "Leci",
+                    BirthDate = new DateOnly(195, 05, 05),
+                    Gender = GenderEnum.M,
+                    RoleId = 2,
+                    CreatedAt = seedTime,
+                    UpdatedAt = seedTime
                 }
             };
 

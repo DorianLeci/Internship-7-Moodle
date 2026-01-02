@@ -23,8 +23,11 @@ public class GetAllUsersToDeleteRequestHandler:IRequestHandler<GetAllUsersToDele
         var predicate = request.RoleFilter.HasValue
             ? (Expression<Func<User, bool>>)(u => u.Role.RoleName == request.RoleFilter)
             : (Expression<Func<User, bool>>)(u => u.Id != request.AdminId);
-            
-        var users = await _userUnitOfWork.UserRepository.GetAllAsync(predicate,u => u.Role);
+        
+        var users = await _userUnitOfWork.UserRepository
+            .GetAllAsync
+            (predicate,u=>u.OrderByDescending(usr=>usr.CreatedAt).ThenBy(usr=>usr.FirstName).ThenBy(usr=>usr.LastName), 
+                u => u.Role);
 
         var userResponses = users
             .Select(u => new UserResponse

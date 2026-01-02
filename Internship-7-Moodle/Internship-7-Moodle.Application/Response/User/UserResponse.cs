@@ -10,5 +10,13 @@ public class UserResponse
     
     public string FullName=> $"{FirstName} {LastName}";
     
-    public RoleEnum? RoleName { get; set; } 
+    public RoleEnum? RoleName { get; set; }
+
+    public string RoleNameCroatian => RoleName switch
+    {
+        RoleEnum.Admin => "Administrator",
+        RoleEnum.Professor => "Profesor",
+        RoleEnum.Student => "Student",
+        _ => "Nepoznato"
+    };
 }

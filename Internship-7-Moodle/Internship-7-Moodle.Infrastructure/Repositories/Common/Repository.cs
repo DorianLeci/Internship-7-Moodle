@@ -23,7 +23,10 @@ public class Repository<TEntity,TId>:IRepository<TEntity,TId> where TEntity :Bas
         return await DbSet.ToListAsync();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity,bool>>? predicate=null,params Expression<Func<TEntity, object>>[] includeProperties)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(
+        Expression<Func<TEntity,bool>>? predicate=null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy=null,
+        params Expression<Func<TEntity, object>>[] includeProperties)
     {
         var query= DbSet.AsQueryable();
 
@@ -31,6 +34,9 @@ public class Repository<TEntity,TId>:IRepository<TEntity,TId> where TEntity :Bas
         
         if(predicate != null)
             query = query.Where(predicate);
+
+        if (orderBy != null)
+            query = orderBy(query);
         
         return await query.ToListAsync();
     }
