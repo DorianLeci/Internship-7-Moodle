@@ -1,5 +1,7 @@
 using Internship_7_Moodle.Application.Common.Model;
+using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Spectre.Console;
@@ -71,21 +73,74 @@ public static partial class Writer
             }
         }
 
-        public static void RegisteredUserCountWriter(List<CountByRoleResponse> responses)
+        public static void RegisteredUserCountWriter(List<CountByRoleResponse> responses,PeriodEnum period)
         {
+            var markupTitle = period switch
+            {
+                PeriodEnum.Today => "Broj registiranih korisnika po ulozi(na dašanji dan)",
+                PeriodEnum.ThisMonth => "Broj registiranih korisnika po ulozi(ovaj mjesec)",
+                PeriodEnum.Total => "Broj registiranih korisnika po ulozi(ukupno)",
+                _ => "-"
+            };
             
             var table = new Table()
                 .Border(TableBorder.Rounded)
-                .AddColumn(new TableColumn("Uloga").Centered().Width(15)) 
-                .AddColumn(new TableColumn("Broj").Centered().Width(10));
+                .AddColumn(new TableColumn(new Markup("[yellow]Uloga[/]"))) 
+                .AddColumn(new TableColumn(new Markup("[rgb(0,200,0)]Broj[/]")));
             
             foreach (var response in responses)
             {
                 table.AddRow(response.RoleNameCroatian, response.Count.ToString());
             }
             
-            AnsiConsole.MarkupLine("[yellow] Broj registiranih korisnika po ulozi\n[/]");
+            AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
             AnsiConsole.Write(table);
+        }
+
+        public static void CourseCountWriter(int courseCount,PeriodEnum period)
+        {
+
+            var markupTitle = period switch
+            {
+                PeriodEnum.Today => "Broj kolegija(dodanih na dašanji dan)",
+                PeriodEnum.ThisMonth => "Broj kolegija(dodanih ovaj mjesec)",
+                PeriodEnum.Total => "Broj kolegija(ukupno)",
+                _ => "-"
+            };
+            
+            var table = new Table()
+                .Border(TableBorder.Rounded)
+                .AddColumn(new TableColumn(new Markup("[rgb(0,200,0)]Broj[/]")));
+            
+            table.AddRow(courseCount.ToString());
+            
+            AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
+            AnsiConsole.Write(table);
+        }
+
+        public static void TopCoursesWriter(List<TopCourseResponse> responses, PeriodEnum period)
+        {
+            var markupTitle = period switch
+            {
+                PeriodEnum.Today => "Top 3 kolegija po broju upisanih studenata(na dašanji dan)",
+                PeriodEnum.ThisMonth => "Top 3 kolegija po broju upisanih studenata(ovaj mjesec)",
+                PeriodEnum.Total => "Top 3 kolegija po broju upisanih studenata(ukupno)",
+                _ => "-"
+            };
+
+            var table = new Table()
+                .Border(TableBorder.Rounded)
+                .AddColumn(new TableColumn(new Markup("[yellow]Id[/]")))
+                .AddColumn(new TableColumn(new Markup("[rgb(0,200,0)]Ime kolegija[/]")))
+                .AddColumn(new TableColumn(new Markup("[rgb(0,200,0)]Broj upisanih studenata[/]")));
+
+            foreach (var response in responses)
+                table.AddRow(response.CourseId.ToString(),response.CourseName,response.EnrollmentCount.ToString());
+            
+            AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
+            AnsiConsole.Write(table);
+
+
         }
     }
 }

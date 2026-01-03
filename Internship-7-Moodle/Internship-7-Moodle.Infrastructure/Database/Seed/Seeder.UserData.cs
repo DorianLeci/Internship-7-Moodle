@@ -76,8 +76,8 @@ internal static partial class Seeder
                     BirthDate = new DateOnly(2005, 11, 28),
                     Gender = GenderEnum.F,
                     RoleId = 1,
-                    CreatedAt = seedTime,
-                    UpdatedAt = seedTime
+                    CreatedAt = DateTime.Now.AddDays(-5),
+                    UpdatedAt = DateTime.Now.AddDays(-5)
                 },
                 new User
                 {
@@ -167,8 +167,8 @@ internal static partial class Seeder
                     BirthDate = new DateOnly(1997, 03, 08),
                     Gender = GenderEnum.M,
                     RoleId = 1,
-                    CreatedAt = seedTime,
-                    UpdatedAt = seedTime
+                    CreatedAt = DateTime.Now.AddMonths(-1),
+                    UpdatedAt = DateTime.Now.AddMonths(-1)
                 },
                 new User
                 {
@@ -193,8 +193,8 @@ internal static partial class Seeder
                     BirthDate = new DateOnly(2005, 03, 10),
                     Gender = GenderEnum.F,
                     RoleId = 1,
-                    CreatedAt = seedTime,
-                    UpdatedAt = seedTime
+                    CreatedAt = DateTime.Now.AddDays(-10),
+                    UpdatedAt = DateTime.Now.AddDays(-10)
                 },
                 new User
                 {
@@ -239,7 +239,7 @@ internal static partial class Seeder
                 {
                     Id = 17,
                     Email = "matijam@gmail.com",
-                    Password = "ProfesorMatija#",
+                    Password = "ProfMatija#",
                     FirstName = "Matija",
                     LastName = "Matijović",
                     BirthDate = new DateOnly(1977, 10, 17),
@@ -252,7 +252,7 @@ internal static partial class Seeder
                 {
                     Id = 18,
                     Email = "mirkom@gmail.com",
-                    Password = "ProfesorMirko#",
+                    Password = "ProfMirko#",
                     FirstName = "Mirko",
                     LastName = "Mirković",
                     BirthDate = new DateOnly(1978, 10, 19),
@@ -265,7 +265,7 @@ internal static partial class Seeder
                 {
                     Id = 19,
                     Email = "tarat@gmail.com",
-                    Password = "ProfesorTara#",
+                    Password = "ProfTara#",
                     FirstName = "Tara",
                     LastName = "Tarić",
                     BirthDate = new DateOnly(1979, 10, 19),
@@ -278,7 +278,7 @@ internal static partial class Seeder
                 {
                     Id = 20,
                     Email = "zlatkol@gmail.com",
-                    Password = "ProfesorZlatko#",
+                    Password = "ProfZlatko#",
                     FirstName = "Zlatko",
                     LastName = "Leci",
                     BirthDate = new DateOnly(1960, 11, 19),
@@ -294,11 +294,89 @@ internal static partial class Seeder
                     Password = "ProfesorDrago#",
                     FirstName = "Drago",
                     LastName = "Leci",
-                    BirthDate = new DateOnly(195, 05, 05),
+                    BirthDate = new DateOnly(1955, 05, 05),
                     Gender = GenderEnum.M,
                     RoleId = 2,
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime
+                },
+                new User
+                {
+                    Id = 22,
+                    Email = "novikorisnik@gmail.com",
+                    Password = "StudentKorisnik#",
+                    FirstName = "Korisnik",
+                    LastName = "Novi",
+                    BirthDate = new DateOnly(2000, 05, 05),
+                    Gender = GenderEnum.M,
+                    RoleId = 1,
+                    CreatedAt = DateTime.Now.AddDays(-1),
+                    UpdatedAt = DateTime.Now.AddDays(-1)
+                },
+                new User
+                {
+                    Id = 23,
+                    Email = "karlok@gmail.com",
+                    Password = "StudentKarlo#",
+                    FirstName = "Karlo",
+                    LastName = "Karlović",
+                    BirthDate = new DateOnly(2002, 04, 15),
+                    Gender = GenderEnum.M,
+                    RoleId = 1,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                },
+                new User
+                {
+                    Id = 24,
+                    Email = "markom@gmail.com",
+                    Password = "StudentMarko#",
+                    FirstName = "Marko",
+                    LastName = "Marković",
+                    BirthDate = new DateOnly(2002, 04, 15),
+                    Gender = GenderEnum.M,
+                    RoleId = 1,
+                    CreatedAt = DateTime.Now.AddDays(-1),
+                    UpdatedAt = DateTime.Now.AddDays(-1)
+                },
+                new User
+                {
+                    Id = 25,
+                    Email = "marijanm@gmail.com",
+                    Password = "ProfMarijan#",
+                    FirstName = "Marijan",
+                    LastName = "Marjanović",
+                    BirthDate = new DateOnly(1983, 02, 17),
+                    Gender = GenderEnum.M,
+                    RoleId = 2,
+                    CreatedAt = DateTime.Now.AddDays(-1),
+                    UpdatedAt = DateTime.Now.AddDays(-1)
+                },
+                new User
+                {
+                    Id = 26,
+                    Email = "zoranz@gmail.com",
+                    Password = "ProfZoran#",
+                    FirstName = "Zoran",
+                    LastName = "Zoranović",
+                    BirthDate = new DateOnly(1978, 02, 18),
+                    Gender = GenderEnum.M,
+                    RoleId = 2,
+                    CreatedAt = DateTime.Now.AddDays(-2),
+                    UpdatedAt = DateTime.Now.AddDays(-2)
+                },
+                new User
+                {
+                    Id = 27,
+                    Email = "zrinkaz@gmail.com",
+                    Password = "ProfZrinka#",
+                    FirstName = "Zrinka",
+                    LastName = "Zrinković",
+                    BirthDate = new DateOnly(1979, 02, 18),
+                    Gender = GenderEnum.F,
+                    RoleId = 2,
+                    CreatedAt = DateTime.Now.AddDays(-3),
+                    UpdatedAt = DateTime.Now.AddDays(-3)
                 }
             };
 

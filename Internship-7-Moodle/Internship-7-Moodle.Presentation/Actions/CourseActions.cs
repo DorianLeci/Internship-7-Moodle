@@ -3,12 +3,16 @@ using Internship_7_Moodle.Application.Courses.AddStudentToCourse;
 using Internship_7_Moodle.Application.Courses.GetAllMaterials;
 using Internship_7_Moodle.Application.Courses.GetAllNotifications;
 using Internship_7_Moodle.Application.Courses.GetAllStudentsEnrolled;
+using Internship_7_Moodle.Application.Courses.GetCourseCount;
+using Internship_7_Moodle.Application.Courses.GetTopCoursesByEnrollment;
 using Internship_7_Moodle.Application.Courses.PublishCourseMaterial;
 using Internship_7_Moodle.Application.Courses.PublishCourseNotification;
 using Internship_7_Moodle.Application.Courses.StudentsNotEnrolled;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Domain.Common.Helper;
+using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
 
@@ -89,5 +93,24 @@ public class CourseActions
     public async Task<AppResult<UserResponse>> AddStudentToCourseAsync(int courseId, int studentId)
     {
         return await _mediator.Send(new AddStudentToCourseCommand(courseId, studentId));
+    }
+    
+    public async Task<CourseCountResponse> GetCourseCountAsync(PeriodEnum period)
+    {
+        var result=await _mediator.Send(new GetCourseCountRequest(period));
+
+        return result.Value ?? new CourseCountResponse { CourseCount = 0 };
+    }
+    
+    public async Task<IEnumerable<TopCourseResponse>> GetTopCoursesByEnrollmentAsync(PeriodEnum period)
+    {
+        var result = await _mediator.Send(new GetTopCoursesRequest(period));
+
+        if (result.Value == null)
+            return [];
+
+        var topCourseResponses = result.Value.Entities;
+
+        return topCourseResponses;
     }
 }

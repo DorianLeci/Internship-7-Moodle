@@ -56,7 +56,7 @@ public class UserRepository:Repository<Domain.Entities.Users.User,int>,IUserRepo
 
     public async Task<IEnumerable<(RoleEnum Role, int Count)>> GetUserCountGroupedByRole(PeriodEnum period)
     {
-        var query = DbSet.Include(u => u.Role);
+        var query = DbSet.AsQueryable();
 
         var filteredQuery = period switch
         {
@@ -67,9 +67,11 @@ public class UserRepository:Repository<Domain.Entities.Users.User,int>,IUserRepo
             _ => query
         };
                 
-        return await filteredQuery
+        var result= await filteredQuery
             .GroupBy(u => u.Role.RoleName)
-            .Select(g => new ValueTuple<RoleEnum, int>(g.Key, g.Count()))
             .ToListAsync();
+
+        return result.Select(g =>(g.Key, g.Count()))
+            .OrderByDescending(g=>g.Item2).ThenBy(g=>g.Key);
     }
 }

@@ -161,6 +161,66 @@ internal static partial class Seeder
                     OwnerId = 7,
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime
+                },
+                new Course
+                {
+                    Id=16,
+                    Name = "Elektronika",
+                    Description = "Kako kompjuteri funkcioniraju i njegovi dijelovi funkcioniraju-matematički i teorijski",
+                    Ects = 7,
+                    OwnerId = 25,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                },
+                new Course
+                {
+                    Id=17,
+                    Name = "Elektronički sklopovi",
+                    Description = "Kako kompjuteri funkcioniraju i njegovi dijelovi funkcioniraju-matematički i teorijski",
+                    Ects = 7,
+                    OwnerId = 25,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                },
+                new Course
+                {
+                    Id=18,
+                    Name = "Praktikum",
+                    Description = "Praktična primjena znanja stečenih na elektronici",
+                    Ects = 2,
+                    OwnerId = 25,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                },
+                new Course
+                {
+                    Id=19,
+                    Name = "Elektromagnetizam",
+                    Description = "Matematički proračuni u elektromagnetizmu",
+                    Ects = 5,
+                    OwnerId = 26,
+                    CreatedAt = DateTime.Now.AddDays(-1),
+                    UpdatedAt = DateTime.Now.AddDays(-1),
+                },
+                new Course
+                {
+                    Id=20,
+                    Name = "Elektroenergetika",
+                    Description = "Matematički proračuni u elektroenergetici",
+                    Ects = 6,
+                    OwnerId = 26,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                },
+                new Course
+                {
+                    Id=21,
+                    Name = "Termodinamika",
+                    Description = "Matematički proračuni u termodinamici",
+                    Ects = 7,
+                    OwnerId = 27,
+                    CreatedAt = DateTime.Now.AddDays(-3),
+                    UpdatedAt = DateTime.Now.AddDays(-3)
                 }); 
         }
         
@@ -225,8 +285,31 @@ internal static partial class Seeder
                 
                 new CourseUser { Id=45,UserId = 13, CourseId = 13, CreatedAt = seedTime,UpdatedAt = seedTime },
                 new CourseUser { Id=46,UserId = 14, CourseId = 13, CreatedAt = seedTime,UpdatedAt = seedTime },
-                new CourseUser { Id=47,UserId = 16, CourseId = 13, CreatedAt = seedTime,UpdatedAt = seedTime }
+                new CourseUser { Id=47,UserId = 16, CourseId = 13, CreatedAt = seedTime,UpdatedAt = seedTime },
                 
+                new CourseUser { Id=48,UserId = 13, CourseId = 16, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=49,UserId = 14, CourseId = 16, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=50,UserId = 16, CourseId = 16, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                
+                new CourseUser { Id=51,UserId = 4, CourseId = 17, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=52,UserId = 5, CourseId = 17, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=53,UserId = 11, CourseId = 17, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=54,UserId = 12, CourseId = 17, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                
+                new CourseUser { Id=55,UserId = 22, CourseId = 18, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=56,UserId = 23, CourseId = 18, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                
+                new CourseUser { Id=57,UserId = 16, CourseId = 19, CreatedAt = DateTime.Now.AddDays(-1),UpdatedAt = DateTime.Now.AddDays(-1) },
+                new CourseUser { Id=58,UserId = 22, CourseId = 19, CreatedAt = DateTime.Now.AddDays(-1),UpdatedAt = DateTime.Now.AddDays(-1) },
+                new CourseUser { Id=59,UserId = 23, CourseId = 19, CreatedAt = DateTime.Now.AddDays(-1),UpdatedAt = DateTime.Now.AddDays(-1) },
+
+                new CourseUser { Id=60,UserId = 1, CourseId = 20, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=61,UserId = 2, CourseId = 20, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=62,UserId = 3, CourseId = 20, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                new CourseUser { Id=63,UserId = 4, CourseId = 20, CreatedAt = DateTime.Now,UpdatedAt = DateTime.Now },
+                
+                new CourseUser { Id=64,UserId = 1, CourseId = 21, CreatedAt = DateTime.Now.AddDays(-2),UpdatedAt = DateTime.Now.AddDays(-2) }
+
                 );
         }
     }

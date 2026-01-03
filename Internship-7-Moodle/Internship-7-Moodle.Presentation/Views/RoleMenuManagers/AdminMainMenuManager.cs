@@ -13,9 +13,12 @@ namespace Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 
 public class AdminMainMenuManager : BaseMainMenuManager
 {
-    public AdminMainMenuManager(int userId, ChatFeature chatFeature, UserActions userActions) : base(userId,
+    private readonly CourseActions _courseActions;
+    
+    public AdminMainMenuManager(int userId, ChatFeature chatFeature, UserActions userActions, CourseActions courseActions) : base(userId,
         chatFeature, userActions)
     {
+        _courseActions = courseActions;
     }
 
     public override async Task RunAsync()
@@ -45,7 +48,7 @@ public class AdminMainMenuManager : BaseMainMenuManager
 
         while (!exitRequested)
         {
-            var allUsers = await UserActions.GetAllUsersAsync(Id, roleFilter);
+            var allUsers = await UserActions.GetAllUsersByRoleAsync(roleFilter);
             var allUsersList = allUsers.ToList();
 
             if (allUsersList.Count == 0)
@@ -191,8 +194,35 @@ public class AdminMainMenuManager : BaseMainMenuManager
             return;            
         }
         
-        Writer.Admin.RegisteredUserCountWriter(countByRoleList);
+        Writer.Admin.RegisteredUserCountWriter(countByRoleList,period);
             
         ConsoleHelper.ScreenExit(1500);
+    }
+
+    public async Task ShowCourseCountAsync(PeriodEnum period)
+    {
+        var courseCountResponse = await _courseActions.GetCourseCountAsync(period);
+        
+        Writer.Admin.CourseCountWriter(courseCountResponse.CourseCount,period);
+            
+        ConsoleHelper.ScreenExit(1500);
+    }
+
+    public async Task ShowTopCoursesByEnrollmentAsync(PeriodEnum period)
+    {
+        var topCourseResponses = await _courseActions.GetTopCoursesByEnrollmentAsync(period);
+        
+        var topCoursesList=topCourseResponses.ToList();
+
+        if (topCoursesList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje upisani studenti u ovom razdoblju .Izlazak...[/]");
+            return;                 
+        }
+        
+        Writer.Admin.TopCoursesWriter(topCoursesList,period);
+            
+        ConsoleHelper.ScreenExit(1500);
+        
     }
 }

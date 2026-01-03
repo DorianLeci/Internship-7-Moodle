@@ -58,6 +58,13 @@ public partial class MenuBuilder
         return new MenuBuilder()
             .AddChoice("Broj registriranih korisnika po ulogama", async () => 
                 {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.UsersByRole,"[yellow] Broj registriranih korisnika po ulogama[/]"); return false; })
+            
+            .AddChoice("Broj kolegija", async () => 
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.CoursesCount,"[yellow] Broj kolegija[/]"); return false; })
+            
+            .AddChoice("Top 3 kolegija po broju upsanih studenata", async () => 
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.TopCoursesByStudents,"[yellow] Top 3 kolegija po broju upsanih studenata[/]"); return false; })
+            
             .AddMenuExit()
             .ReturnDictionary();
     }
@@ -67,8 +74,8 @@ public partial class MenuBuilder
         Func<PeriodEnum,Task> functionToCall = action switch
         {
             StatisticsMenuAction.UsersByRole=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
-            StatisticsMenuAction.CoursesCount=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
-            StatisticsMenuAction.TopCoursesByStudents=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
+            StatisticsMenuAction.CoursesCount=>mainMenuManager.ShowCourseCountAsync,
+            StatisticsMenuAction.TopCoursesByStudents=>mainMenuManager.ShowTopCoursesByEnrollmentAsync,
             StatisticsMenuAction.TopUsersByMessages=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
             _ => throw new ArgumentOutOfRangeException(nameof(action), "Nepoznata akcija")
         };

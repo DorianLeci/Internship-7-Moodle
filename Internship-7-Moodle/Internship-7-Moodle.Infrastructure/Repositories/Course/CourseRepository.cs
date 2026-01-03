@@ -1,4 +1,4 @@
-using Internship_7_Moodle.Domain.Entities.Courses;
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Entities.Courses.Materials;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Domain.Persistence.Courses;
@@ -56,5 +56,51 @@ public class CourseRepository:Repository<Domain.Entities.Courses.Course,int>,ICo
             .ThenBy(u=>u.LastName)
             .ToListAsync();
     }
-    
+
+    public Task<int> GetCourseCountAsync(PeriodEnum period)
+    {
+        var query = DbSet.AsQueryable();
+        
+        var filteredQuery = period switch
+        {
+            PeriodEnum.Today => query.Where(u =>
+                u.CreatedAt >= DateTimeProvider.StarOfToday && u.CreatedAt < DateTimeProvider.EndOfToday),
+            PeriodEnum.ThisMonth => query.Where(u =>
+                u.CreatedAt >= DateTimeProvider.StartOfMonth && u.CreatedAt < DateTimeProvider.EndOfMonth),
+            _ => query
+        };       
+        
+        return  filteredQuery.CountAsync();
+    }
+
+    public async Task<IEnumerable<(int CourseId, string CourseName, int StudentCount)>> GetTopCoursesByStudentCountAsync(PeriodEnum period)
+    {
+        var query = Context.CourseUsers.AsQueryable();
+        
+        var filteredQuery = period switch
+        {
+            PeriodEnum.Today => query.Where(cu =>
+                cu.CreatedAt >= DateTimeProvider.StarOfToday && cu.CreatedAt < DateTimeProvider.EndOfToday),
+            PeriodEnum.ThisMonth => query.Where(cu =>
+                cu.CreatedAt >= DateTimeProvider.StartOfMonth && cu.CreatedAt < DateTimeProvider.EndOfMonth),
+            _ => query
+        };
+
+        var result = await filteredQuery
+            .GroupBy(cu => new { cu.CourseId, cu.Course.Name })
+            .Select(g => new
+            {
+                g.Key.CourseId,
+                CourseName = g.Key.Name,
+                StudentCount = g.Count()
+            })
+            .OrderByDescending(x => x.StudentCount)
+            .ThenBy(x => x.CourseName)
+            .Take(3)
+            .ToListAsync();
+
+        return result.Select(x => (x.CourseId, x.CourseName, x.StudentCount));
+        
+        
+    }
 }

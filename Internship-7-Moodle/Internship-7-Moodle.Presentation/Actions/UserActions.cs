@@ -90,9 +90,9 @@ public class UserActions
         return await _mediator.Send(new ChangeRoleCommand(userId));
     }
 
-    public async Task<IEnumerable<UserResponse>> GetAllUsersAsync(int adminId,RoleEnum ? roleFilter=null)
+    public async Task<IEnumerable<UserResponse>> GetAllUsersByRoleAsync(RoleEnum ? roleFilter=null)
     {
-        var result = await _mediator.Send(new GetAllUsersToDeleteRequest(adminId,roleFilter));
+        var result = await _mediator.Send(new GetAllUsersByRoleRequest(roleFilter));
         
         if (result.Value == null)
             return [];

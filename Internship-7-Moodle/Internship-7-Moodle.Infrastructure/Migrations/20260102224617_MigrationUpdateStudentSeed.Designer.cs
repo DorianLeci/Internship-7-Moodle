@@ -3,6 +3,7 @@ using System;
 using Internship_7_Moodle.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Internship_7_Moodle.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260102224617_MigrationUpdateStudentSeed")]
+    partial class MigrationUpdateStudentSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,66 +288,6 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             Name = "Signali i sustavi",
                             OwnerId = 7,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1913),
-                            Description = "Kako kompjuteri funkcioniraju i njegovi dijelovi funkcioniraju-matematički i teorijski",
-                            Ects = 7,
-                            Name = "Elektronika",
-                            OwnerId = 25,
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1958)
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1961),
-                            Description = "Kako kompjuteri funkcioniraju i njegovi dijelovi funkcioniraju-matematički i teorijski",
-                            Ects = 7,
-                            Name = "Elektronički sklopovi",
-                            OwnerId = 25,
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1962)
-                        },
-                        new
-                        {
-                            Id = 18,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1965),
-                            Description = "Praktična primjena znanja stečenih na elektronici",
-                            Ects = 2,
-                            Name = "Praktikum",
-                            OwnerId = 25,
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1966)
-                        },
-                        new
-                        {
-                            Id = 19,
-                            CreatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1969),
-                            Description = "Matematički proračuni u elektromagnetizmu",
-                            Ects = 5,
-                            Name = "Elektromagnetizam",
-                            OwnerId = 26,
-                            UpdatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1981)
-                        },
-                        new
-                        {
-                            Id = 20,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1984),
-                            Description = "Matematički proračuni u elektroenergetici",
-                            Ects = 6,
-                            Name = "Elektroenergetika",
-                            OwnerId = 26,
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1985)
-                        },
-                        new
-                        {
-                            Id = 21,
-                            CreatedAt = new DateTime(2025, 12, 31, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1987),
-                            Description = "Matematički proračuni u termodinamici",
-                            Ects = 7,
-                            Name = "Termodinamika",
-                            OwnerId = 27,
-                            UpdatedAt = new DateTime(2025, 12, 31, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(1988)
                         });
                 });
 
@@ -1410,142 +1353,6 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             CreatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 16
-                        },
-                        new
-                        {
-                            Id = 48,
-                            CourseId = 16,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2108),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2110),
-                            UserId = 13
-                        },
-                        new
-                        {
-                            Id = 49,
-                            CourseId = 16,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2112),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2113),
-                            UserId = 14
-                        },
-                        new
-                        {
-                            Id = 50,
-                            CourseId = 16,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2115),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2116),
-                            UserId = 16
-                        },
-                        new
-                        {
-                            Id = 51,
-                            CourseId = 17,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2118),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2120),
-                            UserId = 4
-                        },
-                        new
-                        {
-                            Id = 52,
-                            CourseId = 17,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2121),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2123),
-                            UserId = 5
-                        },
-                        new
-                        {
-                            Id = 53,
-                            CourseId = 17,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2125),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2126),
-                            UserId = 11
-                        },
-                        new
-                        {
-                            Id = 54,
-                            CourseId = 17,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2128),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2130),
-                            UserId = 12
-                        },
-                        new
-                        {
-                            Id = 55,
-                            CourseId = 18,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2131),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2133),
-                            UserId = 22
-                        },
-                        new
-                        {
-                            Id = 56,
-                            CourseId = 18,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2134),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2136),
-                            UserId = 23
-                        },
-                        new
-                        {
-                            Id = 57,
-                            CourseId = 19,
-                            CreatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2137),
-                            UpdatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2140),
-                            UserId = 16
-                        },
-                        new
-                        {
-                            Id = 58,
-                            CourseId = 19,
-                            CreatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2142),
-                            UpdatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2143),
-                            UserId = 22
-                        },
-                        new
-                        {
-                            Id = 59,
-                            CourseId = 19,
-                            CreatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2145),
-                            UpdatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2147),
-                            UserId = 23
-                        },
-                        new
-                        {
-                            Id = 60,
-                            CourseId = 20,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2148),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2150),
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 61,
-                            CourseId = 20,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2152),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2153),
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 62,
-                            CourseId = 20,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2155),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2156),
-                            UserId = 3
-                        },
-                        new
-                        {
-                            Id = 63,
-                            CourseId = 20,
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2158),
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2159),
-                            UserId = 4
-                        },
-                        new
-                        {
-                            Id = 64,
-                            CourseId = 21,
-                            CreatedAt = new DateTime(2026, 1, 1, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2161),
-                            UpdatedAt = new DateTime(2026, 1, 1, 15, 8, 26, 761, DateTimeKind.Local).AddTicks(2162),
-                            UserId = 1
                         });
                 });
 
@@ -1685,7 +1492,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "John",
                             Gender = "M",
                             LastName = "Doe",
-                            Password = "AQAAAAEAACcQAAAAEL+UvpzLEsyIQh5gYijNvR4zJ7LvosgSDWWgSUe0UkWMqyWTb4w3LJndhjZyrGnnwA==",
+                            Password = "AQAAAAEAACcQAAAAEJ4WhYEJhY6JmkxodUaq1ykOR5dBU06Mdtp2WmqlVTdYMjnrmfZg5qFJmBKbWLH1KA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1698,7 +1505,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Dorian",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEMMJP0PCidjPtHwOKMJOWeBvPRETbGHPFzMQ7d3mkl9QLjVPHHIrvLd+5LvAj87C5A==",
+                            Password = "AQAAAAEAACcQAAAAELFfWc+GuyANdrRjdy1klVEY8Kp5WMwgrX6LWWbEchYi7S18xp5n8HVZoA0R27ipqA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1711,7 +1518,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Damir",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAENwM67HaV5VzD9J0H8ySFt5/5eNGRpU8tL1963YNnLmRktf9xGpy3WmwqxR2BPUz1Q==",
+                            Password = "AQAAAAEAACcQAAAAEBnG3CBQZgDlAnczYe5wQfKxFMkbaRn97du7A1OBmKptjt0lCKmzGjN8WCquZQJgNQ==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1719,14 +1526,14 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                         {
                             Id = 4,
                             BirthDate = new DateOnly(2005, 11, 28),
-                            CreatedAt = new DateTime(2025, 12, 29, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2010),
+                            CreatedAt = new DateTime(2025, 12, 28, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5604),
                             Email = "vesnaleci@gmail.com",
                             FirstName = "Vesna",
                             Gender = "F",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEOYHRus5XGt42wC4iqhAH6vFrcSmrv24HXU+aViG42fLoAk4eoAmb2aM/dNoIXIf2Q==",
+                            Password = "AQAAAAEAACcQAAAAEPlDzLwIvMVuqyLBy3Bb8b7EG9JUyboh88hnYnhzZgqY6E6n/0AvOXDTy9RW3qRgtA==",
                             RoleId = 1,
-                            UpdatedAt = new DateTime(2025, 12, 29, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2097)
+                            UpdatedAt = new DateTime(2025, 12, 28, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5684)
                         },
                         new
                         {
@@ -1737,7 +1544,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Zora",
                             Gender = "F",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEHwHV3wjY7X+0CZ1Pq334YzhPwkO7jaCRnx0zUXBVprPOyp4bBaEQ1vUFKfF4FoKkQ==",
+                            Password = "AQAAAAEAACcQAAAAEMlY4x4YYpGQoAp7ZEXfTGBmazto+V955FDin4uckWY8Ye/jWcUszBOZjgEoSoc9lg==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1750,7 +1557,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Ivo",
                             Gender = "M",
                             LastName = "Ivić",
-                            Password = "AQAAAAEAACcQAAAAEJ/91If39vQHJ73u2n6cSRqe2cdO7w9xPZE02o/yDMnT2wq2OzE560CU4Ow8TwCYKQ==",
+                            Password = "AQAAAAEAACcQAAAAEMMNFPhSYqOB9Tl5d5UimCnv3RJpC/xMIqlCkuHmfXXsi4Mc52Boqmd9dUcYBQcR6w==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1763,7 +1570,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Petar",
                             Gender = "M",
                             LastName = "Petrović",
-                            Password = "AQAAAAEAACcQAAAAEI6OuciziYTrm6ARLf5UZYd47i/UHCLcXTNiz6WsHOyiwyWJXjCuFiSLxvc4yaqAwA==",
+                            Password = "AQAAAAEAACcQAAAAEATgPiId+EXqqCJNfZiqFJb30nnOGwKcV4b4CInuNydSpkP2J8bukToIpw7iMQKVzg==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1776,7 +1583,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Maja",
                             Gender = "F",
                             LastName = "Majić",
-                            Password = "AQAAAAEAACcQAAAAEDB4uy2XOI8BHFI76gnYDuBpUshYhygHssZMyBQLT/RZKZ7PfHei98bfRXbIDz32+g==",
+                            Password = "AQAAAAEAACcQAAAAENBbWNqBpjlUH7fTMrcvKHHnuqkEnf/t55pV3ryJXy7HXGZ/6+BZ+BnFfX0NCOopLw==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1789,7 +1596,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Vesna",
                             Gender = "F",
                             LastName = "Vesnić",
-                            Password = "AQAAAAEAACcQAAAAEDq0wcHR6InJEU+9lMC/dZvr03xd5m28fDH/CNN/x+gcIbfPtTauo/yOy9j7mSsdeQ==",
+                            Password = "AQAAAAEAACcQAAAAEBR44dYjYrJNM3bSpyWBMqVfnkZ5E0QjDUwtwBDuu65KmXbpfI05fNkO924pietPCg==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1802,7 +1609,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Sebastian",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEHHkFZ9kUD6kz5g1w91t4F9VVhILvdQ9NrC5Wzss+d0GuuoRhyxug2FeDJnG1FCycg==",
+                            Password = "AQAAAAEAACcQAAAAEPVIa7xG7A+DAn1TU6qRfKwQzyJxIykK1vg2KsjCLDI8Z/LJT7oJSP0jV7QrNJYg5Q==",
                             RoleId = 3,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1810,14 +1617,14 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                         {
                             Id = 11,
                             BirthDate = new DateOnly(1997, 3, 8),
-                            CreatedAt = new DateTime(2025, 12, 3, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2114),
+                            CreatedAt = new DateTime(2025, 12, 2, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5700),
                             Email = "nikolaf@gmail.com",
                             FirstName = "Nikola",
                             Gender = "M",
                             LastName = "Filipović",
-                            Password = "AQAAAAEAACcQAAAAENiKU3/Ah5CAGEJdPOELHUH8sgtASi5eUD+ASTjD/mngaH3E02e0DS/2QhKWoO3Y9A==",
+                            Password = "AQAAAAEAACcQAAAAEJwryKgXxFeoLZsVEn71lVGr3Aa9qZdtBBVe+b8kwlwsatZ3gsQQvCw70yplHUYgVQ==",
                             RoleId = 1,
-                            UpdatedAt = new DateTime(2025, 12, 3, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2121)
+                            UpdatedAt = new DateTime(2025, 12, 2, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5702)
                         },
                         new
                         {
@@ -1828,7 +1635,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Toni",
                             Gender = "M",
                             LastName = "Crnčić",
-                            Password = "AQAAAAEAACcQAAAAENaeylGFYjpfNznDxK80qmuibOumXoXLlnUMxVKPYnFRehRVxpnZ0X/YWVvIruSZIw==",
+                            Password = "AQAAAAEAACcQAAAAECpeYfkIVXZE9dB0L21RA5QASiJLSw+9UMxFZaCJ0waZYbPAeQRxLbFr+tOOQnKxMA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1836,14 +1643,14 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                         {
                             Id = 13,
                             BirthDate = new DateOnly(2005, 3, 10),
-                            CreatedAt = new DateTime(2025, 12, 24, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2142),
+                            CreatedAt = new DateTime(2025, 12, 23, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5707),
                             Email = "marijah@gmail.com",
                             FirstName = "Marija",
                             Gender = "F",
                             LastName = "Hanić",
-                            Password = "AQAAAAEAACcQAAAAEGmYAJ0lz5jbCaCd82PQrZ8B9CNxncXURtR7nekQZXLWDwq2wJh2SSdG9nnvLwPXDw==",
+                            Password = "AQAAAAEAACcQAAAAEMasx/XzJ4JvankRRU5aH/mGSKvGdPI37LdcYO440PEbfpIJpg8sUy+R5hep42MyzA==",
                             RoleId = 1,
-                            UpdatedAt = new DateTime(2025, 12, 24, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2144)
+                            UpdatedAt = new DateTime(2025, 12, 23, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5708)
                         },
                         new
                         {
@@ -1854,7 +1661,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Tomislav",
                             Gender = "M",
                             LastName = "Turjan",
-                            Password = "AQAAAAEAACcQAAAAEMTaXrMgeX8r8SgHyaKxIhJHT1aPjrZFaqnESFK3dDVTpPNMA6A2u36385bQhJ5Sug==",
+                            Password = "AQAAAAEAACcQAAAAEGk4k9FasXDHwc8MT1azrJK7C1zbEfrVF0hOJfzwJemk1dRLADw8K9JL+nSQNa9Fqg==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1867,7 +1674,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Ema",
                             Gender = "F",
                             LastName = "Boljevčan",
-                            Password = "AQAAAAEAACcQAAAAEPdeafaiKFwWMvwQxcTn1cT+r9S42vqCobKKfdH2J2uzqBXQczPApL3YuZEl7QMppw==",
+                            Password = "AQAAAAEAACcQAAAAEKvjY8ApxnsS/AHgF7k0kWqT2lU3DV9sEkuuptFZQqS6ZqZVbul/LpUi5jU5NKT3cg==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1880,7 +1687,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Luka",
                             Gender = "M",
                             LastName = "Jerković",
-                            Password = "AQAAAAEAACcQAAAAEI06JHfGoBSerP0Fd9iLOr1Ng4iFyH/FgURpHgX21NDtKSrhgaHQGNNG7ffEtwmgSA==",
+                            Password = "AQAAAAEAACcQAAAAEG4O3dc9Ci2ZYcvgfCIZbhAfm/hgtt+/onRDXn4KtbI8zkGUzdrY7wl74rpz5jXIAA==",
                             RoleId = 1,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1893,7 +1700,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Matija",
                             Gender = "M",
                             LastName = "Matijović",
-                            Password = "AQAAAAEAACcQAAAAENlB9G8J4T1fLM6nFJprgbjeTIHnf8xLiDH58pILY2IayiypXmzVQJwkF/fYwYXBfA==",
+                            Password = "AQAAAAEAACcQAAAAEK5gzXzXH3ygiYBNcwZiOFDvh2ktjYgfns8iGxWkURJxw8eExSTGmBcAJlCFg+0VFQ==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1906,7 +1713,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Mirko",
                             Gender = "M",
                             LastName = "Mirković",
-                            Password = "AQAAAAEAACcQAAAAEF9Ta1kExkzHNNQNCnFBwEEyWb1Jg7tRnAGhxzKdMBc2YiVNhKcogaTaJhek7m/0Zw==",
+                            Password = "AQAAAAEAACcQAAAAEP4u8fUxmbPiJWLEC1025Ee/Us3HHUHZXnVOol7G1hEx5hwvqHGy4ap4H+f5Iz4S/g==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1919,7 +1726,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Tara",
                             Gender = "F",
                             LastName = "Tarić",
-                            Password = "AQAAAAEAACcQAAAAEMCzGuTqbVHL64WDOYMsJBZFfU+0v/YhQ6mQu1BAU55HyAhThzvhzw3dXZN9yLoEXA==",
+                            Password = "AQAAAAEAACcQAAAAEMStZWkpoPK1nPBxgnpT42Q+WyRbkTEstVuEIrjX5GOW/7C4ev7uDntaZBdK/7PJGA==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1932,7 +1739,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Zlatko",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEFGBEa36n+p7aqStmXAqWPif4/oloXH1NBstUlwu2dJyc3d6HpslwMLAOGDsKd/IgQ==",
+                            Password = "AQAAAAEAACcQAAAAEAoR9Np8+fnE8s3RO9imEQg7IF/cG272w6g4noz/GcTaDr3yQ59teHJlIRrep1JH0Q==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1945,7 +1752,7 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                             FirstName = "Drago",
                             Gender = "M",
                             LastName = "Leci",
-                            Password = "AQAAAAEAACcQAAAAEAmz9DGrryxY6hlpUHUW4tNKApZIF6NPxpcUiKHVmEMGt0MM5iuMAgA1CkZ2gVrMwQ==",
+                            Password = "AQAAAAEAACcQAAAAEC0ToBAFwWAFoomTf7+cloQXQoHDfGm4/0ajXthwnqScD8FG4eLaPYoiDydxmtGX5A==",
                             RoleId = 2,
                             UpdatedAt = new DateTime(2025, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1953,79 +1760,40 @@ namespace Internship_7_Moodle.Infrastructure.Migrations
                         {
                             Id = 22,
                             BirthDate = new DateOnly(2000, 5, 5),
-                            CreatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2163),
+                            CreatedAt = new DateTime(2026, 1, 1, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5726),
                             Email = "novikorisnik@gmail.com",
                             FirstName = "Korisnik",
                             Gender = "M",
                             LastName = "Novi",
-                            Password = "AQAAAAEAACcQAAAAEDcfHdWDHJnx8ftfadHOgmGNrWnH8fhyozVYs5LEcv4BEb/W7u0jyUYqDE2PFq2Cxw==",
+                            Password = "AQAAAAEAACcQAAAAEOIDOVQwTZAXp4CzDBtlCs3loTxUcx5RiBO4QVYV7uNV0o4idZtsfHkMORzBIy7PPQ==",
                             RoleId = 1,
-                            UpdatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2165)
+                            UpdatedAt = new DateTime(2026, 1, 1, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5727)
                         },
                         new
                         {
                             Id = 23,
                             BirthDate = new DateOnly(2002, 4, 15),
-                            CreatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2168),
+                            CreatedAt = new DateTime(2026, 1, 2, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5730),
                             Email = "karlok@gmail.com",
                             FirstName = "Karlo",
                             Gender = "M",
                             LastName = "Karlović",
-                            Password = "AQAAAAEAACcQAAAAEMRrfe2k3rf+m+jgRKIkWvYXAg9NA1J9mdpy4ZCh0gWQzFxR2BVA0qD84HLU9bIgVg==",
+                            Password = "AQAAAAEAACcQAAAAEIe2EgKOkw5wIu6dlO0giK8+fkXBqbIkz/OZ2tbZlCcKBHF1Y9xrmISWWJW6sHA4SA==",
                             RoleId = 1,
-                            UpdatedAt = new DateTime(2026, 1, 3, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2169)
+                            UpdatedAt = new DateTime(2026, 1, 2, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5730)
                         },
                         new
                         {
                             Id = 24,
                             BirthDate = new DateOnly(2002, 4, 15),
-                            CreatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2172),
+                            CreatedAt = new DateTime(2026, 1, 1, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5737),
                             Email = "markom@gmail.com",
                             FirstName = "Marko",
                             Gender = "M",
                             LastName = "Marković",
-                            Password = "AQAAAAEAACcQAAAAEJNqZUTylEvjJLOVzEyAWJIzdDXhDV1JpzR9M6G9kaC8gSMZ+/8p92+/IjVYTUVY1g==",
+                            Password = "AQAAAAEAACcQAAAAENbNveKDYU83NkpizvL0yi5SeEDwpFP1dIyjl8zcBofoCJUX1xNLERX7PBwCEdRLQw==",
                             RoleId = 1,
-                            UpdatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2174)
-                        },
-                        new
-                        {
-                            Id = 25,
-                            BirthDate = new DateOnly(1983, 2, 17),
-                            CreatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2177),
-                            Email = "marijanm@gmail.com",
-                            FirstName = "Marijan",
-                            Gender = "M",
-                            LastName = "Marjanović",
-                            Password = "AQAAAAEAACcQAAAAENarYOskdhzzvW51Y9x+bLINYyE59Mb4+piMsS7Loo+0RMDonqENws0an4fMl0ry/w==",
-                            RoleId = 2,
-                            UpdatedAt = new DateTime(2026, 1, 2, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2179)
-                        },
-                        new
-                        {
-                            Id = 26,
-                            BirthDate = new DateOnly(1978, 2, 18),
-                            CreatedAt = new DateTime(2026, 1, 1, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2187),
-                            Email = "zoranz@gmail.com",
-                            FirstName = "Zoran",
-                            Gender = "M",
-                            LastName = "Zoranović",
-                            Password = "AQAAAAEAACcQAAAAELRVsN2swDmMIoAhbGIXdWrUl+l/fAoXRziiKLxDc/FXfugbq6lDK9tbba4DtphJuw==",
-                            RoleId = 2,
-                            UpdatedAt = new DateTime(2026, 1, 1, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2196)
-                        },
-                        new
-                        {
-                            Id = 27,
-                            BirthDate = new DateOnly(1979, 2, 18),
-                            CreatedAt = new DateTime(2025, 12, 31, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2200),
-                            Email = "zrinkaz@gmail.com",
-                            FirstName = "Zrinka",
-                            Gender = "F",
-                            LastName = "Zrinković",
-                            Password = "AQAAAAEAACcQAAAAEGKXBfKEDgj2wTiQII1z7ElbpqEB7/+jtIEEJIajmLGpnwIitfJh0RkoGmJWtsTiug==",
-                            RoleId = 2,
-                            UpdatedAt = new DateTime(2025, 12, 31, 15, 8, 26, 618, DateTimeKind.Local).AddTicks(2201)
+                            UpdatedAt = new DateTime(2026, 1, 1, 23, 46, 16, 740, DateTimeKind.Local).AddTicks(5738)
                         });
                 });
 

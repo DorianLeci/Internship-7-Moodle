@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Internship_7_Moodle.Application.Users.GetAllUsers;
 
-public record GetAllUsersToDeleteRequest(int AdminId,RoleEnum? RoleFilter=null):IRequest<AppResult<GetAllResponse<UserResponse>>>
+public record GetAllUsersByRoleRequest(RoleEnum? RoleFilter=null):IRequest<AppResult<GetAllResponse<UserResponse>>>
 {
     
 }
