@@ -19,7 +19,7 @@ After positioning in the right folder type
 ```
 dotnet run
 ```
-<strong>When you run application migrations(database creation and insertions) are automatically applied</strong>
+<strong>When you run application,migrations(database creation and insertions) will be automatically applied</strong>
 
 
 <b>ERD (diagram)</b>
