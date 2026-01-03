@@ -10,6 +10,7 @@ Steps to install the project:
 ```
 git clone git@github.com:DorianLeci/Internship-7-Moodle.git
 cd Internship-7-Moodle
+cd Internship-7-Moodle
 cd Internship-7-Moodle.Presentation
 ```
 
