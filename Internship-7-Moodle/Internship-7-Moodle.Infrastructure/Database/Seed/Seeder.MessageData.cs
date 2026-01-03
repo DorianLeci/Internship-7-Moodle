@@ -28,11 +28,8 @@ internal static partial class Seeder
                     UpdatedAt = new DateTime(2025, 11, 11, 09, 45, 0),
                     Text = "Poštovani,\n" +
                            "Hvala na pitanju! 🙂\n" +
-                           "Polimorfizam je koncept u objektno-orijentiranom programiranju koji omogućava da se ista metoda ili operacija ponaša različito ovisno o tipu objekta koji je poziva.\n" +
-                           "U praksi, to znači da možete imati baznu klasu s apstraktnom ili virtualnom metodom, a različite izvedene klase mogu implementirati tu metodu na svoj način.\n" +
-                           "Kada pozovete metodu preko referenci na baznu klasu, program automatski izvršava implementaciju odgovarajuće izvedene klase.\n" +
-                           "Ako želite, možemo na primjeru vaše konzolne aplikacije s MenuManager klasama pokazati kako polimorfizam radi u stvarnom kodu.\n" +
-                           "Nadam se da ovo pojašnjava. Javite ako želite detaljniji primjer koda.",
+                           "Polimorfizam u OOP-u omogućava da ista metoda ima različito ponašanje ovisno o tipu objekta. " +
+                           "Primjer: bazna klasa definira metodu, a izvedene klase je implementiraju na svoj način.",
                     
                     SenderId = 8,
                     ReceiverId = 1,

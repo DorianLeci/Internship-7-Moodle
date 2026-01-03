@@ -74,9 +74,7 @@ public partial class MenuBuilder
                 { await menuManager.HandleRegisterUserAsync(); return false; })
             .AddChoice("Prijava", async () =>
                 { await menuManager.HandleLoginUserAsync(); return false; })
-            .AddChoice("Izlaz iz aplikacije", ()=>
-            {
-                AnsiConsole.MarkupLine("[blue bold]Izlaz iz aplikacije...[/]"); return true; })
+            .AddChoice("Izlaz iz aplikacije", ()=> true)
             
             .ReturnDictionary();
     }

@@ -21,7 +21,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
     {
         var mainMenu = MenuBuilder.MenuBuilder.CreateStudentMenu(this);
 
-        await MenuRunner.RunMenuAsync(mainMenu, "[yellow] Glavni izbornik[/]",exitChoice:"Odjava");
+        await MenuRunner.RunMenuAsync(mainMenu, "[yellow bold] Glavni izbornik[/]",exitChoice:"Odjava");
     }
     
     public async Task ShowCourseMenuAsync(int studentId)
@@ -38,7 +38,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
         
         var courseMenu = MenuBuilder.MenuBuilder.CreateCourseMenu(this,studentCoursesList);
 
-        await MenuRunner.RunMenuAsync(courseMenu, "[yellow] Moji kolegiji[/]");
+        await MenuRunner.RunMenuAsync(courseMenu, "[yellow bold] Moji kolegiji[/]");
 
 
     }
@@ -47,7 +47,7 @@ public class StudentMainMenuManager:BaseMainMenuManager
     {
         var courseSubmenu = MenuBuilder.MenuBuilder.CreateCourseSubmenu(this, course.CourseId);
 
-        await MenuRunner.RunMenuAsync(courseSubmenu, "[yellow] Kolegij screen[/]");
+        await MenuRunner.RunMenuAsync(courseSubmenu, "[yellow bold] Kolegij screen[/]");
     }
 
     public async Task ShowCourseNotificationsAsync(int courseId)

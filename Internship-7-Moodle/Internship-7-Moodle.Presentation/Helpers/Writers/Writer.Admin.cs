@@ -78,7 +78,7 @@ public static partial class Writer
         {
             var markupTitle = period switch
             {
-                PeriodEnum.Today => "Broj registiranih korisnika po ulozi(na dašanji dan)",
+                PeriodEnum.Today => "Broj registiranih korisnika po ulozi(na današnji dan)",
                 PeriodEnum.ThisMonth => "Broj registiranih korisnika po ulozi(ovaj mjesec)",
                 PeriodEnum.Total => "Broj registiranih korisnika po ulozi(ukupno)",
                 _ => "-"
@@ -94,7 +94,7 @@ public static partial class Writer
                 table.AddRow(response.RoleNameCroatian, response.Count.ToString());
             }
             
-            AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
+            AnsiConsole.MarkupLine($"[yellow bold] {markupTitle}\n[/]");
             AnsiConsole.Write(table);
         }
 
@@ -103,7 +103,7 @@ public static partial class Writer
 
             var markupTitle = period switch
             {
-                PeriodEnum.Today => "Broj kolegija(dodanih na dašanji dan)",
+                PeriodEnum.Today => "Broj kolegija(dodanih na današnji dan)",
                 PeriodEnum.ThisMonth => "Broj kolegija(dodanih ovaj mjesec)",
                 PeriodEnum.Total => "Broj kolegija(ukupno)",
                 _ => "-"
@@ -115,7 +115,7 @@ public static partial class Writer
             
             table.AddRow(courseCount.ToString());
             
-            AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
+            AnsiConsole.MarkupLine($"[yellow bold] {markupTitle}\n[/]");
             AnsiConsole.Write(table);
         }
 
@@ -123,7 +123,7 @@ public static partial class Writer
         {
             var markupTitle = period switch
             {
-                PeriodEnum.Today => "Top 3 kolegija po broju upisanih studenata(na dašanji dan)",
+                PeriodEnum.Today => "Top 3 kolegija po broju upisanih studenata(na današnji dan)",
                 PeriodEnum.ThisMonth => "Top 3 kolegija po broju upisanih studenata(ovaj mjesec)",
                 PeriodEnum.Total => "Top 3 kolegija po broju upisanih studenata(ukupno)",
                 _ => "-"
@@ -138,7 +138,7 @@ public static partial class Writer
             foreach (var response in responses)
                 table.AddRow(response.CourseId.ToString(),response.CourseName,response.EnrollmentCount.ToString());
             
-            AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
+            AnsiConsole.MarkupLine($"[yellow bold] {markupTitle}\n[/]");
             AnsiConsole.Write(table);
 
 
@@ -148,7 +148,7 @@ public static partial class Writer
         {
             var markupTitle = period switch
             {
-                PeriodEnum.Today => "Top 3 korisnika po broju poslanih poruka(na dašanji dan)",
+                PeriodEnum.Today => "Top 3 korisnika po broju poslanih poruka(na današnji dan)",
                 PeriodEnum.ThisMonth => "Top 3 korisnika po broju poslanih poruka(ovaj mjesec)",
                 PeriodEnum.Total => "Top 3 korisnika po broju poslanih poruka(ukupno)",
                 _ => "-"
@@ -163,7 +163,7 @@ public static partial class Writer
             foreach (var response in responses)
                 table.AddRow(response.UserId.ToString(),response.FullName,response.MsgSentCount.ToString());
             
-            AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
+            AnsiConsole.MarkupLine($"[yellow bold] {markupTitle}\n[/]");
             AnsiConsole.Write(table);
 
 

@@ -27,8 +27,9 @@ public sealed class MenuManager
 
         var guestMenu = MenuBuilder.MenuBuilder.CreateGuestMenu(this);
 
-        await MenuRunner.RunMenuAsync(guestMenu, "[yellow] Početni izbornik[/]",exitChoice:"Izlaz iz aplikacije");
-
+        await MenuRunner.RunMenuAsync(guestMenu);
+        
+        ConsoleHelper.AppExit();
     }
 
     public async Task HandleRegisterUserAsync()

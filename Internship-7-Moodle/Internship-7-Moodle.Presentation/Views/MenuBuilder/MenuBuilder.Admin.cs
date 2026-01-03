@@ -11,10 +11,10 @@ public partial class MenuBuilder
     public static Dictionary<string, Func<Task<bool>>> CreateAdminMenu(AdminMainMenuManager mainMenuManager)
     {
         return new MenuBuilder()
-            .AddChoice("Brisanje korisnika", async () => { await mainMenuManager.ShowUserDeletionMenuAsync("[yellow] Brisanje korisnika[/]",AdminMenuAction.Delete); return false; })
-            .AddChoice("Promjena uloge", async () => { await mainMenuManager.ShowUserRoleChangeMenuAsync("[yellow] Promjena uloge[/]",AdminMenuAction.ChangeRole); return false; })
-            .AddChoice("Promjena emaila", async () => { await mainMenuManager.ShowUserRoleChangeMenuAsync("[yellow] Promjena emaila[/]",AdminMenuAction.ChangeEmail); return false; })
-            .AddChoice("Statistika", async () => { await mainMenuManager.ShowStatisticsMenuAsync("[yellow] Statistika[/]"); return false; })
+            .AddChoice("Brisanje korisnika", async () => { await mainMenuManager.ShowUserDeletionMenuAsync("[yellow bold] Brisanje korisnika[/]",AdminMenuAction.Delete); return false; })
+            .AddChoice("Promjena uloge", async () => { await mainMenuManager.ShowUserRoleChangeMenuAsync("[yellow bold] Promjena uloge[/]",AdminMenuAction.ChangeRole); return false; })
+            .AddChoice("Promjena emaila", async () => { await mainMenuManager.ShowUserRoleChangeMenuAsync("[yellow bold] Promjena emaila[/]",AdminMenuAction.ChangeEmail); return false; })
+            .AddChoice("Statistika", async () => { await mainMenuManager.ShowStatisticsMenuAsync("[yellow bold] Statistika[/]"); return false; })
             .AddCommon(mainMenuManager)  
             .ReturnDictionary();
     }   
@@ -57,16 +57,16 @@ public partial class MenuBuilder
     {
         return new MenuBuilder()
             .AddChoice("Broj registriranih korisnika po ulogama", async () => 
-                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.UsersByRole,"[yellow] Broj registriranih korisnika po ulogama[/]"); return false; })
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.UsersByRole,"[yellow bold] Broj registriranih korisnika po ulogama[/]"); return false; })
             
             .AddChoice("Broj kolegija", async () => 
-                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.CoursesCount,"[yellow] Broj kolegija[/]"); return false; })
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.CoursesCount,"[yellow bold] Broj kolegija[/]"); return false; })
             
             .AddChoice("Top 3 kolegija po broju upisanih studenata", async () => 
-                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.TopCoursesByStudents,"[yellow] Top 3 kolegija po broju upisanih studenata[/]"); return false; })
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.TopCoursesByStudents,"[yellow bold] Top 3 kolegija po broju upisanih studenata[/]"); return false; })
             
             .AddChoice("Top 3 korisnika po broju poslanih poruka", async () => 
-                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.TopUsersByMessages,"[yellow] Top 3 kolegija po broju upsanih studenata[/]"); return false; })
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.TopUsersByMessages,"[yellow bold] Top 3 kolegija po broju upsanih studenata[/]"); return false; })
             
             .AddMenuExit()
             .ReturnDictionary();
@@ -84,7 +84,7 @@ public partial class MenuBuilder
         };
         
         return new MenuBuilder()
-            .AddChoice("Trenutni dan", async () => { await functionToCall(PeriodEnum.Today); return false; })
+            .AddChoice("Današnji dan", async () => { await functionToCall(PeriodEnum.Today); return false; })
             .AddChoice("Trenutni mjesec", async () => { await functionToCall(PeriodEnum.ThisMonth); return false; })
             .AddChoice("Ukupno", async () => { await functionToCall(PeriodEnum.Total); return false; })
             .AddMenuExit()

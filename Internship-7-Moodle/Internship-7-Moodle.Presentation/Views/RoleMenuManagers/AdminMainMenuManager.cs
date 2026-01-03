@@ -27,8 +27,9 @@ public class AdminMainMenuManager : BaseMainMenuManager
     {
         var mainMenu = MenuBuilder.MenuBuilder.CreateAdminMenu(this);
 
-        await MenuRunner.RunMenuAsync(mainMenu, "[yellow] Glavni izbornik[/]", exitChoice: "Odjava");
+        await MenuRunner.RunMenuAsync(mainMenu, "[yellow bold] Glavni izbornik[/]", exitChoice: "Odjava");
     }
+    
 
     public async Task ShowUserDeletionMenuAsync(string title, AdminMenuAction action)
     {
@@ -83,8 +84,8 @@ public class AdminMainMenuManager : BaseMainMenuManager
 
             var choice = AnsiConsole.Prompt(prompt);
             
-            if(choice!=MenuRunner.exitChoiceConst)
-                ConsoleHelper.MenuChoiceSuccess(MenuRunner.successMsg);
+            if(choice!=MenuRunner.ExitChoiceConst)
+                ConsoleHelper.MenuChoiceSuccess(MenuRunner.SuccessMsg);
             
             exitRequested = await usersMenu[choice]();
 

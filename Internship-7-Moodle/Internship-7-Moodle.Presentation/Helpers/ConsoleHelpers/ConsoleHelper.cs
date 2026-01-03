@@ -74,5 +74,11 @@ public static class ConsoleHelper
         SleepAndClear(timeout,"[blue bold]\nIzlazak...[/]");
     }
 
-
+    public static void AppExit(string message="[blue bold]Izlazak iz aplikacije...[/]")
+    {
+        if(!string.IsNullOrEmpty(message))
+            AnsiConsole.MarkupLine(message);
+        
+        Thread.Sleep(2000);
+    }
 }

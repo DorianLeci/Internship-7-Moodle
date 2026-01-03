@@ -24,7 +24,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
     { 
         var mainMenu = MenuBuilder.MenuBuilder.CreateProfessorMenu(this);
 
-        await MenuRunner.RunMenuAsync(mainMenu,"[yellow] Glavni izbornik[/]",exitChoice:"Odjava");
+        await MenuRunner.RunMenuAsync(mainMenu,"[yellow bold] Glavni izbornik[/]",exitChoice:"Odjava");
     }
 
     public async Task ShowCourseMenuAsync(bool isMyCourseSubmenu)
@@ -41,7 +41,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
         var myCourseMenu=MenuBuilder.MenuBuilder.CreateCourseMenu(this,professorCoursesList,isMyCourseSubmenu);
 
-        var title = isMyCourseSubmenu ? "[yellow] Moji kolegiji[/]" : "[yellow] Upravljanje kolegijima[/]";
+        var title = isMyCourseSubmenu ? "[yellow bold] Moji kolegiji[/]" : "[yellow bold] Upravljanje kolegijima[/]";
 
         await MenuRunner.RunMenuAsync(myCourseMenu, title);
 
@@ -53,7 +53,7 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
             MenuBuilder.MenuBuilder.CreateCourseScreen(this, course.CourseId):
             MenuBuilder.MenuBuilder.CreateCourseManagementScreen(this, course.CourseId);
 
-        var title = isMyCourseSubmenu ? "[yellow] Kolegij screen[/]" : "[yellow] Kolegij management screen[/]";
+        var title = isMyCourseSubmenu ? "[yellow bold] Kolegij screen[/]" : "[yellow bold] Kolegij management screen[/]";
         
         await MenuRunner.RunMenuAsync(courseSubmenu,title);
     }
@@ -261,8 +261,8 @@ public class ProfessorMainMenuManager:BaseMainMenuManager
 
             var choice = AnsiConsole.Prompt(prompt);
             
-            if(choice!=MenuRunner.exitChoiceConst)
-                ConsoleHelper.MenuChoiceSuccess(MenuRunner.successMsg);
+            if(choice!=MenuRunner.ExitChoiceConst)
+                ConsoleHelper.MenuChoiceSuccess(MenuRunner.SuccessMsg);
             
             exitRequested = await studentsToAddMenu[choice]();
         }
