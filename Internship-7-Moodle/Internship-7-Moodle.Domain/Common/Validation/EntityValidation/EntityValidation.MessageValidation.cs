@@ -9,7 +9,7 @@ public static partial class EntityValidation
         private const string Prefix = nameof(PrivateMessage);
 
         public static readonly ValidationItem MaxTextLength = new ValidationItem(
-            ValidationType.BussinessRule,
+            ValidationType.BusinessRule,
             ValidationSeverity.Error,
             $"{Prefix}_{nameof(PrivateMessage.MaxTextLength)}",
             $"Sadržaj poruke ne smije biti duži od {PrivateMessage.MaxTextLength} znakova");

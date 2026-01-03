@@ -7,6 +7,6 @@ public class Role:BaseEntity
 {
     public const int MaxDescriptionLength = 200;
     public RoleEnum RoleName { get; set; }
-    
-    public string Description { get; set; }
+
+    public string Description { get; set; } = null!;
 }

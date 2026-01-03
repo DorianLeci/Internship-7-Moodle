@@ -1,5 +1,4 @@
 using Internship_7_Moodle.Application.Common.Model;
-using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Enumerations;

@@ -7,7 +7,7 @@ public static partial class EntityValidation
         public static ValidationItem ItemIsRequired(string entityName, string propertyName)
         {
             return new ValidationItem(
-                ValidationType.BussinessRule,
+                ValidationType.BusinessRule,
                 ValidationSeverity.Error,
                 $"{entityName}_ItemIsRequired",
                 $"{propertyName} je obavezno polje");            

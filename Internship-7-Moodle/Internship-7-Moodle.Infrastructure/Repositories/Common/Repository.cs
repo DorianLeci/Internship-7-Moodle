@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using Internship_7_Moodle.Domain.Common.Abstractions;
-using Internship_7_Moodle.Domain.Common.Model;
 using Internship_7_Moodle.Domain.Persistence.Common;
 using Internship_7_Moodle.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;

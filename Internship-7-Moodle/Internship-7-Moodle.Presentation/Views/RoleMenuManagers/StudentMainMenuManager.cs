@@ -4,8 +4,6 @@ using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Writers;
 using Internship_7_Moodle.Presentation.Views.Common;
-using Spectre.Console;
-
 namespace Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 
 public class StudentMainMenuManager:BaseMainMenuManager

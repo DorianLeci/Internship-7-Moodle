@@ -21,7 +21,7 @@ public partial class CourseNotification
         if(string.IsNullOrWhiteSpace(Subject))
             validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(CourseNotification),"Naslov obavijesti"));
         
-        if(Subject?.Length>CourseNotification.SubjectMaxLength)
+        if(Subject?.Length>SubjectMaxLength)
             validationResult.Add(EntityValidation.CourseValidation.MaxSubjectLength);  
     }
 
@@ -30,7 +30,7 @@ public partial class CourseNotification
         if(string.IsNullOrWhiteSpace(Content))
             validationResult.Add(EntityValidation.CommonValidation.ItemIsRequired(nameof(CourseNotification),"Sadržaj obavijesti"));
         
-        if(Subject?.Length>CourseNotification.ContentMaxLength)
+        if(Subject?.Length>ContentMaxLength)
             validationResult.Add(EntityValidation.CourseValidation.MaxContentLength);          
     }
 }

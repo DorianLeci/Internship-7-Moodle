@@ -1,6 +1,4 @@
 using Internship_7_Moodle.Domain.Common.Abstractions;
-using Internship_7_Moodle.Domain.Common.Model;
-using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Entities.Messages;
 using Internship_7_Moodle.Domain.Entities.Users;
 

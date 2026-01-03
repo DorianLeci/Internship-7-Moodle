@@ -9,7 +9,7 @@ public static partial class EntityValidation
         private const string Prefix = nameof(Role);
         
         public static readonly ValidationItem RoleMustExist= new ValidationItem(
-            ValidationType.BussinessRule,
+            ValidationType.BusinessRule,
             ValidationSeverity.Error,
             $"{Prefix}_RoleMustExist",
             $"Uloga ne postoji u bazi podataka");

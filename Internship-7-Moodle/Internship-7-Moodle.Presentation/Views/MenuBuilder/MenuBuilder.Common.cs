@@ -2,7 +2,6 @@ using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.Views.Common;
-using Spectre.Console;
 
 namespace Internship_7_Moodle.Presentation.Views.MenuBuilder;
 

@@ -1,4 +1,3 @@
-using Internship_7_Moodle.Domain.Entities.Courses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using CourseNotification = Internship_7_Moodle.Domain.Entities.Courses.Notifications.CourseNotification;

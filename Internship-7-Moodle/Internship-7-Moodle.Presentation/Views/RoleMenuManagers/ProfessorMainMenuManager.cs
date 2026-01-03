@@ -2,7 +2,6 @@ using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Presentation.Actions;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
-using Internship_7_Moodle.Presentation.Helpers.Format;
 using Internship_7_Moodle.Presentation.Helpers.PromptFunctions;
 using Internship_7_Moodle.Presentation.Helpers.PromptHelpers;
 using Internship_7_Moodle.Presentation.Helpers.Reader;

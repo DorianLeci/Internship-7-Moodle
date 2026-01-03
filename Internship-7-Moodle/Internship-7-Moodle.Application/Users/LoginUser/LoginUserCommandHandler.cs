@@ -4,7 +4,6 @@ using Internship_7_Moodle.Domain.Common.Validation;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Persistence.Users;
-using Internship_7_Moodle.Domain.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 

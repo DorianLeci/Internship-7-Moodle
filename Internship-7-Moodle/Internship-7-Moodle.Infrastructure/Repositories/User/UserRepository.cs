@@ -1,5 +1,4 @@
 using Internship_7_Moodle.Domain.Common.Helper;
-using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using Internship_7_Moodle.Infrastructure.Database;

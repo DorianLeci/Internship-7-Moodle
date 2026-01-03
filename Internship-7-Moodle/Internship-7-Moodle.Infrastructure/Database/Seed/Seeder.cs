@@ -1,6 +1,3 @@
-using Internship_7_Moodle.Domain.Entities.Chats;
-using Internship_7_Moodle.Domain.Entities.Courses;
-using Internship_7_Moodle.Domain.Entities.Messages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Internship_7_Moodle.Infrastructure.Database.Seed;

@@ -7,7 +7,7 @@ public static partial class EntityValidation
         public static ValidationItem ItemMustBeDifferent(string entityName, string message)
         {
             return new ValidationItem(
-                ValidationType.BussinessRule,
+                ValidationType.BusinessRule,
                 ValidationSeverity.Error,
                 $"{entityName}_ItemMustBeDifferent",
                 $"{message}");   

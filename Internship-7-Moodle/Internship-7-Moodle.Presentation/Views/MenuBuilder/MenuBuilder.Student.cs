@@ -1,5 +1,4 @@
 using Internship_7_Moodle.Application.Response.Course;
-using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 namespace Internship_7_Moodle.Presentation.Views.MenuBuilder;
 

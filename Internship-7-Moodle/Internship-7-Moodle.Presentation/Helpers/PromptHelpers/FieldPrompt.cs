@@ -1,5 +1,3 @@
-using Figgle;
-using Figgle.Fonts;
 using Internship_7_Moodle.Presentation.Helpers.ConsoleHelpers;
 using Internship_7_Moodle.Presentation.InputValidation;
 using Internship_7_Moodle.Presentation.Service;

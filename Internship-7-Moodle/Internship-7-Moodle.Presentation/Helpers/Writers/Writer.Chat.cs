@@ -164,7 +164,7 @@ public static partial class Writer
             Border = BoxBorder.Square
         };
         
-        var statusText = state.Error ?? "\n[blue]Upiši poruku | /exit za izlaz[/]";
+        var statusText = state.Error ?? "\n[blue]Upiši poruku | /exit za izlaz | strelice ↑↓ za povijest[/]";
 
         var statusPanel = new Panel(new Markup(statusText))
         {

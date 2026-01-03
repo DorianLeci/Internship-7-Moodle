@@ -1,4 +1,3 @@
-using Internship_7_Moodle.Domain.Entities.Courses;
 using Internship_7_Moodle.Domain.Entities.Courses.Materials;
 using Internship_7_Moodle.Presentation.Helpers.Format;
 using Internship_7_Moodle.Presentation.InputValidation;

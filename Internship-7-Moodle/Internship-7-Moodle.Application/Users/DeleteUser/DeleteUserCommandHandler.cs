@@ -2,7 +2,6 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Domain.Common.Validation.EntityValidation;
 using Internship_7_Moodle.Domain.Entities.Users;
 using Internship_7_Moodle.Domain.Enumerations;
-using Internship_7_Moodle.Domain.Persistence.Courses;
 using Internship_7_Moodle.Domain.Persistence.Users;
 using MediatR;
 using ValidationResult = Internship_7_Moodle.Domain.Common.Validation.ValidationResult;

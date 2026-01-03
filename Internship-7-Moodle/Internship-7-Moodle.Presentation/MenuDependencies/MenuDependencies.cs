@@ -1,5 +1,4 @@
 using Internship_7_Moodle.Presentation.Actions;
-using Internship_7_Moodle.Presentation.Views.Common;
 
 namespace Internship_7_Moodle.Presentation.MenuDependencies;
 

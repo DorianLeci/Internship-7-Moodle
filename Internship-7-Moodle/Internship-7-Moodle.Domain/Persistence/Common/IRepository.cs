@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using Internship_7_Moodle.Domain.Common.Abstractions;
-using Internship_7_Moodle.Domain.Common.Model;
 
 namespace Internship_7_Moodle.Domain.Persistence.Common;
 
