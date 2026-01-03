@@ -1,3 +1,4 @@
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Enumerations;
 using Internship_7_Moodle.Domain.Persistence.Chats;
 using Internship_7_Moodle.Infrastructure.Database;
@@ -70,5 +71,37 @@ public class ChatRepository:Repository<Domain.Entities.Chats.Chat,int>,IChatRepo
         return await query
             .OrderBy(u=>u.Id).
             ToListAsync();
+    }
+
+    public async Task<IEnumerable<(int UserId, string FullName, int MsgCount)>> GetTopUsersByMsgSent(PeriodEnum period)
+    {
+        var query = Context.PrivateMessages
+            .Include(pm => pm.Sender) 
+            .AsQueryable();
+        
+        var filteredQuery = period switch
+        {
+            PeriodEnum.Today => query.Where(m =>
+                m.CreatedAt >= DateTimeProvider.StarOfToday && m.CreatedAt < DateTimeProvider.EndOfToday),
+            PeriodEnum.ThisMonth => query.Where(m =>
+                m.CreatedAt >= DateTimeProvider.StartOfMonth && m.CreatedAt < DateTimeProvider.EndOfMonth),
+            _ => query
+        };
+
+        var result = await filteredQuery
+            .GroupBy(pm => new {pm.SenderId,pm.Sender.FirstName,pm.Sender.LastName})
+            .Select(g => new
+            {
+                g.Key.SenderId,
+                g.Key.FirstName,
+                g.Key.LastName,
+                MsgCount = g.Count()
+            })
+            .OrderByDescending(x => x.MsgCount).ThenBy(x => x.LastName).ThenBy(x => x.FirstName)
+            .Take(3)
+            .ToListAsync();
+        
+        return result
+            .Select(x => (x.SenderId,FullName: $"{x.FirstName} {x.LastName}", x.MsgCount));
     }
 }

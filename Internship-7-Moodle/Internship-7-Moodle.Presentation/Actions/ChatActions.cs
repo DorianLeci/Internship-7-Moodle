@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Chat.GetChat;
+using Internship_7_Moodle.Application.Chat.GetTopUsersBySentMsg;
 using Internship_7_Moodle.Application.Chat.GetUsersWithChat;
 using Internship_7_Moodle.Application.Chat.GetUsersWithoutChat;
 using Internship_7_Moodle.Application.Chat.SendMessage;
@@ -7,6 +8,7 @@ using Internship_7_Moodle.Application.Common.Model;
 using Internship_7_Moodle.Application.DTO;
 using Internship_7_Moodle.Application.Response.Chat;
 using Internship_7_Moodle.Application.Response.User;
+using Internship_7_Moodle.Domain.Common.Helper;
 using Internship_7_Moodle.Domain.Enumerations;
 using MediatR;
 
@@ -64,5 +66,17 @@ public class ChatActions
     public async Task<AppResult<EmptyResult>> UpdateUnreadMessagesAsync(IEnumerable<int> messageIdList)
     {
         return await _mediator.Send(new UpdateUnreadMessagesRequest(messageIdList));
+    }
+
+    public async Task<IEnumerable<TopUsersByMsgResponse>> GetTopUsersByMsgSentAsync(PeriodEnum period)
+    {
+        var result = await _mediator.Send(new GetTopUsersRequest(period));
+
+        if (result.Value == null)
+            return [];
+
+        var topUserResponses = result.Value.Entities;
+
+        return topUserResponses;       
     }
 }

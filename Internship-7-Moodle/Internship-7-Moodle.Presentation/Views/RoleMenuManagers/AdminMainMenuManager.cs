@@ -14,11 +14,13 @@ namespace Internship_7_Moodle.Presentation.Views.RoleMenuManagers;
 public class AdminMainMenuManager : BaseMainMenuManager
 {
     private readonly CourseActions _courseActions;
+    private readonly ChatActions _chatActions;
     
-    public AdminMainMenuManager(int userId, ChatFeature chatFeature, UserActions userActions, CourseActions courseActions) : base(userId,
+    public AdminMainMenuManager(int userId, ChatFeature chatFeature, UserActions userActions, CourseActions courseActions, ChatActions chatActions) : base(userId,
         chatFeature, userActions)
     {
         _courseActions = courseActions;
+        _chatActions = chatActions;
     }
 
     public override async Task RunAsync()
@@ -216,7 +218,7 @@ public class AdminMainMenuManager : BaseMainMenuManager
 
         if (topCoursesList.Count == 0)
         {
-            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje upisani studenti u ovom razdoblju .Izlazak...[/]");
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Ne postoje upisani studenti u ovom razdoblju.Izlazak...[/]");
             return;                 
         }
         
@@ -224,5 +226,22 @@ public class AdminMainMenuManager : BaseMainMenuManager
             
         ConsoleHelper.ScreenExit(1500);
         
+    }
+
+    public async Task ShowTopUsersByMsgSentAsync(PeriodEnum period)
+    {
+        var topUsersResponses = await _chatActions.GetTopUsersByMsgSentAsync(period);
+        
+        var topUsersList=topUsersResponses.ToList();
+
+        if (topUsersList.Count == 0)
+        {
+            ConsoleHelper.SleepAndClear(2000,"[red bold]Niti jedan korisnik nije poslao poruku u ovom razdoblju.Izlazak...[/]");
+            return;                 
+        }
+        
+        Writer.Admin.TopUsersWriter(topUsersList,period);
+            
+        ConsoleHelper.ScreenExit(1500);        
     }
 }

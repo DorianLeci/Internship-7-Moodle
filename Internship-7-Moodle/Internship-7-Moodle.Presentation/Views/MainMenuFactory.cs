@@ -31,7 +31,8 @@ public static class MainMenuFactory
                 userId, 
                 chatFeature, 
                 menuDependencies.UserActions,
-                menuDependencies.CourseActions
+                menuDependencies.CourseActions,
+                menuDependencies.ChatActions
             ),
 
             _ => throw new ArgumentException("Nepoznata uloga")

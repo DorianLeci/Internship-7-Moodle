@@ -62,8 +62,11 @@ public partial class MenuBuilder
             .AddChoice("Broj kolegija", async () => 
                 {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.CoursesCount,"[yellow] Broj kolegija[/]"); return false; })
             
-            .AddChoice("Top 3 kolegija po broju upsanih studenata", async () => 
-                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.TopCoursesByStudents,"[yellow] Top 3 kolegija po broju upsanih studenata[/]"); return false; })
+            .AddChoice("Top 3 kolegija po broju upisanih studenata", async () => 
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.TopCoursesByStudents,"[yellow] Top 3 kolegija po broju upisanih studenata[/]"); return false; })
+            
+            .AddChoice("Top 3 korisnika po broju poslanih poruka", async () => 
+                {await mainMenuManager.ShowMetricsMenuAsync(StatisticsMenuAction.TopUsersByMessages,"[yellow] Top 3 kolegija po broju upsanih studenata[/]"); return false; })
             
             .AddMenuExit()
             .ReturnDictionary();
@@ -76,7 +79,7 @@ public partial class MenuBuilder
             StatisticsMenuAction.UsersByRole=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
             StatisticsMenuAction.CoursesCount=>mainMenuManager.ShowCourseCountAsync,
             StatisticsMenuAction.TopCoursesByStudents=>mainMenuManager.ShowTopCoursesByEnrollmentAsync,
-            StatisticsMenuAction.TopUsersByMessages=>mainMenuManager.ShowRegisteredUserCountByRoleAsync,
+            StatisticsMenuAction.TopUsersByMessages=>mainMenuManager.ShowTopUsersByMsgSentAsync,
             _ => throw new ArgumentOutOfRangeException(nameof(action), "Nepoznata akcija")
         };
         

@@ -42,7 +42,8 @@ var host=builder.Build();
 var scope = host.Services.CreateScope();
 
 var dbContext=scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-dbContext.Database.Migrate();
+
+await dbContext.Database.MigrateAsync();
 
 var menuManager = scope.ServiceProvider.GetRequiredService<MenuManager>();
 await menuManager.RunAsync();

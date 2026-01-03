@@ -1,4 +1,5 @@
 using Internship_7_Moodle.Application.Common.Model;
+using Internship_7_Moodle.Application.Response.Chat;
 using Internship_7_Moodle.Application.Response.Course;
 using Internship_7_Moodle.Application.Response.User;
 using Internship_7_Moodle.Domain.Common.Helper;
@@ -136,6 +137,31 @@ public static partial class Writer
 
             foreach (var response in responses)
                 table.AddRow(response.CourseId.ToString(),response.CourseName,response.EnrollmentCount.ToString());
+            
+            AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
+            AnsiConsole.Write(table);
+
+
+        }
+        
+        public static void TopUsersWriter(List<TopUsersByMsgResponse> responses, PeriodEnum period)
+        {
+            var markupTitle = period switch
+            {
+                PeriodEnum.Today => "Top 3 korisnika po broju poslanih poruka(na dašanji dan)",
+                PeriodEnum.ThisMonth => "Top 3 korisnika po broju poslanih poruka(ovaj mjesec)",
+                PeriodEnum.Total => "Top 3 korisnika po broju poslanih poruka(ukupno)",
+                _ => "-"
+            };
+
+            var table = new Table()
+                .Border(TableBorder.Rounded)
+                .AddColumn(new TableColumn(new Markup("[yellow]Id[/]")))
+                .AddColumn(new TableColumn(new Markup("[rgb(0,200,0)]Ime korisnika[/]")))
+                .AddColumn(new TableColumn(new Markup("[rgb(0,200,0)]Broj poslanih poruka[/]")));
+
+            foreach (var response in responses)
+                table.AddRow(response.UserId.ToString(),response.FullName,response.MsgSentCount.ToString());
             
             AnsiConsole.MarkupLine($"[yellow] {markupTitle}\n[/]");
             AnsiConsole.Write(table);
