@@ -19,10 +19,12 @@ After positioning in the right folder type
 ```
 dotnet run
 ```
+</br>
 <strong>When you run application,migrations(database creation and insertions) will be automatically applied</strong>
-
+</br>
 
 <b>ERD (diagram)</b>
+</br>
 You can open downloaded diagram in draw.io on the following link:
 
 https://app.diagrams.net/
