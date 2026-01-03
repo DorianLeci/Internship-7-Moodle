@@ -20,7 +20,9 @@ After positioning in the right folder type
 dotnet run
 ```
 
-<b>ERD (diagram)
+
+
+<b>ERD (diagram)</b>
 You can open downloaded diagram in draw.io on the following link:
 
 https://app.diagrams.net/
