@@ -23,10 +23,7 @@ dotnet run
 <b>ERD (diagram)
 You can open downloaded diagram in draw.io on the following link:
 
-```
 https://app.diagrams.net/
-
-```
 
 
 
