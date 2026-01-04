@@ -24,9 +24,9 @@ dotnet run
 </br>
 </br>
 
-<strong>This application has AntiBotService which puts coolodnw of 30 seconds on logging again</strong>
+<strong>This application has AntiBotService which puts cooldown of 30 seconds on logging again</strong>
 </br>
-When clicking on login options coolodown timer will be shown-><b>You can exit it by pressing q or esc on your keyboard</b>
+When clicking on login options,coolodown timer will be shown-><b>You can exit it by pressing q or esc on your keyboard</b>
 </br>
 
 <b>ERD (diagram)</b>
