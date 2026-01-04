@@ -22,6 +22,10 @@ dotnet run
 </br>
 <strong>When you run application,migrations(database creation and insertions) will be automatically applied</strong>
 </br>
+
+<strong>This application has AntiBotService which puts coolodnw of 30 seconds on logging again</strong>
+</br>
+When clicking on login options coolodown timer will be shown-><b>You can exit it by pressing q or esc on your keyboard</b>
 </br>
 
 <b>ERD (diagram)</b>
