@@ -22,6 +22,7 @@ dotnet run
 </br>
 <strong>When you run application,migrations(database creation and insertions) will be automatically applied</strong>
 </br>
+</br>
 
 <strong>This application has AntiBotService which puts coolodnw of 30 seconds on logging again</strong>
 </br>
